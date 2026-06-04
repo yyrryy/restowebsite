@@ -1,0 +1,51 @@
+{% extends 'restaurant/base.html' %}
+
+{% block title %}Order Tracking{% endblock %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-1">Order Tracking</h1>
+      <p class="text-muted mb-0">See the status of your recent orders.</p>
+    </div>
+    <a class="btn btn-outline-primary" href="{% url 'client_dashboard' %}">Back to dashboard</a>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      {% if orders %}
+        {% for order in orders %}
+          <div class="border rounded p-3 mb-3">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+              <div>
+                <strong>Order #{{ order.id }}</strong>
+                <div class="text-muted small">{{ order.created_at|date:'M d, Y H:i' }}</div>
+              </div>
+              <div class="text-end">
+                <span class="badge bg-secondary">{{ order.get_status_display }}</span>
+                <div class="text-muted small">{{ order.get_payment_status_display }}</div>
+              </div>
+            </div>
+            <ul class="list-group list-group-flush mb-2">
+              {% for item in order.items.all %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span>
+                    {{ item.dish.name|default:item.combo.name }}
+                    <span class="text-muted small">x{{ item.quantity }}</span>
+                  </span>
+                  <span>{{ item.line_total|floatformat:2 }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="text-muted">Total</span>
+              <strong>{{ order.total_amount|floatformat:2 }}</strong>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="text-muted mb-0">No orders yet.</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Restaurant</title>
+    {% load static %}
+    {% load restaurant_extras %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ff6b1a;
+            --primary-dark: #e55a00;
+            --text-dark: #1a1a1a;
+            --text-light: #666;
+            --text-lighter: #999;
+            --bg-light: #f8f8f8;
+            --white: #ffffff;
+            --border-color: #e0e0e0;
+            --border-light: #f0f0f0;
+            --success-color: #2e7d32;
+            --danger-color: #c62828;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-size: 16px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .back-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* Container */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 1000px;
+                padding: 1.5rem 2rem;
+            }
+        }
+
+        /* Page Title */
+        .page-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        /* Layout */
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .checkout-layout {
+                grid-template-columns: 1fr 350px;
+            }
+        }
+
+        /* Card Style */
+        .card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-title-icon {
+            font-size: 1.3rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background-color: var(--white);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 107, 26, 0.1);
+        }
+
+        .form-error {
+            color: var(--danger-color);
+            font-size: 0.85rem;
+            margin-top: 0.35rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            box-shadow: 0 4px 12px rgba(255, 107, 26, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            width: 100%;
+            margin-top: 0.75rem;
+            border: 1.5px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--border-light);
+        }
+
+        /* Order Summary */
+        .order-summary {
+            position: sticky;
+            top: 90px;
+        }
+
+        .summary-items {
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .summary-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .summary-item-name {
+            flex: 1;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .summary-item-qty {
+            color: var(--text-lighter);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .summary-item-price {
+            font-weight: 600;
+            color: var(--text-dark);
+            min-width: 60px;
+            text-align: right;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 1rem;
+        }
+
+        .summary-total-label {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .summary-total-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .summary-fee {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Messages */
+        .messages {
+            margin-bottom: 1.5rem;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-error {
+            background-color: #ffebee;
+            color: var(--danger-color);
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .alert-info {
+            background-color: #e3f2fd;
+            color: #1976d2;
+            border-left: 4px solid #1976d2;
+        }
+
+        .profile-info {
+            background-color: #f0f7ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .profile-info-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .profile-info-label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .profile-info-value {
+            color: var(--text-light);
+        }
+
+        .profile-warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-warning-title {
+            font-weight: 600;
+            color: #856404;
+            margin-bottom: 0.75rem;
+        }
+
+        .profile-warning-text {
+            color: #856404;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-update-profile {
+            background-color: #ffc107;
+            color: #000;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn-update-profile:hover {
+            background-color: #e0a800;
+        }
+
+        /* Loading State */
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Responsive */
+        @media (max-width: 767px) {
+            .checkout-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .order-summary {
+                position: static;
+                top: auto;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">🍽️ Restaurant</div>
+            <a href="{% url 'client_dashboard' %}" class="back-link">← Back to menu</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1 class="page-title">Order Checkout</h1>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="checkout-layout">
+            <!-- Delivery Form -->
+            <div class="card">
+                <div class="card-title">
+                    <span class="card-title-icon">📍</span>
+                    Delivery Details
+                </div>
+
+                {% if user_address and user_phone %}
+                    <div class="profile-info">
+                        <div class="profile-info-row">
+                            <span class="profile-info-label">📍 Delivery Address:</span>
+                            <span class="profile-info-value">{{ user_address }}</span>
+                        </div>
+                        <div class="profile-info-row">
+                            <span class="profile-info-label">📱 Phone Number:</span>
+                            <span class="profile-info-value">{{ user_phone }}</span>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="profile-warning">
+                        <div class="profile-warning-title">⚠️ Update Your Profile</div>
+                        <div class="profile-warning-text">
+                            {% if not user_address and not user_phone %}
+                                Please add your delivery address and phone number before checkout.
+                            {% elif not user_address %}
+                                Please add your delivery address before checkout.
+                            {% else %}
+                                Please add your phone number before checkout.
+                            {% endif %}
+                        </div>
+                        <a href="{% url 'update_client_profile' %}" class="btn-update-profile">
+                            Update Profile
+                        </a>
+                    </div>
+                {% endif %}
+
+                
+            </div>
+
+            <!-- Order Summary Sidebar -->
+            <div class="card order-summary">
+                <div class="card-title">
+                    <span class="card-title-icon">🛒</span>
+                    Order Summary
+                </div>
+
+                <div class="summary-items">
+                    {% for item in cart_items %}
+                        <div class="summary-item">
+                            <div>
+                                <div class="summary-item-name">{{ item.object.name }}</div>
+                                <div class="summary-item-qty">×{{ item.quantity }}</div>
+                            </div>
+                            <div class="summary-item-price">{{ item.line_total|floatformat:2 }}</div>
+                        </div>
+                    {% empty %}
+                        <div style="color: var(--text-lighter); text-align: center; padding: 1rem 0;">
+                            No items in cart
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="summary-fee">
+                    <span>Subtotal:</span>
+                    <span>{{ cart_total|floatformat:2 }}</span>
+                </div>
+
+                <div class="summary-fee">
+                    <span>Delivery Fee:</span>
+                    <span>2.00</span>
+                </div>
+
+                <div class="summary-total">
+                    <span class="summary-total-label">Total</span>
+                    <span class="summary-total-price">{{ cart_total|add:"2"|floatformat:2 }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

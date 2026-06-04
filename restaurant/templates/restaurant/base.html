@@ -1,0 +1,251 @@
+{% load static restaurant_extras %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Resto Website{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
+    <style>
+      :root {
+        --primary-color: #ff6b1a;
+        --primary-dark: #e55a00;
+        --text-dark: #1a1a1a;
+        --text-light: #666;
+        --bg-light: #f8f8f8;
+        --white: #ffffff;
+        --border-color: #e0e0e0;
+      }
+
+      /* Glovo Navbar Styling */
+      .navbar-glovo {
+        background-color: var(--white);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        padding: 0.75rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .navbar-glovo-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 1rem;
+      }
+
+      .navbar-logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .navbar-logo:hover {
+        color: var(--primary-dark);
+        text-decoration: none;
+      }
+
+      .navbar-menu {
+        display: none;
+        gap: 0.5rem;
+        align-items: center;
+        flex-direction: row;
+      }
+
+      @media (min-width: 768px) {
+        .navbar-menu {
+          display: flex;
+        }
+      }
+
+      .navbar-toggler-custom {
+        background-color: transparent;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-dark);
+        display: flex;
+        align-items: center;
+      }
+
+      @media (min-width: 768px) {
+        .navbar-toggler-custom {
+          display: none;
+        }
+      }
+
+      .navbar-mobile {
+        display: none;
+        flex-direction: column;
+        gap: 0.5rem;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--white);
+        border-bottom: 1px solid var(--border-color);
+        padding: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-mobile.active {
+        display: flex;
+      }
+
+      @media (min-width: 768px) {
+        .navbar-mobile {
+          display: none !important;
+        }
+      }
+
+      .navbar-link {
+        color: var(--text-dark);
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        padding: 0.5rem 0.75rem;
+        border-radius: 6px;
+      }
+
+      .navbar-link:hover {
+        color: var(--primary-color);
+        background-color: #fff9f5;
+      }
+
+      .navbar-text {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        display: none;
+      }
+
+      @media (min-width: 768px) {
+        .navbar-text {
+          display: inline;
+        }
+      }
+
+      .navbar-btn {
+        background-color: var(--white);
+        color: var(--primary-color);
+        padding: 0.6rem 1.2rem;
+        border: 2px solid var(--primary-color);
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        white-space: nowrap;
+      }
+
+      .navbar-btn:hover {
+        background-color: #fff9f5;
+        text-decoration: none;
+      }
+
+      .navbar-btn-primary {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+      }
+
+      .navbar-btn-primary:hover {
+        background-color: var(--primary-dark);
+        border-color: var(--primary-dark);
+      }
+
+      .navbar-btn-logout {
+        color: #dc3545;
+        border-color: #dc3545;
+      }
+
+      .navbar-btn-logout:hover {
+        background-color: #fff5f5;
+      }
+    </style>
+    {% block head_extra %}{% endblock %}
+  </head>
+  <body class="{% block body_class %}bg-light{% endblock %}">
+    <nav class="navbar-glovo">
+      <div class="navbar-glovo-container">
+        <a class="navbar-logo" href="{% url 'home' %}">Resto</a>
+        
+        <div class="navbar-menu">
+          <div style="display: flex; gap: 1.5rem;">
+            {% if request.user.is_authenticated %}
+              <a class="navbar-link" href="{% url 'client_dashboard' %}">Dashboard</a>
+              {% is_admin as user_is_admin %}
+              {% if user_is_admin %}
+                <a class="navbar-link" href="{% url 'admin_dashboard' %}">Admin</a>
+              {% endif %}
+            {% endif %}
+          </div>
+          
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            {% if request.user.is_authenticated %}
+              <span class="navbar-text">Hi {{ request.user.username }}</span>
+              <a class="navbar-btn navbar-btn-logout" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+              <a class="navbar-btn" href="{% url 'login' %}">Login</a>
+              <a class="navbar-btn navbar-btn-primary" href="{% url 'login' %}">Order Now</a>
+            {% endif %}
+          </div>
+        </div>
+
+        <button class="navbar-toggler-custom" id="navbarToggle">☰</button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div class="navbar-mobile" id="navbarMobile">
+        {% if request.user.is_authenticated %}
+          <a class="navbar-link" href="{% url 'client_dashboard' %}">Dashboard</a>
+          {% is_admin as user_is_admin %}
+          {% if user_is_admin %}
+            <a class="navbar-link" href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+          {% endif %}
+        {% endif %}
+        
+        <hr style="margin: 0.5rem 0; border: none; border-top: 1px solid var(--border-color);">
+        
+        {% if request.user.is_authenticated %}
+          <span class="navbar-text" style="display: block; padding: 0.5rem 0;">Hi {{ request.user.username }}</span>
+          <a class="navbar-btn navbar-btn-logout" href="{% url 'logout' %}">Logout</a>
+        {% else %}
+          <a class="navbar-btn" href="{% url 'login' %}" style="width: 100%; text-align: center;">Login</a>
+          <a class="navbar-btn navbar-btn-primary" href="{% url 'login' %}" style="width: 100%; text-align: center;">Order Now</a>
+        {% endif %}
+      </div>
+    </nav>
+
+    <script>
+      document.getElementById('navbarToggle').addEventListener('click', function() {
+        document.getElementById('navbarMobile').classList.toggle('active');
+      });
+      
+      // Close mobile menu when clicking outside
+      document.addEventListener('click', function(event) {
+        const navbar = document.querySelector('.navbar-glovo');
+        if (!navbar.contains(event.target)) {
+          document.getElementById('navbarMobile').classList.remove('active');
+        }
+      });
+    </script>
+
+    <main class="container py-4">
+      {% include 'restaurant/partials/messages.html' %}
+      {% block content %}{% endblock %}
+    </main>
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

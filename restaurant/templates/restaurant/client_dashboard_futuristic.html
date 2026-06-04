@@ -1,0 +1,238 @@
+{% extends 'restaurant/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Customer Dashboard" %} - Futuristic{% endblock %}
+{% block body_class %}bg-dark text-white futuristic-theme{% endblock %}
+
+{% block content %}
+  <section class="neo-hero rounded-4 p-4 p-lg-5 mb-4">
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-7">
+        <span class="neo-chip">{% trans "Next-gen ordering" %}</span>
+        <h1 class="display-5 fw-bold mb-2">{% trans "Instant flavor. Zero friction." %}</h1>
+        <p class="lead mb-0">{% trans "A smooth, futuristic flow from menu to checkout." %}</p>
+      </div>
+      <div class="col-lg-5 d-flex flex-wrap gap-2 justify-content-lg-end">
+        <a class="btn btn-info btn-lg" href="{% url 'checkout' %}">{% trans "Checkout" %}</a>
+        <a class="btn btn-outline-light btn-lg" href="{% url 'order_tracking' %}">{% trans "Orders" %}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+      <h2 class="neo-title mb-0">{% trans "Signal boosts" %}</h2>
+      <span class="text-white-50 small">{% trans "Limited-time offers" %}</span>
+    </div>
+    <div class="row g-3">
+      {% for offer in offers %}
+        <div class="col-md-4">
+          <div class="neo-glass h-100 p-4 rounded-4">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <span class="neo-chip small">{% trans "Boost" %}</span>
+              <span class="neo-discount">-{{ offer.percent_discount }}%</span>
+            </div>
+            <h3 class="h5 fw-bold">{{ offer.name }}</h3>
+            <p class="text-white-50 small mb-0">{{ offer.description|default:_("Save more on your favorite items.") }}</p>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-12">
+          <div class="alert alert-dark border text-white">{% trans "No active offers yet." %}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+      <h2 class="neo-title mb-0">{% trans "Categories" %}</h2>
+      <span class="text-white-50 small">{% trans "Browse by signal" %}</span>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+      <span class="neo-filter active">{% trans "All" %}</span>
+      {% for category in categories %}
+        <span class="neo-filter">{{ category.name }}</span>
+      {% empty %}
+        <span class="text-white-50">{% trans "Add categories to highlight your menu." %}</span>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+      <div>
+        <h2 class="neo-title mb-1">{% trans "Core dishes" %}</h2>
+        <p class="text-white-50 mb-0">{% trans "Precision-crafted flavors." %}</p>
+      </div>
+    </div>
+    <div class="row g-3">
+      {% for dish in dishes %}
+        <div class="col-md-6 col-xl-4">
+          <div class="neo-card card h-100 border-0 rounded-4">
+            {% if dish.image %}
+              <img src="{{ dish.image.url }}" class="card-img-top" alt="{{ dish.name }}">
+            {% endif %}
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="badge text-bg-light">{{ dish.category.name|default:_("Chef's pick") }}</span>
+                {% if dish.active_discount_percent %}
+                  <span class="badge text-bg-info">-{{ dish.active_discount_percent }}%</span>
+                {% endif %}
+              </div>
+              <h3 class="h6 fw-bold">{{ dish.name }}</h3>
+              <p class="text-white-50 small mb-3">{{ dish.description|default:_("Freshly prepared with premium ingredients.") }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="fw-semibold text-info">{{ dish.discounted_price|floatformat:2 }} MAD</div>
+                <form method="post" action="{% url 'cart_add_dish' dish.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-info">{% trans "Add" %}</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-12">
+          <div class="alert alert-dark border text-white">{% trans "No dishes available yet." %}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+      <h2 class="neo-title mb-0">{% trans "Combo matrix" %}</h2>
+      <span class="text-white-50 small">{% trans "Bundle to optimize" %}</span>
+    </div>
+    <div class="row g-3">
+      {% for combo in combos %}
+        <div class="col-md-6 col-xl-4">
+          <div class="neo-card card h-100 border-0 rounded-4">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="badge text-bg-info">{% trans "Combo" %}</span>
+                {% if combo.active_discount_percent %}
+                  <span class="badge text-bg-danger">-{{ combo.active_discount_percent }}%</span>
+                {% endif %}
+              </div>
+              <h3 class="h6 fw-bold">{{ combo.name }}</h3>
+              <p class="text-white-50 small mb-2">{{ combo.description|default:_("Perfectly paired favorites.") }}</p>
+              <ul class="small text-white-50 mb-3">
+                {% for dish in combo.dishes.all %}
+                  <li>{{ dish.name }}</li>
+                {% empty %}
+                  <li>{% trans "No dishes added yet." %}</li>
+                {% endfor %}
+              </ul>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="fw-semibold text-info">{{ combo.discounted_price|floatformat:2 }} MAD</div>
+                <form method="post" action="{% url 'cart_add_combo' combo.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-outline-info">{% trans "Add combo" %}</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-12">
+          <div class="alert alert-dark border text-white">{% trans "No combos available yet." %}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <div class="row g-4 mb-4">
+    <div class="col-lg-7">
+      <div class="neo-panel card border-0 rounded-4">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h2 class="neo-title mb-0">{% trans "Your cart" %}</h2>
+            <span class="text-white-50 small">{{ cart_items|length }} {% trans "items" %}</span>
+          </div>
+          {% if cart_items %}
+            <form method="post" action="{% url 'cart_update' %}">
+              {% csrf_token %}
+              <div class="table-responsive">
+                <table class="table table-dark align-middle">
+                  <thead>
+                    <tr>
+                      <th>{% trans "Item" %}</th>
+                      <th style="width: 90px;">{% trans "Qty" %}</th>
+                      <th class="text-end">{% trans "Total" %}</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in cart_items %}
+                      <tr>
+                        <td>
+                          <strong>{{ item.object.name }}</strong>
+                          <div class="text-white-50 small">{{ item.unit_price|floatformat:2 }} MAD</div>
+                        </td>
+                        <td>
+                          <input class="form-control form-control-sm" type="number" min="0" name="qty_{{ item.key }}" value="{{ item.quantity }}">
+                        </td>
+                        <td class="text-end fw-semibold">{{ item.line_total|floatformat:2 }} MAD</td>
+                        <td class="text-end">
+                          <a class="btn btn-sm btn-outline-info" href="{% url 'cart_remove' item.key %}">{% trans "Remove" %}</a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <strong class="fs-5">{% trans "Total" %}: {{ cart_total|floatformat:2 }} MAD</strong>
+                <button type="submit" class="btn btn-outline-info btn-sm">{% trans "Update cart" %}</button>
+              </div>
+            </form>
+            <a class="btn btn-info w-100 mt-3" href="{% url 'checkout' %}">{% trans "Checkout" %}</a>
+          {% else %}
+            <p class="text-white-50 mb-0">{% trans "Your cart is empty. Add items to get started." %}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="neo-panel card border-0 rounded-4 mb-4">
+        <div class="card-body">
+          <h2 class="neo-title mb-3">{% trans "Recent orders" %}</h2>
+          {% if recent_orders %}
+            <ul class="list-group list-group-flush">
+              {% for order in recent_orders %}
+                <li class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>#{{ order.id }}</strong>
+                    <div class="text-white-50 small">{{ order.created_at|date:'M d, Y H:i' }}</div>
+                  </div>
+                  <span class="badge text-bg-secondary">{{ order.get_status_display }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="text-white-50 mb-0">{% trans "No orders yet." %}</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="neo-panel card border-0 rounded-4">
+        <div class="card-body">
+          <h2 class="neo-title mb-3">{% trans "Quick actions" %}</h2>
+          <div class="d-grid gap-2">
+            <a class="btn btn-outline-info" href="{% url 'checkout' %}">{% trans "Checkout now" %}</a>
+            <a class="btn btn-outline-info" href="{% url 'order_tracking' %}">{% trans "Track delivery" %}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if cart_items %}
+    <div class="sticky-order d-lg-none">
+      <a class="btn btn-info btn-lg w-100" href="{% url 'checkout' %}">
+        {% trans "Checkout" %} · {{ cart_total|floatformat:2 }} MAD
+      </a>
+    </div>
+  {% endif %}
+{% endblock %}

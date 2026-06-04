@@ -1,0 +1,38 @@
+{% extends 'restaurant/base.html' %}
+{% load restaurant_extras %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <h1 class="h4 mb-3">Sign in</h1>
+          <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="mb-3">
+              <label class="form-label" for="{{ form.username.id_for_label }}">Username</label>
+              {{ form.username|add_class:'form-control' }}
+              {% for error in form.username.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="{{ form.password.id_for_label }}">Password</label>
+              {{ form.password|add_class:'form-control' }}
+              {% for error in form.password.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+          </form>
+          <p class="mt-3 mb-0 text-muted">
+            No account? <a href="{% url 'register' %}">Create one</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+db.sqlite3
+__pycache__/
+*.pyc
+*.pyo
+# Ignore migration files
+**/migrations/*.py
+# But keep __init__.py
+!**/migrations/__init__.py
+img/*
+media/*
+push.py
+media/*
+staticfiles/*
+*.log
+instructions.txt

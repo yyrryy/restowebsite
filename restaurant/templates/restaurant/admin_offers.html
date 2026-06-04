@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Offers - Admin</title>
+    {% load static %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ff6b1a;
+            --primary-dark: #e55a00;
+            --text-dark: #1a1a1a;
+            --text-light: #666;
+            --text-lighter: #999;
+            --bg-light: #f8f8f8;
+            --white: #ffffff;
+            --border-color: #e0e0e0;
+            --border-light: #f0f0f0;
+            --success-color: #2e7d32;
+            --danger-color: #c62828;
+            --warning-color: #f57c00;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-size: 16px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            white-space: nowrap;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .user-info {
+            display: none;
+            gap: 1rem;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        @media (min-width: 768px) {
+            .user-info {
+                display: flex;
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 2rem;
+            }
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .page-header-content h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header-content p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .page-header-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.65rem 1.2rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            box-shadow: 0 4px 12px rgba(255, 107, 26, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: var(--white);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #fff9f5;
+        }
+
+        .btn-small {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #b71c1c;
+            box-shadow: 0 2px 8px rgba(198, 40, 40, 0.3);
+        }
+
+        /* Messages */
+        .messages {
+            margin-bottom: 1.5rem;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-left-color: var(--success-color);
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left-color: var(--danger-color);
+        }
+
+        .alert-info {
+            background-color: #e3f2fd;
+            color: #1976d2;
+            border-left-color: #1976d2;
+        }
+
+        /* Layout */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 350px 1fr;
+            }
+        }
+
+        /* Card */
+        .card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1.5px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background-color: var(--white);
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 107, 26, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-error {
+            color: var(--danger-color);
+            font-size: 0.85rem;
+            margin-top: 0.35rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+        }
+
+        /* Table */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background-color: var(--bg-light);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-light);
+        }
+
+        tbody tr:hover {
+            background-color: var(--bg-light);
+        }
+
+        .offer-name {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .offer-discount {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .discount-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background-color: #fff3e0;
+            color: var(--warning-color);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .badge-inactive {
+            background-color: #f8f9fa;
+            color: var(--text-light);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-lighter);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1023px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .page-header {
+                flex-direction: column;
+            }
+
+            .page-header-content h1 {
+                font-size: 1.5rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 0.75rem;
+            }
+
+            .offer-discount {
+                font-size: 1rem;
+            }
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-lighter);
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text-dark);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .modal-footer .btn {
+            flex: 0 1 auto;
+        }
+
+        /* Scrollbar */
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-content::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: var(--text-lighter);
+        }
+
+        .checkbox-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--bg-light);
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            font-weight: 400;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">🍽️ Restaurant Admin</div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span>Welcome, {{ user.first_name|default:user.username }}!</span>
+                </div>
+                <a href="{% url 'logout' %}" class="btn btn-secondary">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Messages -->
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <h1>🎁 Manage Offers</h1>
+                <p>Create, edit, and manage restaurant offers and discounts</p>
+            </div>
+            <div class="page-header-actions">
+                <button onclick="openOfferModal()" class="btn btn-primary">+ Add New Offer</button>
+                <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">← Back</a>
+            </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <!-- Quick Info Card -->
+            <div class="card">
+                <div class="card-title">📊 Overview</div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.5rem;">
+                        {{ offers|length }}
+                    </div>
+                    <div style="color: var(--text-light); margin-bottom: 1.5rem;">Total Offers</div>
+                    <a onclick="openOfferModal()" class="btn btn-primary" style="width: 100%; cursor: pointer;">
+                        + New Offer
+                    </a>
+                </div>
+            </div>
+
+            <!-- Offers Table -->
+            <div class="card">
+                <div class="card-title">📋 All Offers</div>
+                {% if offers %}
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Discount</th>
+                                    <th>Valid Period</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for offer in offers %}
+                                    <tr>
+                                        <td class="offer-name">{{ offer.name }}</td>
+                                        <td>
+                                            <span class="discount-badge">{{ offer.percent_discount }}% OFF</span>
+                                        </td>
+                                        <td>
+                                            {% if offer.start_date and offer.end_date %}
+                                                {{ offer.start_date|date:"M d, Y" }} - {{ offer.end_date|date:"M d, Y" }}
+                                            {% elif offer.start_date %}
+                                                From {{ offer.start_date|date:"M d, Y" }}
+                                            {% elif offer.end_date %}
+                                                Until {{ offer.end_date|date:"M d, Y" }}
+                                            {% else %}
+                                                <span class="text-lighter">No date limit</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <span class="status-badge {% if offer.is_active %}badge-active{% else %}badge-inactive{% endif %}">
+                                                {% if offer.is_active %}✓ Active{% else %}✗ Inactive{% endif %}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button onclick="openOfferModal({{ offer.id }})" class="btn btn-primary btn-small">✏️ Edit</button>
+                                                <form method="POST" action="{% url 'admin_offer_delete' offer.id %}" style="display: inline;" onsubmit="return confirm('Are you sure?');">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-danger btn-small">🗑️ Delete</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎁</div>
+                        <p>No offers yet. <a onclick="openOfferModal()" style="color: var(--primary-color); font-weight: 600; cursor: pointer;">Create one now</a></p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="offerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">🎁 Add New Offer</h2>
+                <button class="modal-close" onclick="closeOfferModal()">✕</button>
+            </div>
+            <form id="offerForm" method="POST">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div id="formErrors"></div>
+
+                    <div class="form-group">
+                        <label for="id_name">Offer Name *</label>
+                        <input type="text" name="name" id="id_name" maxlength="160" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_description">Description</label>
+                        <textarea name="description" id="id_description"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_percent_discount">Discount Percentage (1-100) *</label>
+                        <input type="number" name="percent_discount" id="id_percent_discount" min="1" max="100" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_start_date">Start Date</label>
+                        <input type="date" name="start_date" id="id_start_date">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_end_date">End Date</label>
+                        <input type="date" name="end_date" id="id_end_date">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Apply to Dishes</label>
+                        <div class="checkbox-list" id="id_dishes">
+                            {% for dish in dishes %}
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="dishes" value="{{ dish.id }}" id="dish_{{ dish.id }}">
+                                    <label for="dish_{{ dish.id }}">{{ dish.name }} - ${{ dish.price|floatformat:2 }}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Apply to Combos</label>
+                        <div class="checkbox-list" id="id_combos">
+                            {% for combo in combos %}
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="combos" value="{{ combo.id }}" id="combo_{{ combo.id }}">
+                                    <label for="combo_{{ combo.id }}">{{ combo.name }} - ${{ combo.price|floatformat:2 }}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" name="is_active" id="id_is_active" checked>
+                        <label for="id_is_active" style="margin: 0;">Active</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeOfferModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Offer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentOfferId = null;
+
+        function openOfferModal(offerId = null) {
+            currentOfferId = offerId;
+            const modal = document.getElementById('offerModal');
+            const form = document.getElementById('offerForm');
+            const title = document.getElementById('modalTitle');
+
+            if (offerId) {
+                title.textContent = '🎁 Edit Offer';
+                form.action = `{% url 'admin_offer_edit' 0 %}`.replace('0', offerId);
+                form.method = 'POST';
+            } else {
+                title.textContent = '🎁 Add New Offer';
+                form.action = '{% url 'admin_offer_create' %}';
+                form.method = 'POST';
+                form.reset();
+                document.getElementById('id_is_active').checked = true;
+                // Uncheck all
+                document.querySelectorAll('input[name="dishes"]').forEach(cb => cb.checked = false);
+                document.querySelectorAll('input[name="combos"]').forEach(cb => cb.checked = false);
+            }
+
+            modal.classList.add('active');
+        }
+
+        function closeOfferModal() {
+            const modal = document.getElementById('offerModal');
+            modal.classList.remove('active');
+            currentOfferId = null;
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('offerModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeOfferModal();
+            }
+        });
+
+        // Form submission
+        document.getElementById('offerForm').addEventListener('submit', function(e) {
+            const dishCheckboxes = document.querySelectorAll('input[name="dishes"]:checked');
+            const comboCheckboxes = document.querySelectorAll('input[name="combos"]:checked');
+
+            if (dishCheckboxes.length === 0 && comboCheckboxes.length === 0) {
+                e.preventDefault();
+                document.getElementById('formErrors').innerHTML = '<div class="form-error">Please select at least one dish or combo</div>';
+            }
+        });
+    </script>
+</body>
+</html>

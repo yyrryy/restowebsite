@@ -1,0 +1,228 @@
+{% extends 'restaurant/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Customer Dashboard" %} - Minimal{% endblock %}
+{% block body_class %}bg-white minimal-theme{% endblock %}
+
+{% block content %}
+  <section class="minimal-hero rounded-4 p-4 p-lg-5 mb-4">
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-8">
+        <h1 class="display-6 fw-semibold mb-2">{% trans "Good food, simply ordered." %}</h1>
+        <p class="text-muted mb-0">{% trans "A calm, focused ordering experience for fast checkout." %}</p>
+      </div>
+      <div class="col-lg-4 d-flex flex-wrap gap-2 justify-content-lg-end">
+        <a class="btn btn-dark btn-lg" href="{% url 'checkout' %}">{% trans "Checkout" %}</a>
+        <a class="btn btn-outline-dark btn-lg" href="{% url 'order_tracking' %}">{% trans "Orders" %}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+      <div>
+        <h2 class="minimal-title mb-1">{% trans "Offers" %}</h2>
+        <p class="text-muted mb-0">{% trans "Small delights with big value." %}</p>
+      </div>
+    </div>
+    <div class="row g-3">
+      {% for offer in offers %}
+        <div class="col-md-4">
+          <div class="minimal-card h-100 p-4 rounded-4">
+            <div class="text-muted small">{% trans "Limited offer" %}</div>
+            <h3 class="h6 fw-semibold mb-2">{{ offer.name }}</h3>
+            <p class="text-muted small mb-0">{{ offer.description|default:_("Save more on your favorite items.") }}</p>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-12">
+          <div class="alert alert-light border">{% trans "No active offers yet." %}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+      <h2 class="minimal-title mb-0">{% trans "Categories" %}</h2>
+      <span class="text-muted small">{% trans "Browse by style" %}</span>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+      <span class="minimal-chip active">{% trans "All" %}</span>
+      {% for category in categories %}
+        <span class="minimal-chip">{{ category.name }}</span>
+      {% empty %}
+        <span class="text-muted">{% trans "Add categories to highlight your menu." %}</span>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+      <div>
+        <h2 class="minimal-title mb-1">{% trans "Dishes" %}</h2>
+        <p class="text-muted mb-0">{% trans "Balanced flavors, clean presentation." %}</p>
+      </div>
+    </div>
+    <div class="row g-3">
+      {% for dish in dishes %}
+        <div class="col-md-6 col-xl-4">
+          <div class="menu-card card h-100 border-0 shadow-sm rounded-4">
+            {% if dish.image %}
+              <img src="{{ dish.image.url }}" class="card-img-top" alt="{{ dish.name }}">
+            {% endif %}
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="badge text-bg-light">{{ dish.category.name|default:_("Chef's pick") }}</span>
+                {% if dish.active_discount_percent %}
+                  <span class="badge text-bg-dark">-{{ dish.active_discount_percent }}%</span>
+                {% endif %}
+              </div>
+              <h3 class="h6 fw-semibold">{{ dish.name }}</h3>
+              <p class="text-muted small mb-3">{{ dish.description|default:_("Freshly prepared with premium ingredients.") }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="fw-semibold">{{ dish.discounted_price|floatformat:2 }} MAD</div>
+                <form method="post" action="{% url 'cart_add_dish' dish.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-outline-dark">{% trans "Add" %}</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-12">
+          <div class="alert alert-light border">{% trans "No dishes available yet." %}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+      <h2 class="minimal-title mb-0">{% trans "Combos" %}</h2>
+      <span class="text-muted small">{% trans "Designed for simplicity" %}</span>
+    </div>
+    <div class="row g-3">
+      {% for combo in combos %}
+        <div class="col-md-6 col-xl-4">
+          <div class="menu-card card h-100 border-0 shadow-sm rounded-4">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="badge text-bg-light">{% trans "Combo" %}</span>
+                {% if combo.active_discount_percent %}
+                  <span class="badge text-bg-dark">-{{ combo.active_discount_percent }}%</span>
+                {% endif %}
+              </div>
+              <h3 class="h6 fw-semibold">{{ combo.name }}</h3>
+              <p class="text-muted small mb-2">{{ combo.description|default:_("Perfectly paired favorites.") }}</p>
+              <ul class="small text-muted mb-3">
+                {% for dish in combo.dishes.all %}
+                  <li>{{ dish.name }}</li>
+                {% empty %}
+                  <li>{% trans "No dishes added yet." %}</li>
+                {% endfor %}
+              </ul>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="fw-semibold">{{ combo.discounted_price|floatformat:2 }} MAD</div>
+                <form method="post" action="{% url 'cart_add_combo' combo.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-outline-dark">{% trans "Add combo" %}</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-12">
+          <div class="alert alert-light border">{% trans "No combos available yet." %}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <div class="row g-4 mb-4">
+    <div class="col-lg-7">
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h2 class="minimal-title mb-0">{% trans "Cart" %}</h2>
+            <span class="text-muted small">{{ cart_items|length }} {% trans "items" %}</span>
+          </div>
+          {% if cart_items %}
+            <form method="post" action="{% url 'cart_update' %}">
+              {% csrf_token %}
+              <div class="table-responsive">
+                <table class="table align-middle">
+                  <thead>
+                    <tr>
+                      <th>{% trans "Item" %}</th>
+                      <th style="width: 90px;">{% trans "Qty" %}</th>
+                      <th class="text-end">{% trans "Total" %}</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in cart_items %}
+                      <tr>
+                        <td>
+                          <strong>{{ item.object.name }}</strong>
+                          <div class="text-muted small">{{ item.unit_price|floatformat:2 }} MAD</div>
+                        </td>
+                        <td>
+                          <input class="form-control form-control-sm" type="number" min="0" name="qty_{{ item.key }}" value="{{ item.quantity }}">
+                        </td>
+                        <td class="text-end fw-semibold">{{ item.line_total|floatformat:2 }} MAD</td>
+                        <td class="text-end">
+                          <a class="btn btn-sm btn-outline-dark" href="{% url 'cart_remove' item.key %}">{% trans "Remove" %}</a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <strong class="fs-5">{% trans "Total" %}: {{ cart_total|floatformat:2 }} MAD</strong>
+                <button type="submit" class="btn btn-outline-dark btn-sm">{% trans "Update cart" %}</button>
+              </div>
+            </form>
+            <a class="btn btn-dark w-100 mt-3" href="{% url 'checkout' %}">{% trans "Checkout" %}</a>
+          {% else %}
+            <p class="text-muted mb-0">{% trans "Your cart is empty. Add items to get started." %}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body">
+          <h2 class="minimal-title mb-3">{% trans "Recent orders" %}</h2>
+          {% if recent_orders %}
+            <ul class="list-group list-group-flush">
+              {% for order in recent_orders %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>#{{ order.id }}</strong>
+                    <div class="text-muted small">{{ order.created_at|date:'M d, Y H:i' }}</div>
+                  </div>
+                  <span class="badge text-bg-light">{{ order.get_status_display }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="text-muted mb-0">{% trans "No orders yet." %}</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body">
+          <h2 class="minimal-title mb-3">{% trans "Quick actions" %}</h2>
+          <div class="d-grid gap-2">
+            <a class="btn btn-outline-dark" href="{% url 'checkout' %}">{% trans "Checkout now" %}</a>
+            <a class="btn btn-outline-dark" href="{% url 'order_tracking' %}">{% trans "Track delivery" %}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

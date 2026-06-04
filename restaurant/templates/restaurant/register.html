@@ -1,0 +1,52 @@
+{% extends 'restaurant/base.html' %}
+{% load restaurant_extras %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <h1 class="h4 mb-3">Create account</h1>
+          <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="mb-3">
+              <label class="form-label" for="{{ form.username.id_for_label }}">Username</label>
+              {{ form.username|add_class:'form-control' }}
+              {% for error in form.username.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="{{ form.email.id_for_label }}">Email</label>
+              {{ form.email|add_class:'form-control' }}
+              {% for error in form.email.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="{{ form.password1.id_for_label }}">Password</label>
+              {{ form.password1|add_class:'form-control' }}
+              {% for error in form.password1.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="{{ form.password2.id_for_label }}">Confirm password</label>
+              {{ form.password2|add_class:'form-control' }}
+              {% for error in form.password2.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-success w-100">Create account</button>
+          </form>
+          <p class="mt-3 mb-0 text-muted">
+            Already have an account? <a href="{% url 'login' %}">Login</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

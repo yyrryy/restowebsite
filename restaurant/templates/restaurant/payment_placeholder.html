@@ -1,0 +1,24 @@
+{% extends 'restaurant/base.html' %}
+
+{% block title %}Payment{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <h1 class="h4 mb-3">Payment (Placeholder)</h1>
+          <p class="text-muted">Simulate payment for order <strong>#{{ order.id }}</strong>.</p>
+          <div class="alert alert-info">
+            Total due: <strong>{{ order.total_amount|floatformat:2 }}</strong>
+          </div>
+          <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Simulate Payment</button>
+            <a class="btn btn-link" href="{% url 'client_dashboard' %}">Back to dashboard</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

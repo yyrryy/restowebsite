@@ -1,0 +1,608 @@
+{% extends 'restaurant/base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "Fast & Fresh Delivery" %} | Resto{% endblock %}
+{% block body_class %}bg-light{% endblock %}
+{% block head_extra %}
+  <meta name="description" content="{% trans "Order your favorite meals in minutes. Hot, fresh, and delivered fast." %}">
+  <meta property="og:title" content="{% trans "Fast & Fresh Delivery" %}">
+  <meta property="og:description" content="{% trans "Order your favorite meals in minutes. Hot, fresh, and delivered fast." %}">
+  <meta property="og:type" content="website">
+  <style>
+    :root {
+      --primary-color: #ff6b1a;
+      --primary-dark: #e55a00;
+      --text-dark: #1a1a1a;
+      --text-light: #666;
+      --text-lighter: #999;
+      --bg-light: #f8f8f8;
+      --white: #ffffff;
+      --border-color: #e0e0e0;
+    }
+
+    body {
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #ff8c42 100%);
+      color: white;
+      border-radius: 16px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(255, 107, 26, 0.2);
+    }
+
+    .hero-section .hero-content {
+      padding: 2rem;
+    }
+
+    .hero-section h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .hero-section .lead {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.95;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background-color: rgba(255, 255, 255, 0.3);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .btn-primary-large {
+      background-color: white;
+      color: var(--primary-color);
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary-large:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-secondary-large {
+      background-color: transparent;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: 2px solid white;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-secondary-large:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      font-size: 0.95rem;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+
+    .hero-image-col {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .hero-section {
+        display: flex;
+        align-items: center;
+      }
+
+      .hero-content {
+        flex: 1;
+      }
+
+      .hero-image-col {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+
+      .hero-section h1 {
+        font-size: 2.2rem;
+      }
+    }
+
+    /* Promo Cards Section */
+    .promo-section {
+      margin-bottom: 2rem;
+    }
+
+    .promo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .promo-card {
+      background-color: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+    }
+
+    .promo-card:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      transform: translateY(-4px);
+    }
+
+    .promo-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .promo-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-dark);
+    }
+
+    .promo-description {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .promo-badge {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* Section Headers */
+    .section-header {
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .section-title {
+      margin: 0;
+    }
+
+    .section-title h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.3rem;
+    }
+
+    .section-title p {
+      color: var(--text-light);
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    .view-all-btn {
+      background-color: var(--white);
+      color: var(--primary-color);
+      padding: 0.6rem 1.2rem;
+      border: 2px solid var(--primary-color);
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .view-all-btn:hover {
+      background-color: #fff9f5;
+    }
+
+    /* Products Grid */
+    .products-section {
+      margin-bottom: 2rem;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .products-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .product-card {
+      background-color: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      transform: translateY(-4px);
+    }
+
+    .product-image-wrapper {
+      width: 100%;
+      height: 180px;
+      background-color: var(--bg-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .discount-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .product-info {
+      padding: 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-category {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--text-lighter);
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .product-name {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+
+    .product-description {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: auto;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.8rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .product-price {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #ff8c42 100%);
+      border-radius: 16px;
+      padding: 2rem;
+      color: white;
+      text-align: center;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(255, 107, 26, 0.2);
+    }
+
+    .cta-section h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-section p {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.95;
+    }
+
+    .btn-cta {
+      background-color: white;
+      color: var(--primary-color);
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .btn-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Empty State */
+    .empty-state {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      color: var(--text-light);
+      border: 1px solid var(--border-color);
+    }
+
+    /* Container */
+    .home-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .home-container {
+        padding: 1.5rem 2rem;
+      }
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <span class="hero-badge">{% trans "Hot Deals" %}</span>
+      <h1>{% trans "Fast-food favorites, delivered hot & fast." %}</h1>
+      <p class="lead">{% trans "Build your order in seconds. Freshly prepared meals, combo savings, and limited-time offers." %}</p>
+      <div class="hero-buttons">
+        <a class="btn-primary-large" href="{% url 'login' %}">{% trans "Start Your Order" %}</a>
+        <a class="btn-secondary-large" href="#menu">{% trans "Explore Menu" %}</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-value">{% trans "30 min" %}</span>
+          <span class="stat-label">{% trans "Avg delivery" %}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">{% trans "4.8/5" %}</span>
+          <span class="stat-label">{% trans "Customer rating" %}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">{% trans "Free" %}</span>
+          <span class="stat-label">{% trans "Pickup option" %}</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image-col">
+      {% if featured_dish and featured_dish.image %}
+        <img src="{{ featured_dish.image.url }}" alt="{{ featured_dish.name }}" style="max-width: 100%; height: auto; border-radius: 12px;">
+      {% else %}
+        <div style="background-color: rgba(255, 255, 255, 0.1); width: 100%; max-width: 300px; height: 300px; border-radius: 12px; display: flex; align-items: flex-end; padding: 1.5rem; color: white;">
+          <div>
+            <h3 style="font-weight: 700; margin-bottom: 0.5rem;">{% trans "Signature Combos" %}</h3>
+            <p style="margin: 0; font-size: 0.95rem;">{% trans "Crispy, cheesy, and ready to go." %}</p>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Promo Cards -->
+  <section class="promo-section">
+    <div class="promo-grid">
+      {% if offers %}
+        {% for offer in offers %}
+          <div class="promo-card">
+            <span class="promo-label">{% trans "Limited offer" %}</span>
+            <h3>{{ offer.name }}</h3>
+            <p class="promo-description">{{ offer.description|default:_("Save more on your favorites today.") }}</p>
+            <span class="promo-badge">{% blocktrans with percent=offer.percent_discount %}Save {{ percent }}%{% endblocktrans %}</span>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="promo-card">
+          <span class="promo-label">{% trans "Limited offer" %}</span>
+          <h3>{% trans "Family Feast" %}</h3>
+          <p class="promo-description">{% trans "Big flavors, bigger savings for the whole crew." %}</p>
+          <span class="promo-badge">{% trans "Save 20%" %}</span>
+        </div>
+        <div class="promo-card">
+          <span class="promo-label">{% trans "Best sellers" %}</span>
+          <h3>{% trans "Crispy Chicken Box" %}</h3>
+          <p class="promo-description">{% trans "Golden crunch with fries and a chilled drink." %}</p>
+          <span class="promo-badge">{% trans "From 39 MAD" %}</span>
+        </div>
+        <div class="promo-card">
+          <span class="promo-label">{% trans "New" %}</span>
+          <h3>{% trans "Cheesy Burger Deluxe" %}</h3>
+          <p class="promo-description">{% trans "Double cheese, fresh toppings, toasted bun." %}</p>
+          <span class="promo-badge">{% trans "Try it today" %}</span>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Popular Menu Section -->
+  <section class="products-section" id="menu">
+    <div class="section-header">
+      <div class="section-title">
+        <h2>{% trans "Popular menu" %}</h2>
+        <p>{% trans "Fresh picks, curated for fast checkout." %}</p>
+      </div>
+      <a class="view-all-btn" href="{% url 'login' %}">{% trans "View full menu" %}</a>
+    </div>
+    <div class="products-grid">
+      {% for dish in dishes %}
+        <div class="product-card">
+          <div class="product-image-wrapper">
+            {% if dish.image %}
+              <img src="{{ dish.image.url }}" alt="{{ dish.name }}" class="product-image">
+            {% else %}
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: var(--text-lighter); font-size: 2rem;">🍔</div>
+            {% endif %}
+            {% if dish.active_discount_percent %}
+              <span class="discount-badge">-{{ dish.active_discount_percent }}%</span>
+            {% endif %}
+          </div>
+          <div class="product-info">
+            <span class="product-category">{{ dish.category.name|default:_("Chef's pick") }}</span>
+            <h3 class="product-name">{{ dish.name }}</h3>
+            <p class="product-description">{{ dish.description|default:_("Freshly prepared with premium ingredients.") }}</p>
+            <div class="product-footer">
+              <span class="product-price">{{ dish.discounted_price|floatformat:2 }} MAD</span>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="empty-state">{% trans "Menu items will appear here once added." %}</div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Combo Deals Section -->
+  <section class="products-section">
+    <div class="section-header">
+      <div class="section-title">
+        <h2>{% trans "Combo deals" %}</h2>
+        <p>{% trans "Bundles built for value and speed." %}</p>
+      </div>
+      <a class="view-all-btn" href="{% url 'login' %}">{% trans "See combos" %}</a>
+    </div>
+    <div class="products-grid">
+      {% for combo in combos %}
+        <div class="product-card">
+          <div class="product-image-wrapper">
+            {% if combo.image %}
+              <img src="{{ combo.image.url }}" alt="{{ combo.name }}" class="product-image">
+            {% else %}
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: var(--text-lighter); font-size: 2rem;">📦</div>
+            {% endif %}
+            {% if combo.active_discount_percent %}
+              <span class="discount-badge">-{{ combo.active_discount_percent }}%</span>
+            {% endif %}
+          </div>
+          <div class="product-info">
+            <span class="product-category">{% trans "Combo" %}</span>
+            <h3 class="product-name">{{ combo.name }}</h3>
+            <p class="product-description">{{ combo.description|default:_("Perfectly paired favorites.") }}</p>
+            <div class="product-footer">
+              <span class="product-price">{{ combo.discounted_price|floatformat:2 }} MAD</span>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="empty-state">{% trans "Combo deals will appear here once added." %}</div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <h2>{% trans "Ready to eat?" %}</h2>
+    <p>{% trans "Create an account in seconds and unlock delivery, loyalty points, and order tracking." %}</p>
+    <a class="btn-cta" href="{% url 'register' %}">{% trans "Create Account" %}</a>
+  </section>
+</div>
+{% endblock %}

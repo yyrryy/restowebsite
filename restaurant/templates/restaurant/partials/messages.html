@@ -1,0 +1,25 @@
+{% if messages %}
+  <div class="mb-3">
+    {% for message in messages %}
+      {% if 'error' in message.tags %}
+        {% with alert_type='danger' %}
+          <div class="alert alert-{{ alert_type }} alert-auto-dismiss" role="alert">
+            {{ message }}
+          </div>
+        {% endwith %}
+      {% elif 'warning' in message.tags %}
+        <div class="alert alert-warning alert-auto-dismiss" role="alert">
+          {{ message }}
+        </div>
+      {% elif 'success' in message.tags %}
+        <div class="alert alert-success alert-auto-dismiss" role="alert">
+          {{ message }}
+        </div>
+      {% else %}
+        <div class="alert alert-info alert-auto-dismiss" role="alert">
+          {{ message }}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}

@@ -1,0 +1,305 @@
+.hero-section {
+  background: radial-gradient(circle at top left, #fff4d6, #ffffff 60%);
+}
+
+.hero-placeholder {
+  min-height: 320px;
+  background: linear-gradient(135deg, #ff7b47, #f7354b);
+}
+
+.hero-image {
+  max-height: 420px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.promo-card {
+  background: #111827;
+  color: #fff;
+}
+
+.promo-card p {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.cta-section {
+  background: linear-gradient(135deg, #dc3545, #f97316);
+}
+
+.sticky-cart {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  background: #fff;
+  border-radius: 999px;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 1040;
+}
+
+.sticky-order {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.75rem;
+  background: #ffffff;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  z-index: 1040;
+}
+
+.dashboard-hero {
+  background: linear-gradient(135deg, #111827, #dc3545);
+}
+
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.category-chip {
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: #111827;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.category-chip.active {
+  background: #dc3545;
+  color: #fff;
+}
+
+.menu-card img {
+  height: 160px;
+  object-fit: cover;
+}
+
+@media (max-width: 991.98px) {
+  main.container {
+    padding-bottom: 5rem;
+  }
+}
+
+.bold-theme .ff-hero {
+  background: linear-gradient(120deg, #ff2d2d, #ff8f00);
+}
+
+.bold-theme .ff-badge {
+  display: inline-block;
+  background: #111827;
+  color: #fff;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.bold-theme .ff-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.bold-theme .ff-tile {
+  background: #fff6ed;
+  border: 2px dashed #ff6b00;
+}
+
+.bold-theme .ff-pill {
+  background: #111827;
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
+.bold-theme .ff-discount {
+  font-weight: 800;
+  color: #ff2d2d;
+}
+
+.bold-theme .ff-chip {
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: #f9d8c1;
+  font-weight: 600;
+}
+
+.bold-theme .ff-chip.active {
+  background: #ff2d2d;
+  color: #fff;
+}
+
+.bold-theme .ff-card img {
+  height: 170px;
+  object-fit: cover;
+}
+
+.minimal-theme .minimal-hero {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.minimal-theme .minimal-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.minimal-theme .minimal-card {
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.minimal-theme .minimal-chip {
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  color: #111827;
+  font-weight: 600;
+  background: #ffffff;
+}
+
+.minimal-theme .minimal-chip.active {
+  background: #111827;
+  color: #fff;
+  border-color: #111827;
+}
+
+.street-theme {
+  background: #0b0b0f;
+}
+
+.street-theme .street-hero {
+  background: repeating-linear-gradient(120deg, #111827, #111827 18px, #1f2937 18px, #1f2937 36px);
+}
+
+.street-theme .street-stamp {
+  display: inline-block;
+  background: #f59e0b;
+  color: #111827;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.street-theme .street-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.street-theme .street-card {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.street-theme .street-ribbon {
+  position: absolute;
+  top: 1rem;
+  right: -1.5rem;
+  background: #ef4444;
+  color: #fff;
+  padding: 0.25rem 2rem;
+  transform: rotate(20deg);
+  font-weight: 700;
+}
+
+.street-theme .street-chip {
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: #1f2937;
+  color: #f9fafb;
+  font-weight: 600;
+}
+
+.street-theme .street-chip.active {
+  background: #f59e0b;
+  color: #111827;
+}
+
+.street-theme .street-menu {
+  background: #0f172a;
+  color: #fff;
+}
+
+.street-theme .street-menu img {
+  height: 170px;
+  object-fit: cover;
+}
+
+.street-theme .street-panel {
+  background: #111827;
+  color: #fff;
+}
+
+.futuristic-theme {
+  background: #0a0f1f;
+}
+
+.futuristic-theme .neo-hero {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.35), rgba(168, 85, 247, 0.35));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+.futuristic-theme .neo-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.futuristic-theme .neo-chip {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  color: #e2e8f0;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.futuristic-theme .neo-glass {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.futuristic-theme .neo-discount {
+  color: #38bdf8;
+  font-weight: 800;
+}
+
+.futuristic-theme .neo-filter {
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.futuristic-theme .neo-filter.active {
+  background: #38bdf8;
+  color: #0f172a;
+  border-color: #38bdf8;
+}
+
+.futuristic-theme .neo-card {
+  background: rgba(15, 23, 42, 0.85);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.futuristic-theme .neo-card img {
+  height: 170px;
+  object-fit: cover;
+}
+
+.futuristic-theme .neo-panel {
+  background: rgba(15, 23, 42, 0.75);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
