@@ -114,8 +114,8 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'mydb',        # Replace with your database name
-            'USER': 'postgres',     # Replace with your database user
-            'PASSWORD': 'gadwad123', # Replace with your database password
+            'USER': 'restouser',     # Replace with your database user
+            'PASSWORD': os.getenv('PSQL_PASS'),  # Use environment variable for password
             'HOST': 'localhost',         # Or your database server address
             'PORT': '5432',              # Default PostgreSQL port
         }

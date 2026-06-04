@@ -13,3 +13,4 @@ media/*
 staticfiles/*
 *.log
 instructions.txt
+.env
