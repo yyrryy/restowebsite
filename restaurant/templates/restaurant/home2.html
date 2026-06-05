@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>rr</title>
+    <title>Grillade le gout - commander online</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Commandez vos plats préférés de Grillade le gout en ligne et faites-vous livrer rapidement.">
+    <meta name="keywords" content="Grillade le gout, commande en ligne, livraison, plats délicieux">
     {% load static i18n %}
     <style>
         * {
@@ -44,8 +47,8 @@
 
         /* Hero Section (Left Side) */
         .hero-section {
+            position: relative;
             flex: 1;
-            background: linear-gradient(135deg, var(--primary-color) 0%, #ff8c42 100%);
             color: white;
             padding: 2rem;
             display: flex;
@@ -53,8 +56,42 @@
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
+            overflow: hidden;
         }
 
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /* background: linear-gradient(135deg, rgba(255, 107, 26, 0.7) 0%, rgba(255, 140, 66, 0.7) 100%); */
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-section video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        .hero-content {
+            /* make glass effect */
+            background: #ff6a1ad2; /* semi-transparent background */
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 2rem;
+        }
         @media (max-width: 768px) {
             .hero-section {
                 min-height: auto;
@@ -64,9 +101,9 @@
             }
         }
 
-        .hero-content {
+        /* .hero-content {
             max-width: 500px;
-        }
+        } */
 
         .hero-logo {
             font-size: 2rem;
@@ -348,9 +385,14 @@
 <body>
     <div class="container-wrapper">
         <!-- Hero Section -->
+         <!-- this video https://videocdn.cdnpk.net/videos/ac8a1aa4-e7ad-5d59-babc-bb7f9dcfb500/horizontal/previews/clear/large.mp4?token=exp=1780660704~hmac=4ada161d2016825403aa1c613757f5515e286bf0df76b855ca2ee89698046fcb in the background of hero section -->
+        
         <div class="hero-section">
+            <video autoplay muted loop playsinline>
+                <source src="https://videocdn.cdnpk.net/videos/ac8a1aa4-e7ad-5d59-babc-bb7f9dcfb500/horizontal/previews/clear/large.mp4?token=exp=1780660704~hmac=4ada161d2016825403aa1c613757f5515e286bf0df76b855ca2ee89698046fcb" type="video/mp4">
+            </video>
             <div class="hero-content">
-                <div class="hero-logo">🍕 Resto</div>
+                <div class="hero-logo">🍕 Grillade le gout</div>
                 <h1 class="hero-title">{% trans "Fast-food favorites, delivered hot & fast." %}</h1>
                 <p class="hero-description">{% trans "Build your order in seconds. Freshly prepared meals, combo savings, and limited-time offers." %}</p>
                 
@@ -380,8 +422,8 @@
             <div class="auth-container">
                 <!-- Tabs -->
                 <div class="auth-tabs">
-                    <button class="tab-button active" data-tab="login">{% trans "Login" %}</button>
-                    <button class="tab-button" data-tab="signup">{% trans "Sign Up" %}</button>
+                    <button class="tab-button active" data-tab="login">{%trans "Se connecter" %}</button>
+                    <button class="tab-button" data-tab="signup">{% trans "Créer un compte" %}</button>
                 </div>
 
                 <!-- Login Form -->
@@ -404,7 +446,7 @@
                         {% endif %}
 
                         <div class="form-group">
-                            <label for="id_username" class="form-label">{% trans "Username or Email" %}</label>
+                            <label for="id_username" class="form-label">{% trans "Username" %}</label>
                             <input 
                                 type="text" 
                                 id="id_username" 
@@ -419,12 +461,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="id_password" class="form-label">{% trans "Password" %}</label>
+                            <label for="id_password" class="form-label">{% trans "Mot de passe" %}</label>
                             <input 
                                 type="password" 
                                 id="id_password" 
                                 name="password" 
-                                class="form-input" 
+                                class="form-input"
                                 placeholder="{% trans "Enter your password" %}"
                                 required
                             >
@@ -433,11 +475,11 @@
                             {% endif %}
                         </div>
 
-                        <button type="submit" class="form-button">{% trans "Login" %}</button>
+                        <button type="submit" class="form-button">{% trans "Se connecter" %}</button>
                     </form>
 
                     <div class="form-footer">
-                        {% trans "Don't have an account?" %} <a href="#" class="switch-tab" data-tab="signup">{% trans "Sign up here" %}</a>
+                        {% trans "pas de compte?" %} <a href="#" class="switch-tab" data-tab="signup">{% trans "Créer un compte" %}</a>
                     </div>
                 </div>
 
@@ -503,7 +545,7 @@
                     </form>
 
                     <div class="form-footer">
-                        {% trans "Already have an account?" %} <a href="#" class="switch-tab" data-tab="login">{% trans "Login here" %}</a>
+                        {% trans "Deja un compte?" %} <a href="#" class="switch-tab" data-tab="login">{% trans "se connecter" %}</a>
                     </div>
                 </div>
             </div>
