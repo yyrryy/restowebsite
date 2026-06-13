@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Combo, Dish, DishVariant, Offer, Order, OrderItem, Profile
+from .models import MenuCategory, Combo, MenuItem, MenuItemVariant, Offer, Order, OrderItem, Profile
 
 
 @admin.register(Profile)
@@ -9,25 +9,25 @@ class ProfileAdmin(admin.ModelAdmin):
     list_select_related = ('user',)
 
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+@admin.register(MenuCategory)
+class MenuCategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'is_active')
     list_filter = ('is_active',)
     search_fields = ('name',)
 
 
-class DishVariantInline(admin.TabularInline):
-    model = DishVariant
+class MenuItemVariantInline(admin.TabularInline):
+    model = MenuItemVariant
     extra = 1
     fields = ('name', 'price_modifier', 'is_available')
 
 
-@admin.register(Dish)
-class DishAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'price', 'is_available', 'created_at')
+@admin.register(MenuItem)
+class MenuItemAdmin(admin.ModelAdmin):
+    list_display = ('name', 'category', 'price', 'is_available')
     list_filter = ('is_available', 'category')
     search_fields = ('name',)
-    inlines = [DishVariantInline]
+    inlines = [MenuItemVariantInline]
 
 
 @admin.register(Combo)

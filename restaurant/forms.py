@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Category, Combo, Dish, Offer, Order, Profile
+from .models import MenuCategory, Combo, MenuItem, Offer, Order, Profile
 
 
 class RegistrationForm(UserCreationForm):
@@ -27,22 +27,22 @@ class ProfileForm(forms.ModelForm):
         }
 
 
-class CategoryForm(forms.ModelForm):
+class MenuCategoryForm(forms.ModelForm):
     class Meta:
-        model = Category
+        model = MenuCategory
         fields = ('name', 'is_active')
 
 
-class DishForm(forms.ModelForm):
+class MenuItemForm(forms.ModelForm):
     class Meta:
-        model = Dish
-        fields = ('category', 'name', 'description', 'price', 'image', 'is_available')
+        model = MenuItem
+        fields = ('category', 'name', 'price', 'image', 'is_available')
 
 
 class ComboForm(forms.ModelForm):
     class Meta:
         model = Combo
-        fields = ('name', 'description', 'price', 'dishes', 'is_active')
+        fields = ('name', 'price', 'dishes', 'is_active')
         widgets = {
             'dishes': forms.CheckboxSelectMultiple,
         }
@@ -53,7 +53,6 @@ class OfferForm(forms.ModelForm):
         model = Offer
         fields = (
             'name',
-            'description',
             'percent_discount',
             'is_active',
             'start_date',

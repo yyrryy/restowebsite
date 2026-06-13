@@ -37,23 +37,24 @@ def create_user_profile(sender, instance: User, created: bool, **kwargs):
         Profile.objects.create(user=instance)
 
 
-class Category(models.Model):
+class MenuCategory(models.Model):
     name = models.CharField(max_length=120, unique=True)
     is_active = models.BooleanField(default=True)
-
+    code = models.CharField(max_length=20, unique=False, blank=True)
     def __str__(self) -> str:
         return self.name
 
 
-class Dish(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
-    name = models.CharField(max_length=160)
-    description = models.TextField(blank=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to='dishes/', blank=True, null=True)
+class MenuItem(models.Model):
+    code = models.CharField(max_length=500, default=None, null=True, blank=True)
+    name = models.CharField(max_length=5000, default=None, null=True, blank=True)
+    categoryname = models.CharField(max_length=60)
+    category = models.ForeignKey(MenuCategory, on_delete=models.SET_NULL, null=True, blank=True)
+    price = models.FloatField(default=0, null=True, blank=True)
+    image = models.FileField(upload_to='menu_items/', blank=True)
     is_available = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
+    plu = models.IntegerField(unique=True, null=True, blank=True, db_index=True, default=None)
+    
     def __str__(self) -> str:
         return self.name
 
@@ -72,8 +73,8 @@ class Dish(models.Model):
         return self.price * (100 - percent) / 100
 
 
-class DishVariant(models.Model):
-    dish = models.ForeignKey(Dish, on_delete=models.CASCADE, related_name='variants')
+class MenuItemVariant(models.Model):
+    dish = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name='variants')
     name = models.CharField(max_length=160)
     price_modifier = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     is_available = models.BooleanField(default=True)
@@ -97,7 +98,7 @@ class Combo(models.Model):
     name = models.CharField(max_length=160)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    dishes = models.ManyToManyField(Dish, blank=True, related_name='combos')
+    dishes = models.ManyToManyField(MenuItem, blank=True, related_name='combos')
     is_active = models.BooleanField(default=True)
 
     def __str__(self) -> str:
@@ -128,7 +129,7 @@ class Offer(models.Model):
     is_active = models.BooleanField(default=True)
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
-    dishes = models.ManyToManyField(Dish, blank=True, related_name='offers')
+    dishes = models.ManyToManyField(MenuItem, blank=True, related_name='offers')
     combos = models.ManyToManyField(Combo, blank=True, related_name='offers')
 
     def __str__(self) -> str:
@@ -179,9 +180,9 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
-    dish = models.ForeignKey(Dish, on_delete=models.SET_NULL, null=True, blank=True)
+    dish = models.ForeignKey(MenuItem, on_delete=models.SET_NULL, null=True, blank=True)
     combo = models.ForeignKey(Combo, on_delete=models.SET_NULL, null=True, blank=True)
-    variant = models.ForeignKey(DishVariant, on_delete=models.SET_NULL, null=True, blank=True)
+    variant = models.ForeignKey(MenuItemVariant, on_delete=models.SET_NULL, null=True, blank=True)
     quantity = models.PositiveIntegerField(default=1)
     unit_price = models.DecimalField(max_digits=10, decimal_places=2)
     line_total = models.DecimalField(max_digits=10, decimal_places=2)

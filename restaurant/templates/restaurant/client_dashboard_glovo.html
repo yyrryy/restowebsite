@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant Ordering - Glovo Inspired</title>
+    <title>Grillade le gout</title>
     {% load static %}
     <style>
         .messages {
@@ -986,7 +986,7 @@
     <!-- Header -->
     <header>
         <div class="header-content">
-            <div class="logo">🍽️ Restaurant</div>
+            <div class="logo">🍽️ Grillade le gout</div>
             <div class="header-right">
                 <div class="user-info">
                     <span>Welcome, {{ user.first_name|default:user.username }}!</span>
@@ -998,6 +998,7 @@
                     {% endif %}
                 </button>
                 <div class="user-profile-container">
+                    {% if request.user.is_authenticated %}
                     <button class="profile-button" onclick="toggleProfileDropdown()">
                         👤 Profile
                     </button>
@@ -1005,6 +1006,11 @@
                         <a href="{% url 'update_client_profile' %}">Update Profile</a>
                         <a href="{% url 'logout' %}" class="logout">Logout</a>
                     </div>
+                    {% else %}
+                    <a class="profile-button" href="/login">
+                        👤 Connecter
+                    </a>
+                    {%endif%}
                 </div>
             </div>
         </div>
@@ -1020,9 +1026,9 @@
         <div class="categories-section">
             <div class="categories-title">Categories</div>
             <div class="categories-scroll">
-                <div class="category-chip active" onclick="filterByCategory(null)">All</div>
+                <div class="category-chip active" onclick="filterByMenuCategory(null)">All</div>
                 {% for category in categories %}
-                    <div class="category-chip" onclick="filterByCategory({{ category.id }})">
+                    <div class="category-chip" onclick="filterByMenuCategory({{ category.id }})">
                         {{ category.name }}
                     </div>
                 {% endfor %}
@@ -1030,9 +1036,9 @@
         </div>
         {% endif %}
 
-        <!-- Dishes Section -->
+        <!-- MenuItemes Section -->
         {% if dishes %}
-            <h2 class="section-title">Dishes</h2>
+            <h2 class="section-title">MenuItemes</h2>
             <div class="products-grid" id="dishes-grid">
                 {% for dish in dishes %}
                     <div class="product-card" data-category="{{ dish.category.id|default:'' }}" data-dish-id="{{ dish.id }}">
@@ -1078,7 +1084,7 @@
                                     {% endif %}
                                 </div>
                                 <button class="btn-add-to-cart" 
-                                        onclick="handleAddDish({{ dish.id }}, '{{ dish.name|escapejs }}', {% if dish.variants.all %}true{% else %}false{% endif %}, {{ dish.variants.count }})"
+                                        onclick="handleAddMenuItem({{ dish.id }}, '{{ dish.name|escapejs }}', {% if dish.variants.all %}true{% else %}false{% endif %}, {{ dish.variants.count }})"
                                         {% if not dish.is_available %}disabled{% endif %}>
                                     {% if dish.is_available %}Add{% else %}Unavailable{% endif %}
                                 </button>
@@ -1236,7 +1242,7 @@
             variants: []
         };
 
-        function handleAddDish(dishId, dishName, hasVariants, variantCount) {
+        function handleAddMenuItem(dishId, dishName, hasVariants, variantCount) {
             if (hasVariants && variantCount > 0) {
                 showVariantModal(dishId, dishName);
             } else {
@@ -1465,14 +1471,14 @@
             }
         });
 
-        function filterByCategory(categoryId) {
+        function filterByMenuCategory(categoryId) {
             const cards = document.querySelectorAll('.product-card');
             cards.forEach(card => {
                 if (categoryId === null) {
                     card.style.display = '';
                 } else {
-                    const cardCategory = card.getAttribute('data-category');
-                    card.style.display = cardCategory === String(categoryId) ? '' : 'none';
+                    const cardMenuCategory = card.getAttribute('data-category');
+                    card.style.display = cardMenuCategory === String(categoryId) ? '' : 'none';
                 }
             });
 

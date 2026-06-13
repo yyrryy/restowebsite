@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Dishes - Admin</title>
+    <title>Manage MenuItemes - Admin</title>
     {% load static %}
     <style>
         * {
@@ -558,11 +558,11 @@
         <!-- Page Header -->
         <div class="page-header">
             <div class="page-header-content">
-                <h1>🍽️ Manage Dishes</h1>
+                <h1>🍽️ Manage MenuItemes</h1>
                 <p>Create, edit, and manage restaurant dishes</p>
             </div>
             <div class="page-header-actions">
-                <button onclick="openDishModal()" class="btn btn-primary">+ Add New Dish</button>
+                <button onclick="openMenuItemModal()" class="btn btn-primary">+ Add New MenuItem</button>
                 <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">← Back</a>
             </div>
         </div>
@@ -576,23 +576,23 @@
                     <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.5rem;">
                         {{ dishes|length }}
                     </div>
-                    <div style="color: var(--text-light); margin-bottom: 1.5rem;">Total Dishes</div>
-                    <a onclick="openDishModal()" class="btn btn-primary" style="width: 100%; cursor: pointer;">
-                        + New Dish
+                    <div style="color: var(--text-light); margin-bottom: 1.5rem;">Total MenuItemes</div>
+                    <a onclick="openMenuItemModal()" class="btn btn-primary" style="width: 100%; cursor: pointer;">
+                        + New MenuItem
                     </a>
                 </div>
             </div>
 
-            <!-- Dishes Table -->
+            <!-- MenuItemes Table -->
             <div class="card">
-                <div class="card-title">📋 All Dishes</div>
+                <div class="card-title">📋 All MenuItemes</div>
                 {% if dishes %}
                     <div class="table-responsive">
                         <table>
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Category</th>
+                                    <th>MenuCategory</th>
                                     <th>Price</th>
                                     <th>Status</th>
                                     <th>Actions</th>
@@ -617,7 +617,7 @@
                                         </td>
                                         <td>
                                             <div class="action-buttons">
-                                                <button onclick="openDishModal({{ dish.id }})" class="btn btn-primary btn-small">✏️ Edit</button>
+                                                <button onclick="openMenuItemModal({{ dish.id }})" class="btn btn-primary btn-small">✏️ Edit</button>
                                                 <form method="POST" action="{% url 'admin_dish_delete' dish.id %}" style="display: inline;" onsubmit="return confirm('Are you sure?');">
                                                     {% csrf_token %}
                                                     <button type="submit" class="btn btn-danger btn-small">🗑️ Delete</button>
@@ -632,7 +632,7 @@
                 {% else %}
                     <div class="empty-state">
                         <div class="empty-state-icon">🍽️</div>
-                        <p>No dishes yet. <a onclick="openDishModal()" style="color: var(--primary-color); font-weight: 600; cursor: pointer;">Create one now</a></p>
+                        <p>No dishes yet. <a onclick="openMenuItemModal()" style="color: var(--primary-color); font-weight: 600; cursor: pointer;">Create one now</a></p>
                     </div>
                 {% endif %}
             </div>
@@ -643,8 +643,8 @@
     <div class="modal-overlay" id="dishModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="modalTitle">🍽️ Add New Dish</h2>
-                <button class="modal-close" onclick="closeDishModal()">✕</button>
+                <h2 class="modal-title" id="modalTitle">🍽️ Add New MenuItem</h2>
+                <button class="modal-close" onclick="closeMenuItemModal()">✕</button>
             </div>
             <form id="dishForm" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -652,7 +652,7 @@
                     <div id="formErrors"></div>
 
                     <div class="form-group">
-                        <label for="id_category">Category</label>
+                        <label for="id_category">MenuCategory</label>
                         <select name="category" id="id_category">
                             <option value="">-- Select a category --</option>
                             {% for category in categories %}
@@ -662,7 +662,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="id_name">Dish Name *</label>
+                        <label for="id_name">MenuItem Name *</label>
                         <input type="text" name="name" id="id_name" maxlength="160" required>
                     </div>
 
@@ -687,8 +687,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeDishModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save Dish</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeMenuItemModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save MenuItem</button>
                 </div>
             </form>
         </div>
@@ -698,14 +698,14 @@
         // Get categories from the page or fetch them
         const categoriesSelect = document.getElementById('id_category');
         
-        function openDishModal(dishId = null) {
+        function openMenuItemModal(dishId = null) {
             const modal = document.getElementById('dishModal');
             const form = document.getElementById('dishForm');
             const modalTitle = document.getElementById('modalTitle');
             
             if (dishId) {
                 // Edit mode
-                modalTitle.textContent = '✏️ Edit Dish';
+                modalTitle.textContent = '✏️ Edit MenuItem';
                 form.action = `{% url 'admin_dish_edit' 0 %}`.replace('0', dishId);
                 
                 // Fetch dish data
@@ -721,7 +721,7 @@
                     .catch(error => console.error('Error:', error));
             } else {
                 // Create mode
-                modalTitle.textContent = '🍽️ Add New Dish';
+                modalTitle.textContent = '🍽️ Add New MenuItem';
                 form.action = `{% url 'admin_dish_create' %}`;
                 form.reset();
                 document.getElementById('id_is_available').checked = true;
@@ -730,7 +730,7 @@
             modal.classList.add('active');
         }
 
-        function closeDishModal() {
+        function closeMenuItemModal() {
             const modal = document.getElementById('dishModal');
             modal.classList.remove('active');
         }
@@ -738,7 +738,7 @@
         // Close modal when clicking outside
         document.getElementById('dishModal').addEventListener('click', function(e) {
             if (e.target === this) {
-                closeDishModal();
+                closeMenuItemModal();
             }
         });
 
@@ -778,7 +778,7 @@
         // Close modal on Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                closeDishModal();
+                closeMenuItemModal();
             }
         });
     </script>

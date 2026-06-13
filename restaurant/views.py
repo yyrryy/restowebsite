@@ -12,9 +12,9 @@ from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 from .forms import (
-    CategoryForm,
+    MenuCategoryForm,
     ComboForm,
-    DishForm,
+    MenuItemForm,
     OfferForm,
     OrderCreateForm,
     OrderStatusForm,
@@ -22,7 +22,7 @@ from .forms import (
     RegistrationForm,
     UserRoleForm,
 )
-from .models import Category, Combo, Dish, DishVariant, Offer, Order, OrderItem, Profile
+from .models import MenuCategory, Combo, MenuItem, MenuItemVariant, Offer, Order, OrderItem, Profile
 
 
 def login_view(request):
@@ -39,8 +39,14 @@ def login_view(request):
                 auth_login(request, user)
                 return redirect('client_dashboard')
     else:
-        form = AuthenticationForm()
-    return render(request, 'registration/login.html', {'form': form})
+        if request.user.is_authenticated:
+            if is_admin(request.user):
+                return redirect('admin_dashboard')
+            return redirect('client_dashboard')
+        return render(
+            request,
+            'restaurant/home2.html',
+        )
 
 
 def logout_view(request):
@@ -67,35 +73,26 @@ def client_required(view_func):
 
 
 def home(request):
-    if request.user.is_authenticated:
-        if is_admin(request.user):
-            return redirect('admin_dashboard')
-        return redirect('client_dashboard')
-    categories = Category.objects.filter(is_active=True).order_by('name')
-    offers = Offer.objects.filter(is_active=True).order_by('-id')[:3]
-    dishes = (
-        Dish.objects.filter(is_available=True)
-        .select_related('category')
-        .order_by('-created_at')[:8]
-    )
-    combos = Combo.objects.filter(is_active=True).prefetch_related('dishes')[:4]
-    featured_dish = (
-        Dish.objects.filter(is_available=True, image__isnull=False)
-        .exclude(image='')
-        .order_by('-created_at')
-        .first()
-    )
+
+    dishes = MenuItem.objects.filter(is_available=True).select_related('category')
+    combos = Combo.objects.filter(is_active=True).prefetch_related('dishes')
+    offers = Offer.objects.filter(is_active=True)
+    categories = MenuCategory.objects.filter(is_active=True).order_by('name')
+    cart_items, cart_total = _build_cart_items(_get_cart(request))
+    
     return render(
         request,
-        'restaurant/home2.html',
+        'restaurant/client_dashboard_glovo.html',
         {
-            'categories': categories,
-            'offers': offers,
             'dishes': dishes,
             'combos': combos,
-            'featured_dish': featured_dish,
+            'offers': offers,
+            'categories': categories,
+            'cart_items': cart_items,
+            'cart_total': cart_total,
         },
     )
+    
 
 
 def register(request):
@@ -144,8 +141,8 @@ def _build_cart_items(cart):
         elif key.startswith('combo:'):
             combo_ids.append(int(key.split(':')[1]))
 
-    dishes = {dish.id: dish for dish in Dish.objects.filter(id__in=dish_ids, is_available=True).prefetch_related('variants')}
-    variants = {v.id: v for v in DishVariant.objects.filter(id__in=variant_ids, is_available=True)} if variant_ids else {}
+    dishes = {dish.id: dish for dish in MenuItem.objects.filter(id__in=dish_ids, is_available=True).prefetch_related('variants')}
+    variants = {v.id: v for v in MenuItemVariant.objects.filter(id__in=variant_ids, is_available=True)} if variant_ids else {}
     combos = {combo.id: combo for combo in Combo.objects.filter(id__in=combo_ids, is_active=True)}
 
     items = []
@@ -242,11 +239,11 @@ def api_cart_add(request):
         variant_id = data.get('variant_id')  # Optional variant ID
         
         if item_type == 'dish':
-            item = get_object_or_404(Dish, id=item_id, is_available=True)
+            item = get_object_or_404(MenuItem, id=item_id, is_available=True)
             
             # Validate variant if provided
             if variant_id:
-                variant = get_object_or_404(DishVariant, id=variant_id, dish=item, is_available=True)
+                variant = get_object_or_404(MenuItemVariant, id=variant_id, dish=item, is_available=True)
             
         elif item_type == 'combo':
             item = get_object_or_404(Combo, id=item_id, is_active=True)
@@ -324,10 +321,10 @@ def api_cart_remove(request):
 @require_http_methods(["GET"])
 def client_dashboard(request):
     
-    dishes = Dish.objects.filter(is_available=True).select_related('category')
+    dishes = MenuItem.objects.filter(is_available=True).select_related('category')
     combos = Combo.objects.filter(is_active=True).prefetch_related('dishes')
     offers = Offer.objects.filter(is_active=True)
-    categories = Category.objects.filter(is_active=True).order_by('name')
+    categories = MenuCategory.objects.filter(is_active=True).order_by('name')
     cart_items, cart_total = _build_cart_items(_get_cart(request))
     recent_orders = Order.objects.filter(user=request.user).order_by('-created_at')[:5]
     return render(
@@ -374,10 +371,10 @@ def api_cart_get(request):
 
 
 
-    dishes = Dish.objects.filter(is_available=True).select_related('category')
+    dishes = MenuItem.objects.filter(is_available=True).select_related('category')
     combos = Combo.objects.filter(is_active=True).prefetch_related('dishes')
     offers = Offer.objects.filter(is_active=True)
-    categories = Category.objects.filter(is_active=True).order_by('name')
+    categories = MenuCategory.objects.filter(is_active=True).order_by('name')
     cart_items, cart_total = _build_cart_items(_get_cart(request))
     recent_orders = Order.objects.filter(user=request.user).order_by('-created_at')[:5]
     return render(
@@ -399,7 +396,7 @@ def api_cart_get(request):
 def cart_add_dish(request, dish_id):
     if request.method != 'POST':
         return redirect('client_dashboard')
-    dish = get_object_or_404(Dish, id=dish_id, is_available=True)
+    dish = get_object_or_404(MenuItem, id=dish_id, is_available=True)
     cart = _get_cart(request)
     key = _cart_key('dish', dish.id)
     cart[key] = cart.get(key, 0) + 1
@@ -522,7 +519,7 @@ def order_tracking(request):
 @admin_required
 def admin_dashboard(request):
     stats = {
-        'dishes': Dish.objects.count(),
+        'dishes': MenuItem.objects.count(),
         'combos': Combo.objects.count(),
         'offers': Offer.objects.count(),
         'orders': Order.objects.count(),
@@ -534,14 +531,14 @@ def admin_dashboard(request):
 @admin_required
 def admin_categories(request):
     if request.method == 'POST':
-        form = CategoryForm(request.POST)
+        form = MenuCategoryForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Category saved.')
+            messages.success(request, 'MenuCategory saved.')
             return redirect('admin_categories')
     else:
-        form = CategoryForm()
-    categories = Category.objects.order_by('name')
+        form = MenuCategoryForm()
+    categories = MenuCategory.objects.order_by('name')
     return render(
         request,
         'restaurant/admin_categories.html',
@@ -552,8 +549,8 @@ def admin_categories(request):
 @admin_required
 @admin_required
 def admin_dishes(request):
-    dishes = Dish.objects.select_related('category').order_by('name')
-    categories = Category.objects.filter(is_active=True).order_by('name')
+    dishes = MenuItem.objects.select_related('category').order_by('name')
+    categories = MenuCategory.objects.filter(is_active=True).order_by('name')
     return render(request, 'restaurant/admin_dishes.html', {
         'dishes': dishes,
         'categories': categories,
@@ -563,46 +560,46 @@ def admin_dishes(request):
 @admin_required
 def admin_dish_create(request):
     if request.method == 'POST':
-        form = DishForm(request.POST, request.FILES)
+        form = MenuItemForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-                return JsonResponse({'success': True, 'message': 'Dish created.'})
-            messages.success(request, 'Dish created.')
+                return JsonResponse({'success': True, 'message': 'MenuItem created.'})
+            messages.success(request, 'MenuItem created.')
             return redirect('admin_dishes')
         else:
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({'errors': form.errors}, status=400)
     else:
-        form = DishForm()
-    return render(request, 'restaurant/admin_dish_form.html', {'form': form, 'title': 'New Dish'})
+        form = MenuItemForm()
+    return render(request, 'restaurant/admin_dish_form.html', {'form': form, 'title': 'New MenuItem'})
 
 
 @admin_required
 def admin_dish_edit(request, dish_id):
-    dish = get_object_or_404(Dish, id=dish_id)
+    dish = get_object_or_404(MenuItem, id=dish_id)
     if request.method == 'POST':
-        form = DishForm(request.POST, request.FILES, instance=dish)
+        form = MenuItemForm(request.POST, request.FILES, instance=dish)
         if form.is_valid():
             form.save()
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-                return JsonResponse({'success': True, 'message': 'Dish updated.'})
-            messages.success(request, 'Dish updated.')
+                return JsonResponse({'success': True, 'message': 'MenuItem updated.'})
+            messages.success(request, 'MenuItem updated.')
             return redirect('admin_dishes')
         else:
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({'errors': form.errors}, status=400)
     else:
-        form = DishForm(instance=dish)
-    return render(request, 'restaurant/admin_dish_form.html', {'form': form, 'title': 'Edit Dish'})
+        form = MenuItemForm(instance=dish)
+    return render(request, 'restaurant/admin_dish_form.html', {'form': form, 'title': 'Edit MenuItem'})
 
 
 @admin_required
 def admin_dish_delete(request, dish_id):
-    dish = get_object_or_404(Dish, id=dish_id)
+    dish = get_object_or_404(MenuItem, id=dish_id)
     if request.method == 'POST':
         dish.delete()
-        messages.info(request, 'Dish deleted.')
+        messages.info(request, 'MenuItem deleted.')
     return redirect('admin_dishes')
 
 
@@ -610,11 +607,11 @@ def admin_dish_delete(request, dish_id):
 @require_http_methods(["GET"])
 def admin_dish_data(request, dish_id):
     """Fetch dish data as JSON for modal editing"""
-    dish = get_object_or_404(Dish, id=dish_id)
+    dish = get_object_or_404(MenuItem, id=dish_id)
     return JsonResponse({
         'id': dish.id,
         'name': dish.name,
-        'description': dish.description or '',
+        'description': '',
         'price': str(dish.price),
         'category': dish.category_id,
         'is_available': dish.is_available,
@@ -624,7 +621,7 @@ def admin_dish_data(request, dish_id):
 @admin_required
 def admin_combos(request):
     combos = Combo.objects.prefetch_related('dishes').order_by('name')
-    dishes = Dish.objects.filter(is_available=True).order_by('name')
+    dishes = MenuItem.objects.filter(is_available=True).order_by('name')
     return render(request, 'restaurant/admin_combos.html', {
         'combos': combos,
         'dishes': dishes,
@@ -695,7 +692,7 @@ def admin_combo_data(request, combo_id):
 @admin_required
 def admin_offers(request):
     offers = Offer.objects.order_by('-id')
-    dishes = Dish.objects.all()
+    dishes = MenuItem.objects.all()
     combos = Combo.objects.all()
     return render(request, 'restaurant/admin_offers.html', {'offers': offers, 'dishes': dishes, 'combos': combos})
 
