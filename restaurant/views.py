@@ -82,7 +82,7 @@ def home(request):
     
     return render(
         request,
-        'restaurant/client_dashboard_glovo.html',
+        'restaurant/home_dashboard.html',
         {
             'dishes': dishes,
             'combos': combos,
