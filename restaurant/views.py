@@ -73,11 +73,12 @@ def client_required(view_func):
 
 
 def home(request):
-
+    print("User is authenticated:")
+    top_ordered_dishes = MenuItem.objects.filter(is_available=True).order_by('-id')[:5]
     dishes = MenuItem.objects.filter(is_available=True).select_related('category')
     combos = Combo.objects.filter(is_active=True).prefetch_related('dishes')
     offers = Offer.objects.filter(is_active=True)
-    categories = MenuCategory.objects.filter(is_active=True).order_by('name')
+    categories = MenuCategory.objects.filter.order_by('name')
     cart_items, cart_total = _build_cart_items(_get_cart(request))
     
     return render(

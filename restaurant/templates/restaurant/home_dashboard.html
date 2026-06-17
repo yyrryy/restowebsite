@@ -117,17 +117,12 @@
                 <!-- STICKY CATEGORY TABS (horizontal scroll) -->
                 <div class="sticky top-[70px] z-20 bg-white border-b border-gray-200 sticky-nav rounded-t-xl overflow-x-auto scrollbar-hide">
                     <div class="flex space-x-6 px-1 py-3 text-sm font-medium whitespace-nowrap" id="categoryTabs">
-                        <a href="#top-sellers" class="category-link text-primary border-primary border-b-2 pb-2">Top sellers</a>
-                        <a href="#sandwich-normal" class="category-link text-gray-500 hover:text-gray-800 pb-2 border-b-2 border-transparent">Sandwich Normal</a>
-                        <a href="#sandwich-large" class="category-link text-gray-500 hover:text-gray-800 pb-2 border-b-2 border-transparent">Sandwich Large</a>
-                        <a href="#tacos" class="category-link text-gray-500 hover:text-gray-800 pb-2 border-b-2 border-transparent">Tacos Machwi</a>
-                        <a href="#bowls" class="category-link text-gray-500 hover:text-gray-800 pb-2 border-b-2 border-transparent">Bowls</a>
-                        <a href="#burgers" class="category-link text-gray-500 hover:text-gray-800 pb-2 border-b-2 border-transparent">Burgers</a>
-                        <a href="#plats" class="category-link text-gray-500 hover:text-gray-800 pb-2 border-b-2 border-transparent">Plats</a>
-                        <a href="#poulet" class="category-link text-gray-500 hover:text-gray-800 pb-2 border-b-2 border-transparent">Poulet Machwi</a>
-                        <a href="#supplements" class="category-link text-gray-500 hover:text-gray-800 pb-2 border-b-2 border-transparent">Suppléments</a>
-                        <a href="#boissons" class="category-link text-gray-500 hover:text-gray-800 pb-2 border-b-2 border-transparent">Boissons</a>
-                        <a href="#faq" class="category-link text-gray-500 hover:text-gray-800 pb-2 border-b-2 border-transparent">FAQs</a>
+                        <!-- <a href="#top-sellers" class="category-link text-primary border-primary border-b-2 pb-2">Top sellers</a> -->
+                        {% for category in categories %}
+                        <a href="#{{ category.name }}tab" class="category-link text-gray-500 hover:text-gray-800 pb-2 border-b-2 border-transparent">{{ category.name }}</a>
+                        {% endfor %}
+<!--                         
+                        <a href="#faq" class="category-link text-gray-500 hover:text-gray-800 pb-2 border-b-2 border-transparent">FAQs</a> -->
                     </div>
                 </div>
 
