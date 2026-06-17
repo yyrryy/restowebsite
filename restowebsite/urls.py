@@ -21,7 +21,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import include, path
 
 urlpatterns = [
-    path('dj-admin/', admin.site.urls),
+    path('masta/', admin.site.urls),
     path('', include('restaurant.urls'), name='restaurant'),
 ]
 

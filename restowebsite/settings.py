@@ -24,7 +24,7 @@ load_dotenv(BASE_DIR / '.env')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-8@k)mv5*d+$c@^wh5(h&6*pyh)^cjf($)k9-2#&7n(w+4-(-oc'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver', "*"]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver', "grilladelegout.ma", "www.grilladelegout.ma"]
 
 
 # Application definition
@@ -82,7 +82,10 @@ TEMPLATES = [
         },
     },
 ]
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://grilladelegout.ma",
+    "https://www.grilladelegout.ma",
+]
 WSGI_APPLICATION = 'restowebsite.wsgi.application'
 
 
