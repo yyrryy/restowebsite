@@ -129,7 +129,39 @@
                 <!-- PRODUCT SECTIONS (dynamic menu from provided data) -->
                 <div class="space-y-8 mt-4">
                     <!-- TOP SELLERS section (special badge) -->
-                    <div id="top-sellers">
+                     {% for category in categories %}
+
+                        <div id="{{ category.name }}tab">
+                            <h2 class="text-xl font-bold mb-3">
+
+                                {{ category.name }}
+                            </h2>
+
+                            <div class="grid gap-4">
+                                
+                                {% for item in category.menuitem_set.all %}
+                                    <div class="product-card bg-white rounded-xl border border-gray-100 p-3 flex justify-between items-center transition">
+                                        <div class="flex-1">
+                                            <div class="flex items-center gap-1">
+                                                <!-- ${isTopSeller ? '<span class="bg-yellow-200 text-yellow-800 text-[10px] font-bold px-1.5 rounded-full">🔥 Top</span>' : ''} -->
+                                                <h3 class="font-bold text-gray-800">{{ item.name }}</h3>
+                                            </div>
+                                            <p class="text-gray-500 text-xs mt-1">{{ item.description }}</p>
+                                            <div class="font-bold text-primary mt-1">{{ item.price|floatformat:"2" }} MAD</div>
+                                        </div>
+                                        <button class="add-to-cart-btn bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center shadow-md hover:bg-primary-dark transition" product-name="{{ item.name }}" product-price="{{ item.price }}" product-desc="{{ item.description }}" onclick="addToCart({ name: '{{ item.name }}', price: {{ item.price }}, desc: '{{ item.description }}' })">
+                                            <i class="fas fa-plus text-sm"></i>
+                                        </button>
+                                    </div>
+                                    
+                                {% endfor %}
+                            </div>
+
+
+                        </div>
+
+                        {% endfor %}
+                    <!-- <div id="top-sellers">
                         <h2 class="text-xl font-bold mb-4 flex items-center"><span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-0.5 rounded-full mr-2">⭐</span> Top sellers</h2>
                         <div class="grid gap-4" id="topSellersList"></div>
                     </div>
@@ -141,7 +173,7 @@
                     <div id="plats"><h2 class="text-xl font-bold mb-3">🍽️ Plats (360g)</h2><div class="grid gap-4" id="platsGrid"></div></div>
                     <div id="poulet"><h2 class="text-xl font-bold mb-3">🍗 Poulet Machwi</h2><div class="grid gap-4" id="pouletGrid"></div></div>
                     <div id="supplements"><h2 class="text-xl font-bold mb-3">🍟 Suppléments</h2><div class="grid gap-4" id="supplementsGrid"></div></div>
-                    <div id="boissons"><h2 class="text-xl font-bold mb-3">🥤 Boissons</h2><div class="grid gap-4" id="boissonsGrid"></div></div>
+                    <div id="boissons"><h2 class="text-xl font-bold mb-3">🥤 Boissons</h2><div class="grid gap-4" id="boissonsGrid"></div></div> -->
 
                     
                 </div>

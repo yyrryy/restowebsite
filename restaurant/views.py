@@ -78,7 +78,7 @@ def home(request):
     dishes = MenuItem.objects.filter(is_available=True).select_related('category')
     combos = Combo.objects.filter(is_active=True).prefetch_related('dishes')
     offers = Offer.objects.filter(is_active=True)
-    categories = MenuCategory.objects.order_by('name')
+    categories = MenuCategory.objects.prefetch_related('menuitem_set').all()
     cart_items, cart_total = _build_cart_items(_get_cart(request))
     
     return render(
