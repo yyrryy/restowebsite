@@ -30,7 +30,7 @@ class ProfileForm(forms.ModelForm):
 class MenuCategoryForm(forms.ModelForm):
     class Meta:
         model = MenuCategory
-        fields = ('name', 'is_active')
+        fields = ('name', 'isactive')
 
 
 class MenuItemForm(forms.ModelForm):

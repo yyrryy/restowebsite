@@ -11,8 +11,8 @@ class ProfileAdmin(admin.ModelAdmin):
 
 @admin.register(MenuCategory)
 class MenuCategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'is_active')
-    list_filter = ('is_active',)
+    list_display = ('name', 'isactive')
+    list_filter = ('isactive',)
     search_fields = ('name',)
 
 
