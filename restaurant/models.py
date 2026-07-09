@@ -39,7 +39,7 @@ def create_user_profile(sender, instance: User, created: bool, **kwargs):
 
 class MenuCategory(models.Model):
     name = models.CharField(max_length=120, unique=True)
-    is_active = models.BooleanField(default=True, null=True, blank=True)
+    isactive = models.BooleanField(default=True, null=True, blank=True)
     code = models.CharField(max_length=20, unique=False, blank=True)
     def __str__(self) -> str:
         return self.name
