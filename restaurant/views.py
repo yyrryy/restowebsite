@@ -452,7 +452,37 @@ def cart_remove(request, item_key):
 @client_required
 @transaction.atomic
 def checkout(request):
-    cart_items, cart_total = _build_cart_items(_get_cart(request))
+    # Normal flow uses session cart. However, a client may POST a cart payload (cart_items_json)
+    # sent from the frontend. Accept that as a fallback to build the order.
+    cart = _get_cart(request)
+    # If cart empty, attempt to use posted cart JSON
+    cart_items, cart_total = _build_cart_items(cart)
+
+    if not cart_items and request.method == 'POST' and request.POST.get('cart_items_json'):
+        try:
+            posted = json.loads(request.POST.get('cart_items_json'))
+            # Build a temporary cart dict using names -> try to resolve to dish ids
+            temp_cart = {}
+            for entry in posted:
+                # Expect entries like { name, price, quantity }
+                name = entry.get('name')
+                qty = int(entry.get('quantity', 0))
+                if not name or qty <= 0:
+                    continue
+                # Try to find MenuItem by exact name
+                try:
+                    menu_obj = MenuItem.objects.filter(name__iexact=name).first()
+                    if menu_obj:
+                        key = _cart_key('dish', menu_obj.id)
+                        temp_cart[key] = temp_cart.get(key, 0) + qty
+                except Exception:
+                    continue
+            if temp_cart:
+                _set_cart(request, temp_cart)
+                cart_items, cart_total = _build_cart_items(temp_cart)
+        except Exception:
+            pass
+
     if not cart_items:
         messages.warning(request, 'Your cart is empty.')
         return redirect('client_dashboard')
@@ -492,6 +522,52 @@ def checkout(request):
             'user_phone': request.user.profile.phone_number if hasattr(request.user, 'profile') else None,
         },
     )
+
+
+# New view: import cart JSON into session for authenticated users
+@client_required
+@require_http_methods(["POST"])
+def api_cart_import(request):
+    """Import a client-side cart (JSON array) into the session cart.
+    Expected payload: JSON body or form field 'cart_items_json' containing
+    [{ name, price, quantity }, ...]. Matching is attempted by MenuItem.name (case-insensitive).
+    """
+    try:
+        # accept JSON body or form field
+        raw = request.body.decode('utf-8') or request.POST.get('cart_items_json', '')
+        data = None
+        try:
+            data = json.loads(raw)
+        except Exception:
+            # try form field
+            data = json.loads(request.POST.get('cart_items_json', '[]'))
+        if not isinstance(data, list):
+            return JsonResponse({'error': 'Invalid cart format'}, status=400)
+
+        new_cart = {}
+        for entry in data:
+            name = entry.get('name')
+            qty = int(entry.get('quantity', 0)) if entry.get('quantity') else 0
+            if not name or qty <= 0:
+                continue
+            menu_obj = MenuItem.objects.filter(name__iexact=name).first()
+            if menu_obj:
+                key = _cart_key('dish', menu_obj.id)
+                new_cart[key] = new_cart.get(key, 0) + qty
+
+        # merge with existing session cart
+        cart = _get_cart(request)
+        cart.update(new_cart)
+        _set_cart(request, cart)
+        items, total = _build_cart_items(cart)
+        return JsonResponse({'success': True, 'cart': _format_cart_for_ajax(items, total)})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
+
+# Guest checkout view (no login required) to display localStorage cart and prompt login or save locally
+def guest_checkout(request):
+    return render(request, 'restaurant/guest_checkout.html')
 
 
 @client_required

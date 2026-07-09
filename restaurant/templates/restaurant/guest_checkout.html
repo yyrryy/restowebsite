@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Guest Checkout</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body { font-family: Inter, system-ui, -apple-system, sans-serif; background:#f8fafc; padding:20px; }
+        .card { background:#fff; padding:16px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,.04); max-width:900px; margin:12px auto; }
+        .btn { background:#ff6b1a; color:#fff; padding:10px 14px; border-radius:8px; border:none; cursor:pointer; }
+        .muted { color:#666; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Guest Checkout</h2>
+        <p class="muted">You are not signed in. Your order is kept locally in your browser. Sign in or register to save the order to your account and complete payment.</p>
+        <div id="guestItems" style="margin-top:12px;"></div>
+        <div style="margin-top:12px; display:flex; gap:8px;">
+            <a href="/login/" class="btn">Sign in to place order</a>
+            <button id="clearGuestCart" class="btn" style="background:#e53e3e;">Clear local order</button>
+        </div>
+    </div>
+
+    <script>
+        function renderGuestCart() {
+            const raw = localStorage.getItem('guest_cart');
+            const container = document.getElementById('guestItems');
+            if (!raw) {
+                container.innerHTML = '<div class="muted">No items in local order.</div>';
+                return;
+            }
+            try {
+                const cart = JSON.parse(raw);
+                if (!Array.isArray(cart) || cart.length === 0) {
+                    container.innerHTML = '<div class="muted">No items in local order.</div>';
+                    return;
+                }
+                let html = '<ul>';
+                let subtotal = 0;
+                cart.forEach(it => {
+                    const line = (it.price * it.quantity) || 0;
+                    subtotal += line;
+                    html += `<li style="margin-bottom:8px;"><strong>${it.name}</strong> × ${it.quantity} — ${line.toFixed(2)} MAD<br><small class="muted">${it.desc || ''}</small></li>`;
+                });
+                html += `</ul><div style="margin-top:8px; font-weight:bold">Subtotal: ${subtotal.toFixed(2)} MAD</div>`;
+                container.innerHTML = html;
+            } catch(e) {
+                container.innerHTML = '<div class="muted">Unable to read local order.</div>';
+            }
+        }
+
+        document.getElementById('clearGuestCart').addEventListener('click', function(){
+            localStorage.removeItem('guest_cart');
+            renderGuestCart();
+        });
+
+        renderGuestCart();
+    </script>
+</body>
+</html>

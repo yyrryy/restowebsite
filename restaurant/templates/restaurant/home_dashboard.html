@@ -149,7 +149,7 @@
                                             <p class="text-gray-500 text-xs mt-1">{{ item.description }}</p>
                                             <div class="font-bold text-primary mt-1">{{ item.price|floatformat:"2" }} MAD</div>
                                         </div>
-                                        <button class="add-to-cart-btn bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center shadow-md hover:bg-primary-dark transition" product-name="{{ item.name }}" product-price="{{ item.price }}" product-desc="{{ item.description }}" onclick="addToCart({ name: '{{ item.name }}', price: {{ item.price }}, desc: '{{ item.description }}' })">
+                                        <button class="add-to-cart-btn bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center shadow-md hover:bg-primary-dark transition" data-item-id="{{ item.id }}" data-name="{{ item.name }}" data-price="{{ item.price }}" data-desc="{{ item.description }}">
                                             <i class="fas fa-plus text-sm"></i>
                                         </button>
                                     </div>
@@ -190,7 +190,7 @@
                         <div class="flex justify-between font-semibold"><span>Subtotal</span> <span id="cartSubtotal">0,00 MAD</span></div>
                         <div class="flex justify-between text-sm text-gray-500 mt-1"><span>Delivery fee</span><span>12,00 MAD</span></div>
                         <div class="flex justify-between font-bold text-lg mt-2"><span>Total</span><span id="cartTotal">12,00 MAD</span></div>
-                        <button class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 rounded-xl mt-5 transition">Go to checkout →</button>
+                    <button id="goToCheckout" class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 rounded-xl mt-5 transition">Go to checkout →</button>
                     </div>
                 </div>
             </div>
@@ -280,7 +280,9 @@
         };
 
         // Cart state: { name, price, quantity, img, desc }
-        let cart = [];
+        // load guest cart from localStorage if present
+        let cart = JSON.parse(localStorage.getItem('guest_cart') || '[]');
+        function saveCart() { try { localStorage.setItem('guest_cart', JSON.stringify(cart)); } catch(e){} }
 
         // Helper render cart (both desktop & mobile)
         function updateCartUI() {
@@ -341,6 +343,8 @@
             $("#mobileTotal").text(`${total.toFixed(2)} MAD`);
             const itemCount = cart.reduce((acc, i) => acc + i.quantity, 0);
             $("#globalCartCount").text(itemCount);
+            // persist guest cart whenever UI updates
+            saveCart();
         }
 
         function modifyCartItem(index, delta) {
@@ -366,6 +370,20 @@
             $("#globalCartCount").addClass("scale-110");
             setTimeout(() => $("#globalCartCount").removeClass("scale-110"), 200);
         }
+
+        // server-rendered buttons include data-item-id attribute; handle those clicks to add to guest cart (and allow import on checkout)
+        $(document).on('click', '.add-to-cart-btn', function(e) {
+            const id = $(this).data('item-id');
+            if (typeof id !== 'undefined' && id !== false) {
+                e.preventDefault();
+                const prod = {
+                    name: $(this).data('name'),
+                    price: parseFloat($(this).data('price')) || 0,
+                    desc: $(this).data('desc') || ''
+                };
+                addToCart(prod);
+            }
+        });
 
         // Render product grid generator
         function renderProductGrid(containerId, itemsArray, isTopSeller = false) {
@@ -449,7 +467,7 @@
         $("#cartIconMobile").on("click", () => {
             $("#mobileCartDrawer").removeClass("hidden");
         });
-        $("#closeCartDrawer, #mobileCartDrawer .bg-black/50").on("click", function(e) {
+        $("#closeCartDrawer, #mobileCartDrawer .bg-black\\/50").on("click", function(e) {
             if(e.target === this || $(e.target).hasClass("fa-times")) $("#mobileCartDrawer").addClass("hidden");
         });
         // optional background close
@@ -457,8 +475,70 @@
             if (e.target === this) $(this).addClass("hidden");
         });
         
-        // initial cart update
-        updateCartUI();
+        // Checkout helper and action
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        $(document).on('click', '#goToCheckout', function(e){
+            e.preventDefault();
+            const isAuth = {{ user.is_authenticated|yesno:'true,false' }};
+            if (isAuth) {
+                fetch("{% url 'api_cart_import' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify(cart)
+                }).then(r => {
+                    if (r.ok) {
+                        return r.json();
+                    }
+                    // if server returns non-OK (403/500), still navigate to checkout so user can try
+                    window.location.href = "{% url 'checkout' %}";
+                    throw new Error('server-error');
+                }).then(data => {
+                    if (data && data.success) {
+                        window.location.href = "{% url 'checkout' %}";
+                    } else {
+                        // fallback: navigate to checkout anyway
+                        window.location.href = "{% url 'checkout' %}";
+                    }
+                }).catch((err) => {
+                    console.warn('Cart import failed:', err);
+                    window.location.href = "{% url 'checkout' %}";
+                });
+            } else {
+                saveCart();
+                window.location.href = "{% url 'guest_checkout' %}";
+            }
+        });
+
+        // On DOM ready, load guest_cart and render it
+        $(function(){
+            try{
+                const saved = localStorage.getItem('guest_cart');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed) && parsed.length) {
+                        cart = parsed;
+                    }
+                }
+            }catch(e){ console.warn('Failed loading guest_cart', e); }
+            updateCartUI();
+        });
     </script>
 </body>
 </html>
