@@ -627,7 +627,7 @@ def admin_categories(request):
 @admin_required
 def admin_dishes(request):
     dishes = MenuItem.objects.select_related('category').order_by('name')
-    categories = MenuCategory.objects.filter(is_active=True).order_by('name')
+    categories = MenuCategory.objects.filter(isactive=True).order_by('name')
     return render(request, 'restaurant/admin_dishes.html', {
         'dishes': dishes,
         'categories': categories,

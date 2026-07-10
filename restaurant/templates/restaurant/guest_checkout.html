@@ -1,28 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Guest Checkout</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body { font-family: Inter, system-ui, -apple-system, sans-serif; background:#f8fafc; padding:20px; }
-        .card { background:#fff; padding:16px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,.04); max-width:900px; margin:12px auto; }
-        .btn { background:#ff6b1a; color:#fff; padding:10px 14px; border-radius:8px; border:none; cursor:pointer; }
-        .muted { color:#666; }
-    </style>
-</head>
-<body>
-    <div class="card">
+{% extends 'restaurant/base.html' %}
+{% block content %}
         <h2>Guest Checkout</h2>
-        <p class="muted">You are not signed in. Your order is kept locally in your browser. Sign in or register to save the order to your account and complete payment.</p>
-        <div id="guestItems" style="margin-top:12px;"></div>
-        <div style="margin-top:12px; display:flex; gap:8px;">
-            <a href="/login/" class="btn">Sign in to place order</a>
-            <button id="clearGuestCart" class="btn" style="background:#e53e3e;">Clear local order</button>
-        </div>
-    </div>
+        <p class="muted">You're checking out as a guest — quick, friendly, and private. Save your details to checkout faster next time.</p>
 
+        <div id="guestItems" style="margin-top:12px;"></div>
+
+        <form id="guestForm" style="margin-top:14px; display:grid; gap:10px;">
+            <div style="display:flex; gap:10px;">
+                <input id="guestName" name="name" placeholder="Full name ✨" required style="flex:1; padding:10px; border-radius:8px; border:1px solid #e6e9ef;" />
+                <input id="guestPhone" name="phone" placeholder="Phone number 📞" required style="width:200px; padding:10px; border-radius:8px; border:1px solid #e6e9ef;" />
+            </div>
+
+            <input id="guestAddress" name="address" placeholder="Delivery address / pickup notes 🏠 (leave empty if pickup)" style="padding:10px; border-radius:8px; border:1px solid #e6e9ef;" />
+
+            <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+                <div style="flex:1;">
+                    <div style="font-weight:600; margin-bottom:6px;">Delivery option</div>
+                    <label style="margin-right:8px;"><input type="radio" name="delivery_option" value="delivery" checked> Delivery 🚚</label>
+                    <label style="margin-right:8px;"><input type="radio" name="delivery_option" value="pickup"> Pickup 🧾</label>
+                </div>
+
+                <div style="flex:1;">
+                    <div style="font-weight:600; margin-bottom:6px;">Payment method</div>
+                    <label style="margin-right:8px;"><input type="radio" name="payment_method" value="card" checked> Credit / Debit Card 💳</label>
+                    <label style="margin-right:8px;"><input type="radio" name="payment_method" value="cod"> Cash on delivery 💵</label>
+                </div>
+            </div>
+
+            <div id="cardFields" style="display:block; margin-top:6px;">
+                <input id="cardNumber" name="card_number" placeholder="Card number (testing only)" style="padding:10px; border-radius:8px; border:1px solid #e6e9ef;" />
+                <div style="display:flex; gap:8px; margin-top:8px;">
+                    <input id="cardExpiry" name="card_expiry" placeholder="MM/YY" style="padding:10px; border-radius:8px; border:1px solid #e6e9ef; width:120px;" />
+                    <input id="cardCvc" name="card_cvc" placeholder="CVC" style="padding:10px; border-radius:8px; border:1px solid #e6e9ef; width:100px;" />
+                </div>
+                <div class="muted" style="font-size:12px; margin-top:6px;">Card entry is simulated here; the real site will redirect to a payment provider.</div>
+            </div>
+
+            <div style="display:flex; gap:8px; margin-top:8px;">
+                <button type="submit" class="btn">Place order — continue</button>
+                <button type="button" id="clearGuestCart" class="btn" style="background:#e53e3e;">Clear local order</button>
+                <a href="/login/" class="btn" style="background:#334155;">Sign in</a>
+            </div>
+        </form>
+
+        <div id="guestNotice" style="margin-top:10px; font-size:13px; color:#475569;"></div>
+    </div>
+{% endblock %}
+{% block js %}
     <script>
         function renderGuestCart() {
             const raw = localStorage.getItem('guest_cart');
@@ -37,7 +61,7 @@
                     container.innerHTML = '<div class="muted">No items in local order.</div>';
                     return;
                 }
-                let html = '<ul>';
+                let html = '<ul style="padding-left:18px; margin:0;">';
                 let subtotal = 0;
                 cart.forEach(it => {
                     const line = (it.price * it.quantity) || 0;
@@ -51,12 +75,58 @@
             }
         }
 
+        // toggle card fields when payment method changes
+        function toggleCardFields() {
+            const method = document.querySelector('input[name="payment_method"]:checked').value;
+            const cardFields = document.getElementById('cardFields');
+            if (method === 'card') cardFields.style.display = 'block'; else cardFields.style.display = 'none';
+        }
+
+        document.querySelectorAll('input[name="payment_method"]').forEach(el => el.addEventListener('change', toggleCardFields));
+        document.querySelectorAll('input[name="delivery_option"]').forEach(el => el.addEventListener('change', function(){
+            const addr = document.getElementById('guestAddress');
+            if (this.value === 'pickup') {
+                addr.placeholder = 'Pickup notes (where will you collect?)';
+            } else {
+                addr.placeholder = 'Delivery address / apartment, floor, landmark';
+            }
+        }));
+
         document.getElementById('clearGuestCart').addEventListener('click', function(){
             localStorage.removeItem('guest_cart');
             renderGuestCart();
         });
 
+        document.getElementById('guestForm').addEventListener('submit', function(e){
+            e.preventDefault();
+            const name = document.getElementById('guestName').value.trim();
+            const phone = document.getElementById('guestPhone').value.trim();
+            const address = document.getElementById('guestAddress').value.trim();
+            const payment = document.querySelector('input[name="payment_method"]:checked').value;
+            const delivery = document.querySelector('input[name="delivery_option"]:checked').value;
+
+            if (!name || !phone) {
+                document.getElementById('guestNotice').textContent = 'Please provide your name and phone so the rider can reach you.';
+                return;
+            }
+
+            // Save guest info locally to pass to checkout/import.
+            const guestInfo = { name, phone, address, payment, delivery, savedAt: Date.now() };
+            localStorage.setItem('guest_info', JSON.stringify(guestInfo));
+
+            // if card, simulate tokenization (note: placeholder)
+            if (payment === 'card') {
+                document.getElementById('guestNotice').textContent = 'Processing card (simulated)… redirecting to secure payment provider.';
+            } else {
+                document.getElementById('guestNotice').textContent = 'Order saved locally — redirecting to checkout to confirm.';
+            }
+
+            // small friendly delay then redirect to checkout page where server will import guest_cart if supported
+            setTimeout(() => { window.location.href = '/checkout/'; }, 900);
+        });
+
+        // initial states
+        toggleCardFields();
         renderGuestCart();
     </script>
-</body>
-</html>
+{% endblock %}

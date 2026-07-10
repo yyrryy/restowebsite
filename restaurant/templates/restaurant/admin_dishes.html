@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage MenuItemes - Admin</title>
+    <title>Manage Plats - Admin</title>
     {% load static %}
     <style>
         * {
@@ -558,8 +558,8 @@
         <!-- Page Header -->
         <div class="page-header">
             <div class="page-header-content">
-                <h1>🍽️ Manage MenuItemes</h1>
-                <p>Create, edit, and manage restaurant dishes</p>
+                <h1>🍽️ Manage Plats</h1>
+                <p>Creer, Modifier, et Gerer les plats</p>
             </div>
             <div class="page-header-actions">
                 <button onclick="openMenuItemModal()" class="btn btn-primary">+ Add New MenuItem</button>
@@ -576,16 +576,16 @@
                     <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.5rem;">
                         {{ dishes|length }}
                     </div>
-                    <div style="color: var(--text-light); margin-bottom: 1.5rem;">Total MenuItemes</div>
+                    <div style="color: var(--text-light); margin-bottom: 1.5rem;">Total Plats</div>
                     <a onclick="openMenuItemModal()" class="btn btn-primary" style="width: 100%; cursor: pointer;">
                         + New MenuItem
                     </a>
                 </div>
             </div>
 
-            <!-- MenuItemes Table -->
+            <!-- Plats Table -->
             <div class="card">
-                <div class="card-title">📋 All MenuItemes</div>
+                <div class="card-title">📋 All Plats</div>
                 {% if dishes %}
                     <div class="table-responsive">
                         <table>
@@ -609,7 +609,7 @@
                                                 <span class="text-lighter">No category</span>
                                             {% endif %}
                                         </td>
-                                        <td class="dish-price">${{ dish.price|floatformat:2 }}</td>
+                                        <td class="dish-price">{{ dish.price|floatformat:2 }}</td>
                                         <td>
                                             <span class="status-badge {% if dish.is_available %}badge-active{% else %}badge-inactive{% endif %}">
                                                 {% if dish.is_available %}✓ Available{% else %}✗ Unavailable{% endif %}
@@ -617,10 +617,10 @@
                                         </td>
                                         <td>
                                             <div class="action-buttons">
-                                                <button onclick="openMenuItemModal({{ dish.id }})" class="btn btn-primary btn-small">✏️ Edit</button>
+                                                <button onclick="openMenuItemModal({{ dish.id }})" class="btn btn-primary btn-small">✏️ Modifier</button>
                                                 <form method="POST" action="{% url 'admin_dish_delete' dish.id %}" style="display: inline;" onsubmit="return confirm('Are you sure?');">
                                                     {% csrf_token %}
-                                                    <button type="submit" class="btn btn-danger btn-small">🗑️ Delete</button>
+                                                    <button type="submit" class="btn btn-danger btn-small">🗑️ Supprimer</button>
                                                 </form>
                                             </div>
                                         </td>
