@@ -72,37 +72,23 @@
                 </div>
             </div>
 
-            <!-- RIGHT SIDEBAR CART (desktop persistent, mobile drawer modal) -->
+            <!-- RIGHT SIDEBAR CART -->
             <div class="lg:w-1/3 w-full">
-                <div class="bg-white rounded-2xl shadow-md border border-gray-200 sticky top-[88px] p-5 hidden lg:block">
-                    <h3 class="text-xl font-bold flex items-center gap-2"><i class="fas fa-shopping-bag text-primary"></i> La commande</h3>
+                <div id="cartSidebar" class="cart-sidebar-panel bg-white rounded-2xl shadow-md border border-gray-200 sticky top-[88px] p-5">
+                    <div class="flex items-center justify-between gap-3">
+                        <h3 class="text-xl font-bold flex items-center gap-2"><i class="fas fa-shopping-bag text-primary"></i> La commande</h3>
+                        <button type="button" id="closeCartDrawer" class="lg:hidden text-gray-500 text-2xl leading-none" aria-label="Fermer la commande">×</button>
+                    </div>
                     <div id="cartItemsContainer" class="cart-sidebar mt-4 space-y-3 min-h-[200px]">
-                        <div class="text-center text-gray-400 py-8 text-sm">✨ When you add products from the menu, they will appear here.</div>
+                        <div class="text-center text-gray-400 py-8 text-sm">✨ les produits apparaîtront ici.</div>
                     </div>
                     <div class="border-t pt-4 mt-2">
                         <div class="flex justify-between font-semibold"><span>Subtotal</span> <span id="cartSubtotal">0,00 MAD</span></div>
-                        <div class="flex justify-between text-sm text-gray-500 mt-1"><span>Delivery fee</span><span>12,00 MAD</span></div>
+                        <div class="flex justify-between text-sm text-gray-500 mt-1"><span>Frais de livraison</span><span>12,00 MAD</span></div>
                         <div class="flex justify-between font-bold text-lg mt-2"><span>Total</span><span id="cartTotal">12,00 MAD</span></div>
-                    <button id="goToCheckout" class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 rounded-xl mt-5 transition">Go to checkout →</button>
+                    <button id="goToCheckout" class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 rounded-xl mt-5 transition">Commander →</button>
                     </div>
                 </div>
             </div>
-        
-
-    <!-- MOBILE CART DRAWER (hidden by default) -->
-    <div id="mobileCartDrawer" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden transition-all duration-300">
-        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl p-5 max-h-[80vh] flex flex-col">
-            <div class="flex justify-between items-center border-b pb-3">
-                <h3 class="text-xl font-bold">Your cart</h3>
-                <i class="fas fa-times text-gray-500 text-xl" id="closeCartDrawer"></i>
-            </div>
-            <div id="mobileCartItems" class="cart-sidebar-mobile flex-1 overflow-y-auto py-3 space-y-3"></div>
-            <div class="border-t pt-3 mt-2">
-                <div class="flex justify-between"><span>Subtotal</span><span id="mobileSubtotal">0,00 MAD</span></div>
-                <div class="flex justify-between text-sm"><span>Delivery</span><span>12,00 MAD</span></div>
-                <div class="flex justify-between font-bold text-lg"><span>Total</span><span id="mobileTotal">12,00 MAD</span></div>
-                <button id="goToCheckout" class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 rounded-xl mt-5 transition">Commander</button>
-            </div>
-        </div>
-    </div>
+            <div id="cartBackdrop" class="cart-backdrop fixed inset-0 z-50 bg-black/50 backdrop-blur-sm lg:hidden"></div>
 {% endblock %}

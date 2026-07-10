@@ -61,10 +61,32 @@
             max-height: calc(100vh - 140px);
             overflow-y: auto;
         }
-        @media (max-width: 768px) {
-            .cart-sidebar-mobile {
-                max-height: 65vh;
-                overflow-y: auto;
+        .cart-backdrop {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .cart-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        @media (max-width: 1023px) {
+            .cart-sidebar-panel {
+                position: fixed;
+                left: 1rem;
+                right: 1rem;
+                top: 50%;
+                z-index: 60;
+                max-height: calc(100vh - 2rem);
+                transform: translateY(-50%) scale(0.96);
+                opacity: 0;
+                pointer-events: none;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+            }
+            .cart-sidebar-panel.open {
+                transform: translateY(-50%) scale(1);
+                opacity: 1;
+                pointer-events: auto;
             }
         }
     </style>
@@ -187,18 +209,14 @@
         let cart = JSON.parse(localStorage.getItem('guest_cart') || '[]');
         function saveCart() { try { localStorage.setItem('guest_cart', JSON.stringify(cart)); } catch(e){} }
 
-        // Helper render cart (both desktop & mobile)
+        // Helper render cart
         function updateCartUI() {
             const container = $("#cartItemsContainer");
-            const mobileContainer = $("#mobileCartItems");
             if (cart.length === 0) {
                 container.html(`<div class="text-center text-gray-400 py-8 text-sm">✨ When you add products from the menu, they will appear here.</div>`);
-                mobileContainer.html(`<div class="text-center text-gray-400 py-6 text-sm">Your cart is empty.</div>`);
             } else {
                 let html = '';
-                let mobileHtml = '';
                 cart.forEach((item, idx) => {
-                    const itemTotal = item.price * item.quantity;
                     const itemHtml = `
                         <div class="flex justify-between items-start border-b pb-2" data-idx="${idx}">
                             <div class="flex-1"><span class="font-medium">${item.name}</span><div class="text-xs text-gray-500">${item.desc.substring(0, 50)}</div><div class="font-bold text-primary text-sm">${item.price.toFixed(2)} MAD</div></div>
@@ -209,10 +227,8 @@
                             </div>
                         </div>`;
                     html += itemHtml;
-                    mobileHtml += itemHtml;
                 });
                 container.html(html);
-                mobileContainer.html(mobileHtml);
 
                 // Attach events for desktop increment/decrement
                 container.find(".incr").each(function() {
@@ -225,16 +241,6 @@
                     const idx = parentDiv.attr("data-idx");
                     $(this).off("click").on("click", () => modifyCartItem(parseInt(idx), -1));
                 });
-                mobileContainer.find(".incr").each(function() {
-                    const parentDiv = $(this).closest("[data-idx]");
-                    const idx = parentDiv.attr("data-idx");
-                    $(this).off("click").on("click", () => modifyCartItem(parseInt(idx), 1));
-                });
-                mobileContainer.find(".decr").each(function() {
-                    const parentDiv = $(this).closest("[data-idx]");
-                    const idx = parentDiv.attr("data-idx");
-                    $(this).off("click").on("click", () => modifyCartItem(parseInt(idx), -1));
-                });
             }
             // Update totals and badge
             const subtotal = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
@@ -242,8 +248,6 @@
             const total = subtotal + delivery;
             $("#cartSubtotal").text(`${subtotal.toFixed(2)} MAD`);
             $("#cartTotal").text(`${total.toFixed(2)} MAD`);
-            $("#mobileSubtotal").text(`${subtotal.toFixed(2)} MAD`);
-            $("#mobileTotal").text(`${total.toFixed(2)} MAD`);
             const itemCount = cart.reduce((acc, i) => acc + i.quantity, 0);
             $("#globalCartCount").text(itemCount);
             // persist guest cart whenever UI updates
@@ -319,28 +323,6 @@
             });
         }
 
-        // Mobile cart drawer logic
-        const drawer = $("#mobileCartDrawer");
-
-        $("#cartIconMobile").on("click", () => {
-            drawer.removeClass("hidden");
-        });
-
-        $("#closeCartDrawer").on("click", () => {
-            drawer.addClass("hidden");
-        });
-
-        // Close when clicking on the backdrop (the dark overlay)
-        drawer.on("click", function(e) {
-            if (e.target === this) {
-                drawer.addClass("hidden");
-            }
-        });
-
-        // Prevent closing when clicking inside the white drawer content
-        drawer.find(".absolute").on("click", function(e) {
-            e.stopPropagation();
-        });
         // populate all sections
         renderProductGrid("topSellersList", menu.topSellers, true);
         renderProductGrid("sandwichNormalGrid", menu.sandwichNormal);
@@ -366,17 +348,25 @@
             $(this).addClass("text-primary border-primary").removeClass("text-gray-500 border-transparent");
         });
 
-        // Mobile cart drawer logic
+        const cartSidebar = $("#cartSidebar");
+        const cartBackdrop = $("#cartBackdrop");
+
+        function openCartSidebar() {
+            cartSidebar.addClass("open");
+            cartBackdrop.addClass("open");
+        }
+
+        function closeCartSidebar() {
+            cartSidebar.removeClass("open");
+            cartBackdrop.removeClass("open");
+        }
+
         $("#cartIconMobile").on("click", () => {
-            $("#mobileCartDrawer").removeClass("hidden");
+            if (window.matchMedia("(max-width: 1023px)").matches) {
+                openCartSidebar();
+            }
         });
-        $("#closeCartDrawer, #mobileCartDrawer .bg-black\\/50").on("click", function(e) {
-            if(e.target === this || $(e.target).hasClass("fa-times")) $("#mobileCartDrawer").addClass("hidden");
-        });
-        // optional background close
-        $("#mobileCartDrawer").on("click", function(e) {
-            if (e.target === this) $(this).addClass("hidden");
-        });
+        $("#closeCartDrawer, #cartBackdrop").on("click", closeCartSidebar);
         
         // Checkout helper and action
         function getCookie(name) {
