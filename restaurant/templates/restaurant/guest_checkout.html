@@ -1,132 +1,240 @@
 {% extends 'restaurant/base.html' %}
 {% block content %}
-        <h2>Guest Checkout</h2>
-        <p class="muted">You're checking out as a guest — quick, friendly, and private. Save your details to checkout faster next time.</p>
-
-        <div id="guestItems" style="margin-top:12px;"></div>
-
-        <form id="guestForm" style="margin-top:14px; display:grid; gap:10px;">
-            <div style="display:flex; gap:10px;">
-                <input id="guestName" name="name" placeholder="Full name ✨" required style="flex:1; padding:10px; border-radius:8px; border:1px solid #e6e9ef;" />
-                <input id="guestPhone" name="phone" placeholder="Phone number 📞" required style="width:200px; padding:10px; border-radius:8px; border:1px solid #e6e9ef;" />
+<div class="space-y-6">
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-orange-500 via-orange-500 to-amber-500 text-white shadow-lg">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.22),transparent_35%)]"></div>
+        <div class="relative p-6 md:p-8">
+            <div class="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold backdrop-blur">
+                <span>Guest checkout</span>
+                <span class="h-1.5 w-1.5 rounded-full bg-white/80"></span>
+                <span>Fast & private</span>
             </div>
-
-            <input id="guestAddress" name="address" placeholder="Delivery address / pickup notes 🏠 (leave empty if pickup)" style="padding:10px; border-radius:8px; border:1px solid #e6e9ef;" />
-
-            <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
-                <div style="flex:1;">
-                    <div style="font-weight:600; margin-bottom:6px;">Delivery option</div>
-                    <label style="margin-right:8px;"><input type="radio" name="delivery_option" value="delivery" checked> Delivery 🚚</label>
-                    <label style="margin-right:8px;"><input type="radio" name="delivery_option" value="pickup"> Pickup 🧾</label>
-                </div>
-
-                <div style="flex:1;">
-                    <div style="font-weight:600; margin-bottom:6px;">Payment method</div>
-                    <label style="margin-right:8px;"><input type="radio" name="payment_method" value="card" checked> Credit / Debit Card 💳</label>
-                    <label style="margin-right:8px;"><input type="radio" name="payment_method" value="cod"> Cash on delivery 💵</label>
-                </div>
-            </div>
-
-            <div id="cardFields" style="display:block; margin-top:6px;">
-                <input id="cardNumber" name="card_number" placeholder="Card number (testing only)" style="padding:10px; border-radius:8px; border:1px solid #e6e9ef;" />
-                <div style="display:flex; gap:8px; margin-top:8px;">
-                    <input id="cardExpiry" name="card_expiry" placeholder="MM/YY" style="padding:10px; border-radius:8px; border:1px solid #e6e9ef; width:120px;" />
-                    <input id="cardCvc" name="card_cvc" placeholder="CVC" style="padding:10px; border-radius:8px; border:1px solid #e6e9ef; width:100px;" />
-                </div>
-                <div class="muted" style="font-size:12px; margin-top:6px;">Card entry is simulated here; the real site will redirect to a payment provider.</div>
-            </div>
-
-            <div style="display:flex; gap:8px; margin-top:8px;">
-                <button type="submit" class="btn">Place order — continue</button>
-                <button type="button" id="clearGuestCart" class="btn" style="background:#e53e3e;">Clear local order</button>
-                <a href="/login/" class="btn" style="background:#334155;">Sign in</a>
-            </div>
-        </form>
-
-        <div id="guestNotice" style="margin-top:10px; font-size:13px; color:#475569;"></div>
+            <p class="mt-3 max-w-2xl text-sm text-white/90 md:text-base">
+                Finalizer la commande en tant qu'invité. Les informations de contact et de livraison sont stockées localement sur cet appareil et ne sont pas partagées avec le restaurant. Vous pouvez également vous connecter pour sauvegarder votre commande dans votre compte.
+            </p>
+        </div>
     </div>
+
+    <div class="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm md:p-6">
+            <div class="flex items-center justify-between gap-3 border-b border-gray-100 pb-4">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900">La commande</h3>
+                </div>
+            </div>
+
+            <div id="guestItems" class="mt-5 space-y-3"></div>
+
+            <div class="mt-5 rounded-2xl border border-gray-200 bg-gray-50 p-4">
+                <div class="space-y-2 text-sm">
+                    <div class="flex items-center justify-between text-gray-600">
+                        <span>Sous-total</span>
+                        <span id="guestSubtotal">0,00 MAD</span>
+                    </div>
+                    <div class="flex items-center justify-between text-gray-600">
+                        <span>Frais de livraison</span>
+                        <span id="guestDeliveryFee">0,00 MAD</span>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-gray-200 pt-3 text-base font-bold text-gray-900">
+                        <span>Total</span>
+                        <span id="guestTotal">0,00 MAD</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm md:p-6">
+            <div class="flex items-center justify-between gap-3 border-b border-gray-100 pb-4">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900">Détails de livraison</h3>
+                    <p class="text-sm text-gray-500">Ajoutez les éléments essentiels pour que nous puissions finaliser la commande.</p>
+                </div>
+                <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-600">Secure</span>
+            </div>
+
+            <form id="guestForm" class="mt-5 space-y-5">
+                <div class="grid gap-4 md:grid-cols-2">
+                    <label class="block">
+                        <span class="mb-2 block text-sm font-semibold text-gray-700">Full name</span>
+                        <input id="guestName" name="name" placeholder="Full name" required class="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-100">
+                    </label>
+                    <label class="block">
+                        <span class="mb-2 block text-sm font-semibold text-gray-700">Phone number</span>
+                        <input id="guestPhone" name="phone" placeholder="+212 ..." required class="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-100">
+                    </label>
+                </div>
+
+                <label class="block">
+                    <span class="mb-2 block text-sm font-semibold text-gray-700">Address / pickup notes</span>
+                    <input id="guestAddress" name="address" placeholder="Delivery address or pickup notes" class="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-100">
+                </label>
+
+                <div class="grid gap-4 md:grid-cols-2">
+                    <div class="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+                        <div class="mb-3 text-sm font-semibold text-gray-700">Livraison</div>
+                        <div class="flex flex-wrap gap-2">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="delivery_option" value="delivery" checked class="peer sr-only">
+                                <span class="inline-flex items-center rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition peer-checked:border-orange-500 peer-checked:bg-orange-50 peer-checked:text-orange-600">🚚 A domicile</span>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="delivery_option" value="pickup" class="peer sr-only">
+                                <span class="inline-flex items-center rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition peer-checked:border-orange-500 peer-checked:bg-orange-50 peer-checked:text-orange-600">🧾 Em porter</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+                        <div class="mb-3 text-sm font-semibold text-gray-700">Payment method</div>
+                        <div class="flex flex-wrap gap-2">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="payment_method" value="card" checked class="peer sr-only">
+                                <span class="inline-flex items-center rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition peer-checked:border-orange-500 peer-checked:bg-orange-50 peer-checked:text-orange-600">💳 Card</span>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="payment_method" value="cod" class="peer sr-only">
+                                <span class="inline-flex items-center rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition peer-checked:border-orange-500 peer-checked:bg-orange-50 peer-checked:text-orange-600">💵 Cash on delivery</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="cardFields" class="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                    <div class="mb-3 flex items-center justify-between">
+                        <div>
+                            <h4 class="font-semibold text-gray-900">Card details</h4>
+                            <p class="text-xs text-gray-500">Demo fields for the guest flow.</p>
+                        </div>
+                        <span class="text-xs font-semibold text-orange-500">Secure UI</span>
+                    </div>
+                    <div class="space-y-3">
+                        <input id="cardNumber" name="card_number" placeholder="Card number" class="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-100">
+                        <div class="grid grid-cols-2 gap-3">
+                            <input id="cardExpiry" name="card_expiry" placeholder="MM/YY" class="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-100">
+                            <input id="cardCvc" name="card_cvc" placeholder="CVC" class="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-100">
+                        </div>
+                        <div class="text-xs text-gray-500">Card entry is simulated here; the real site redirects to a payment provider.</div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-3 sm:flex-row">
+                    <button type="submit" class="inline-flex flex-1 items-center justify-center gap-2 rounded-2xl bg-orange-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-200 transition hover:bg-orange-600">
+                        Place order
+                        <span>→</span>
+                    </button>
+                    <button type="button" id="clearGuestCart" class="rounded-2xl border border-red-200 bg-red-50 px-5 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-100">
+                        Clear order
+                    </button>
+                    <a href="/login/" class="rounded-2xl border border-gray-200 bg-white px-5 py-3 text-center text-sm font-semibold text-gray-700 transition hover:bg-gray-50">
+                        Sign in
+                    </a>
+                </div>
+            </form>
+
+            <div id="guestNotice" class="mt-4 rounded-2xl bg-gray-50 px-4 py-3 text-sm text-gray-600"></div>
+        </section>
+    </div>
+</div>
 {% endblock %}
 {% block js %}
-    <script>
-        function renderGuestCart() {
-            const raw = localStorage.getItem('guest_cart');
-            const container = document.getElementById('guestItems');
-            if (!raw) {
-                container.innerHTML = '<div class="muted">No items in local order.</div>';
+<script>
+    function renderGuestCart() {
+        const raw = localStorage.getItem('guest_cart');
+        const container = document.getElementById('guestItems');
+        const deliveryOption = document.querySelector('input[name="delivery_option"]:checked')?.value || 'delivery';
+        const deliveryFee = deliveryOption === 'delivery' ? 12 : 0;
+        if (!raw) {
+            container.innerHTML = '<div class="rounded-2xl border border-dashed border-gray-200 bg-gray-50 px-4 py-6 text-center text-sm text-gray-500">No items in local order.</div>';
+            document.getElementById('guestSubtotal').textContent = '0,00 MAD';
+            document.getElementById('guestDeliveryFee').textContent = `${deliveryFee.toFixed(2)} MAD`;
+            document.getElementById('guestTotal').textContent = `${deliveryFee.toFixed(2)} MAD`;
+            return;
+        }
+        try {
+            const cart = JSON.parse(raw);
+            if (!Array.isArray(cart) || cart.length === 0) {
+                container.innerHTML = '<div class="rounded-2xl border border-dashed border-gray-200 bg-gray-50 px-4 py-6 text-center text-sm text-gray-500">No items in local order.</div>';
+                document.getElementById('guestSubtotal').textContent = '0,00 MAD';
+                document.getElementById('guestDeliveryFee').textContent = `${deliveryFee.toFixed(2)} MAD`;
+                document.getElementById('guestTotal').textContent = `${deliveryFee.toFixed(2)} MAD`;
                 return;
             }
-            try {
-                const cart = JSON.parse(raw);
-                if (!Array.isArray(cart) || cart.length === 0) {
-                    container.innerHTML = '<div class="muted">No items in local order.</div>';
-                    return;
-                }
-                let html = '<ul style="padding-left:18px; margin:0;">';
-                let subtotal = 0;
-                cart.forEach(it => {
-                    const line = (it.price * it.quantity) || 0;
-                    subtotal += line;
-                    html += `<li style="margin-bottom:8px;"><strong>${it.name}</strong> × ${it.quantity} — ${line.toFixed(2)} MAD<br><small class="muted">${it.desc || ''}</small></li>`;
-                });
-                html += `</ul><div style="margin-top:8px; font-weight:bold">Subtotal: ${subtotal.toFixed(2)} MAD</div>`;
-                container.innerHTML = html;
-            } catch(e) {
-                container.innerHTML = '<div class="muted">Unable to read local order.</div>';
-            }
+            let html = '<div class="space-y-3">';
+            let subtotal = 0;
+            cart.forEach(it => {
+                const line = (it.price * it.quantity) || 0;
+                subtotal += line;
+                html += `
+                    <div class="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <div class="font-semibold text-gray-900">${it.name}</div>
+                                <div class="mt-1 text-sm text-gray-500">${it.desc || ''}</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm font-semibold text-gray-700">× ${it.quantity}</div>
+                                <div class="mt-1 text-sm font-bold text-orange-500">${line.toFixed(2)} MAD</div>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+            html += `</div><div class="mt-4 rounded-2xl bg-orange-50 px-4 py-3 text-sm font-semibold text-orange-700">Subtotal: ${subtotal.toFixed(2)} MAD</div>`;
+            container.innerHTML = html;
+            document.getElementById('guestSubtotal').textContent = `${subtotal.toFixed(2)} MAD`;
+            document.getElementById('guestDeliveryFee').textContent = `${deliveryFee.toFixed(2)} MAD`;
+            document.getElementById('guestTotal').textContent = `${(subtotal + deliveryFee).toFixed(2)} MAD`;
+        } catch(e) {
+            container.innerHTML = '<div class="rounded-2xl border border-dashed border-gray-200 bg-gray-50 px-4 py-6 text-center text-sm text-gray-500">Unable to read local order.</div>';
+            document.getElementById('guestSubtotal').textContent = '0,00 MAD';
+            document.getElementById('guestDeliveryFee').textContent = `${deliveryFee.toFixed(2)} MAD`;
+            document.getElementById('guestTotal').textContent = `${deliveryFee.toFixed(2)} MAD`;
         }
+    }
 
-        // toggle card fields when payment method changes
-        function toggleCardFields() {
-            const method = document.querySelector('input[name="payment_method"]:checked').value;
-            const cardFields = document.getElementById('cardFields');
-            if (method === 'card') cardFields.style.display = 'block'; else cardFields.style.display = 'none';
-        }
+    function toggleCardFields() {
+        const method = document.querySelector('input[name="payment_method"]:checked').value;
+        const cardFields = document.getElementById('cardFields');
+        cardFields.style.display = method === 'card' ? 'block' : 'none';
+    }
 
-        document.querySelectorAll('input[name="payment_method"]').forEach(el => el.addEventListener('change', toggleCardFields));
-        document.querySelectorAll('input[name="delivery_option"]').forEach(el => el.addEventListener('change', function(){
-            const addr = document.getElementById('guestAddress');
-            if (this.value === 'pickup') {
-                addr.placeholder = 'Pickup notes (where will you collect?)';
-            } else {
-                addr.placeholder = 'Delivery address / apartment, floor, landmark';
-            }
-        }));
-
-        document.getElementById('clearGuestCart').addEventListener('click', function(){
-            localStorage.removeItem('guest_cart');
-            renderGuestCart();
-        });
-
-        document.getElementById('guestForm').addEventListener('submit', function(e){
-            e.preventDefault();
-            const name = document.getElementById('guestName').value.trim();
-            const phone = document.getElementById('guestPhone').value.trim();
-            const address = document.getElementById('guestAddress').value.trim();
-            const payment = document.querySelector('input[name="payment_method"]:checked').value;
-            const delivery = document.querySelector('input[name="delivery_option"]:checked').value;
-
-            if (!name || !phone) {
-                document.getElementById('guestNotice').textContent = 'Please provide your name and phone so the rider can reach you.';
-                return;
-            }
-
-            // Save guest info locally to pass to checkout/import.
-            const guestInfo = { name, phone, address, payment, delivery, savedAt: Date.now() };
-            localStorage.setItem('guest_info', JSON.stringify(guestInfo));
-
-            // if card, simulate tokenization (note: placeholder)
-            if (payment === 'card') {
-                document.getElementById('guestNotice').textContent = 'Processing card (simulated)… redirecting to secure payment provider.';
-            } else {
-                document.getElementById('guestNotice').textContent = 'Order saved locally — redirecting to checkout to confirm.';
-            }
-
-            // small friendly delay then redirect to checkout page where server will import guest_cart if supported
-            setTimeout(() => { window.location.href = '/checkout/'; }, 900);
-        });
-
-        // initial states
-        toggleCardFields();
+    document.querySelectorAll('input[name="payment_method"]').forEach(el => el.addEventListener('change', toggleCardFields));
+    document.querySelectorAll('input[name="delivery_option"]').forEach(el => el.addEventListener('change', function() {
+        const addr = document.getElementById('guestAddress');
+        addr.placeholder = this.value === 'pickup'
+            ? 'Pickup notes (where will you collect?)'
+            : 'Delivery address / apartment, floor, landmark';
         renderGuestCart();
-    </script>
+    }));
+
+    document.getElementById('clearGuestCart').addEventListener('click', function() {
+        localStorage.removeItem('guest_cart');
+        renderGuestCart();
+    });
+
+    document.getElementById('guestForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('guestName').value.trim();
+        const phone = document.getElementById('guestPhone').value.trim();
+        const address = document.getElementById('guestAddress').value.trim();
+        const payment = document.querySelector('input[name="payment_method"]:checked').value;
+        const delivery = document.querySelector('input[name="delivery_option"]:checked').value;
+
+        if (!name || !phone) {
+            document.getElementById('guestNotice').textContent = 'Please provide your name and phone so the rider can reach you.';
+            return;
+        }
+
+        const guestInfo = { name, phone, address, payment, delivery, savedAt: Date.now() };
+        localStorage.setItem('guest_info', JSON.stringify(guestInfo));
+
+        document.getElementById('guestNotice').textContent = payment === 'card'
+            ? 'Processing card (simulated)… redirecting to secure payment provider.'
+            : 'Order saved locally — redirecting to checkout to confirm.';
+
+        setTimeout(() => { window.location.href = '/checkout/'; }, 900);
+    });
+
+    toggleCardFields();
+    renderGuestCart();
+</script>
 {% endblock %}

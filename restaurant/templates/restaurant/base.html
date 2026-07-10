@@ -71,20 +71,24 @@
             pointer-events: auto;
         }
         @media (max-width: 1023px) {
+            .cart-sidebar {
+                max-height: none;
+                overflow: visible;
+            }
             .cart-sidebar-panel {
                 position: fixed;
-                left: 1rem;
-                right: 1rem;
+                left: 50%;
                 top: 50%;
                 z-index: 60;
-                max-height: calc(100vh - 2rem);
-                transform: translateY(-50%) scale(0.96);
+                width: calc(100vw - 2rem);
+                max-height: none;
+                transform: translate(-50%, -50%) scale(0.96);
                 opacity: 0;
                 pointer-events: none;
                 transition: transform 0.3s ease, opacity 0.3s ease;
             }
             .cart-sidebar-panel.open {
-                transform: translateY(-50%) scale(1);
+                transform: translate(-50%, -50%) scale(1);
                 opacity: 1;
                 pointer-events: auto;
             }
@@ -98,7 +102,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between flex-wrap">
             <div class="flex items-center space-x-4">
                 <div class="flex items-center space-x-1">
-                    <span class="text-2xl font-bold text-primary">Grillade le gout</span>
+                    <a href="/" class="text-2xl font-bold text-primary">Grillade le gout</a>
                     <span class="text-xs bg-gray-100 px-1.5 py-0.5 rounded-full text-gray-600">MA</span>
                 </div>
                 <div class="hidden md:flex items-center text-sm text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full">
@@ -118,25 +122,10 @@
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div class="flex flex-col lg:flex-row gap-8">
+            {% block content %}{% endblock %}
             <!-- MAIN CONTENT (left) -->
-            <div class="lg:w-2/3 w-full">
-                <!-- RESTAURANT HERO SECTION -->
-                <div class="relative rounded-2xl overflow-hidden mb-6">
-                    <div class="h-48 md:h-56 w-full bg-gradient-to-r from-amber-900/70 to-amber-800/70 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=987&q=80'); background-size: cover;"></div>
-                    <div class="absolute inset-0 bg-black/30 flex items-end p-5">
-                        <div class="text-white">
-                            <h1 class="text-3xl md:text-4xl font-extrabold">Grillade le gout</h1>
-                            <div class="flex flex-wrap items-center gap-3 mt-2">
-                                <div class="bg-white/90 backdrop-blur-sm text-gray-800 text-sm font-bold px-2 py-0.5 rounded-full flex items-center"><i class="fas fa-thumbs-up text-green-600 mr-1"></i> 93%</div>
-                                <div class="bg-white/30 backdrop-blur-sm text-white text-xs px-2 py-0.5 rounded-full">⭐ Prime</div>
-                                <div class="text-sm font-medium">12,00 MAD delivery</div>
-                                <div class="text-xs opacity-90">• 20-35 min • 1.2 km • Marocaine</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% block content %}{% endblock %}
-              </div>
+            
+        </div>
     </main>
 
     <script>
@@ -207,13 +196,19 @@
         // Cart state: { name, price, quantity, img, desc }
         // load guest cart from localStorage if present
         let cart = JSON.parse(localStorage.getItem('guest_cart') || '[]');
-        function saveCart() { try { localStorage.setItem('guest_cart', JSON.stringify(cart)); } catch(e){} }
+        function saveCart() {
+            if (cart.length === 0) {
+                localStorage.removeItem('guest_cart');
+                return;
+            }
+            try { localStorage.setItem('guest_cart', JSON.stringify(cart)); } catch(e){} 
+        }
 
         // Helper render cart
         function updateCartUI() {
             const container = $("#cartItemsContainer");
             if (cart.length === 0) {
-                container.html(`<div class="text-center text-gray-400 py-8 text-sm">✨ When you add products from the menu, they will appear here.</div>`);
+                container.html(`<div class="text-center text-gray-400 py-8 text-sm">✨ les produits apparaîtront ici.</div>`);
             } else {
                 let html = '';
                 cart.forEach((item, idx) => {
@@ -354,11 +349,27 @@
         function openCartSidebar() {
             cartSidebar.addClass("open");
             cartBackdrop.addClass("open");
+            document.body.style.overflow = "hidden";
+            if (window.matchMedia("(max-width: 1023px)").matches) {
+                cartSidebar.attr("style", [
+                    "position: fixed",
+                    "left: 50%",
+                    "top: 50%",
+                    "width: min(calc(100vw - 2rem), 26rem)",
+                    "max-height: none",
+                    "transform: translate(-50%, -50%) scale(1)",
+                    "opacity: 1",
+                    "pointer-events: auto",
+                    "z-index: 60"
+                ].join("; "));
+            }
         }
 
         function closeCartSidebar() {
             cartSidebar.removeClass("open");
             cartBackdrop.removeClass("open");
+            document.body.style.overflow = "";
+            cartSidebar.removeAttr("style");
         }
 
         $("#cartIconMobile").on("click", () => {
@@ -386,6 +397,10 @@
 
         $(document).on('click', '#goToCheckout', function(e){
             e.preventDefault();
+            if (cart.length === 0) {
+                // alert('La commande est vide. Veuillez ajouter des articles avant de passer à la caisse.');
+                return;
+            }
             const isAuth = {{ user.is_authenticated|yesno:'true,false' }};
             if (isAuth) {
                 fetch("{% url 'api_cart_import' %}", {
