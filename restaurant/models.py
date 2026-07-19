@@ -166,12 +166,17 @@ class Order(models.Model):
     payment_status = models.CharField(
         max_length=20, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_UNPAID
     )
+    name=models.CharField(max_length=120, blank=True, null=True, default=None)
     payment_reference = models.CharField(max_length=120, blank=True)
     delivery_address = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=40)
     notes = models.TextField(blank=True)
-    total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
+    total = models.FloatField(default=0)
+    subtotal = models.FloatField(default=0)
+    deliveryfees = models.FloatField(default=0)
+    date = models.DateTimeField(auto_now_add=True)
+    paiment_method=models.CharField(max_length=120, blank=True, null=True, default=None)
+    ispaid=models.BooleanField(default=False)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:

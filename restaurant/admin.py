@@ -58,9 +58,9 @@ class OrderAdmin(admin.ModelAdmin):
         'user',
         'status',
         'payment_status',
-        'total_amount',
-        'created_at',
+        'total',
+        'date',
     )
     list_filter = ('status', 'payment_status')
-    search_fields = ('user__username', 'payment_reference')
+    search_fields = ('user__username', 'payment_reference', 'name')
     inlines = [OrderItemInline]

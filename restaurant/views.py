@@ -857,3 +857,35 @@ def admin_users(request):
             messages.success(request, 'User role updated.')
         return redirect('admin_users')
     return render(request, 'restaurant/admin_users.html', {'users': users})
+
+def createguestorder(request):
+    guest = json.loads(request.GET.get('guest'))
+    print("guest", guest, type(guest))
+    name = guest['name']
+    phone_number = guest['phone']
+    address = guest['address']
+    subtotal = guest['subtotal']
+    deliveryfees = guest['deliveryfees']
+    total = guest['total']
+    payment_method=guest["payment"]
+    cart_items_json = request.GET.get('cart_items_json')
+    if not all([name, phone_number, address, cart_items_json]):
+        return JsonResponse({
+            "success":False,
+            "error":"Remplir tous les champs"
+        })
+    print("cart items", cart_items_json)
+    Order.objects.create(
+        name=name,
+        phone_number=phone_number,
+        delivery_address=address,
+        total=total,
+        subtotal=subtotal,
+        notes='Guest order',
+        deliveryfees=deliveryfees,
+        payment_method=payment_method
+    )
+
+    # finish the order creation and redirect to a confirmation page or home
+    
+    

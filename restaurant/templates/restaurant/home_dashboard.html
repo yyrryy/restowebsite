@@ -1,4 +1,5 @@
 {% extends 'restaurant/base.html' %}
+{% block body_class %}home-dashboard-cart-bottom{% endblock %}
 {% block content %}
 <div class="lg:w-2/3 w-full">
                 <!-- RESTAURANT HERO SECTION -->
@@ -10,10 +11,9 @@
                         <div class="text-white">
                             <h1 class="text-3xl md:text-4xl font-extrabold">Grillade le gout</h1>
                             <div class="flex flex-wrap items-center gap-3 mt-2">
-                                <div class="bg-white/90 backdrop-blur-sm text-gray-800 text-sm font-bold px-2 py-0.5 rounded-full flex items-center"><i class="fas fa-thumbs-up text-green-600 mr-1"></i> 93%</div>
+                                <div class="bg-white/90 backdrop-blur-sm text-gray-800 text-sm font-bold px-2 py-0.5 rounded-full flex items-center"><i class="fas fa-thumbs-up text-green-600 mr-1"></i> 99%</div>
                                 <div class="bg-white/30 backdrop-blur-sm text-white text-xs px-2 py-0.5 rounded-full">⭐ Prime</div>
-                                <div class="text-sm font-medium">12,00 MAD delivery</div>
-                                <div class="text-xs opacity-90">• 20-35 min • 1.2 km • Marocaine</div>
+                                <div class="text-sm font-medium">livraison a partir de 15 Dh</div>
                             </div>
                         </div>
                     </div>
@@ -110,4 +110,13 @@
                 </div>
             </div>
             <div id="cartBackdrop" class="cart-backdrop fixed inset-0 z-50 bg-black/50 backdrop-blur-sm lg:hidden"></div>
+            <div id="cartMobileBottom" class="fixed inset-x-4 bottom-4 z-40 hidden lg:hidden">
+                <button type="button" id="cartIconBottom" class="w-full flex items-center justify-between gap-3 bg-primary px-4 py-3 text-white shadow-lg">
+                    <span class="flex items-center gap-2 font-semibold">
+                        <i class="fas fa-shopping-bag text-lg"></i>
+                        <span>Panier de commande</span>
+                    </span>
+                    <span id="globalCartCountBottom" class="flex h-7 min-w-7 items-center justify-center rounded-full bg-white px-2 text-sm font-bold text-primary">0</span>
+                </button>
+            </div>
 {% endblock %}

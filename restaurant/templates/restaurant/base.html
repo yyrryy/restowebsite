@@ -10,6 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <!-- Font Awesome 6 (free icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/alertify.min.css">
     <style>
         * {
             scroll-margin-top: 80px; /* smooth anchor offset for sticky header */
@@ -75,6 +76,12 @@
                 max-height: none;
                 overflow: visible;
             }
+            body.home-dashboard-cart-bottom #cartIconMobile {
+                display: none;
+            }
+            body.home-dashboard-cart-bottom #cartMobileBottom {
+                display: block;
+            }
             .cart-sidebar-panel {
                 position: fixed;
                 left: 50%;
@@ -95,7 +102,7 @@
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased {% block body_class %}{% endblock %}">
 
     <!-- HEADER (simple clone style) -->
     <header class="bg-white shadow-sm sticky top-0 z-30 border-b border-gray-100">
@@ -127,71 +134,9 @@
             
         </div>
     </main>
-
+    <script src="/static/js/alertify.min.js"></script>
     <script>
-        const menu = {
-            topSellers: [
-                { name: "Plat Mixte", price: 93, desc: "Combinaison de 3 viandes, dinde, viande hachée, merguez, salade, frites", img: "🍛" },
-                { name: "Tacos Poulet", price: 53, desc: "Tacos Machwi au poulet, fromage, sauce des frites", img: "🌮" },
-                { name: "Tacos Viande Hachée", price: 51, desc: "Tacos à la viande hachée, fromage, sauce", img: "🌮" }
-            ],
-            sandwichNormal: [
-                { name: "Sandwich Poulet 120g", price: 40, desc: "Poulet, fromage, sauce", img: "🥪" }, 
-                { name: "Sandwich Kefta 120g", price: 36, desc: "Kefta, fromage, sauce", img: "🥙" },
-                { name: "Sandwich Merguez 120g", price: 36, desc: "Merguez, fromage, sauce", img: "🌭" }
-            ],
-            sandwichLarge: [
-                { name: "Sandwich Mixte 240g", price: 52, desc: "Kefta, poulet, merguez, fromage, sauce", img: "🌯" },
-                { name: "Sandwich Poulet 240g", price: 50, desc: "Poulet, fromage, sauce", img: "🥪" },
-                { name: "Sandwich Kefta 240g", price: 48, desc: "Kefta, fromage, sauce", img: "🥙" },
-                { name: "Sandwich Merguez 240g", price: 47, desc: "Merguez, fromage", img: "🌭" }
-            ],
-            tacos: [
-                { name: "Big Tacos", price: 108, desc: "Tacos Machwi XXL (Mixte) fromage, sauce frites", img: "🌮" },
-                { name: "Tacos Mixte", price: 65, desc: "Trois viandes, fromage, sauce", img: "🌮" },
-                { name: "Tacos Poulet", price: 53, desc: "Poulet, fromage, sauce frites", img: "🍗" },
-                { name: "Tacos Viande Hachée", price: 51, desc: "Viande hachée, fromage, sauce", img: "🥩" },
-                { name: "Tacos Merguez", price: 50, desc: "Merguez, fromage, sauce", img: "🌭" }
-            ],
-            bowls: [
-                { name: "Tacos Bowls Mixte", price: 88, desc: "Trois viandes, sauce fromagère, barbecue, fromage, frites", img: "🥗" },
-                { name: "Tacos Bowls Viande Hachée", price: 72, desc: "Viande hachée, sauce fromagère, barbecue, frites", img: "🥩" },
-                { name: "Tacos Bowls Poulet", price: 69, desc: "Poulet, sauce fromagère, barbecue, fromage", img: "🐔" },
-                { name: "Bowl Wings", price: 65, desc: "Wings, sauce fromagère, barbecue, frites", img: "🍗" },
-                { name: "Bowl Merguez", price: 65, desc: "Merguez, sauce fromagère, barbecue", img: "🌭" }
-            ],
-            burgers: [
-                { name: "Triple Chicken (450g)", price: 68, desc: "Triple steak poulet, cheddar, tomate, salade, sauce", img: "🍔" },
-                { name: "Double Chicken Burger (300g)", price: 56, desc: "Double steak poulet, cheddar, salade, tomate, cornichon", img: "🍔" },
-                { name: "Chicken Burger (150g)", price: 45, desc: "Steak poulet, salade, tomate, cornichon, sauce", img: "🍔" }
-            ],
-            plats: [
-                { name: "Plat Mixte", price: 93, desc: "Trois viandes, dinde, hachée, merguez, salade, frites, sauce", img: "🍛" },
-                { name: "Plat Viande Hachée", price: 88, desc: "Brochettes viande hachée, salade, frites", img: "🍖" },
-                { name: "Plat poulet", price: 82, desc: "Brochettes poulet, frites, sauce", img: "🍗" },
-                { name: "Plat Merguez", price: 79, desc: "Merguez, salade, frites, sauce", img: "🌭" },
-                { name: "Plat wings", price: 72, desc: "Wings de poulet, garniture, pain, sauce", img: "🍗" }
-            ],
-            poulet: [
-                { name: "Poulet Entier Machwi", price: 208, desc: "1 poulet grillé, salade marocaine, riz, frites, daghmira", img: "🍗" },
-                { name: "1/2 Poulet Machwi", price: 120, desc: "Demi-poulet grillé, salade, riz, frites, daghmira", img: "🍗" },
-                { name: "1/4 Poulet Machwi", price: 64, desc: "Quart de poulet grillé, salade marocaine, riz, frites", img: "🍗" }
-            ],
-            supplements: [
-                { name: "Frites", price: 40, desc: "Frites sauce fromagère, barbecue, cheddar", img: "🍟" },
-                { name: "Frites Cheezy", price: 32, desc: "Frites sauce fromagère, barbecue", img: "🍟" },
-                { name: "Wings", price: 24, desc: "6 pièces", img: "🍗" },
-                { name: "Frites", price: 16, desc: "1 portion", img: "🍟" },
-                { name: "Pain 3ich", price: 4, desc: "1 portion", img: "🥖" }
-            ],
-            boissons: [
-                { name: "Boisson gazeuse (33cl)", price: 16, desc: "Au choix", img: "🥤" },
-                { name: "Eau Minérale 1,5l", price: 16, desc: "Eau plate", img: "💧" },
-                { name: "Oulmes 50cl", price: 16, desc: "Eau gazeuse", img: "💧" },
-                { name: "Eau Minérale 50cl", price: 12, desc: "Eau plate", img: "💧" },
-                { name: "Eau Minérale 33cl", price: 5, desc: "Petite eau", img: "💧" }
-            ]
-        };
+        
 
         // Cart state: { name, price, quantity, img, desc }
         // load guest cart from localStorage if present
@@ -245,6 +190,7 @@
             $("#cartTotal").text(`${total.toFixed(2)} MAD`);
             const itemCount = cart.reduce((acc, i) => acc + i.quantity, 0);
             $("#globalCartCount").text(itemCount);
+            $("#globalCartCountBottom").text(itemCount);
             // persist guest cart whenever UI updates
             saveCart();
         }
@@ -373,6 +319,11 @@
         }
 
         $("#cartIconMobile").on("click", () => {
+            if (window.matchMedia("(max-width: 1023px)").matches) {
+                openCartSidebar();
+            }
+        });
+        $("#cartIconBottom").on("click", () => {
             if (window.matchMedia("(max-width: 1023px)").matches) {
                 openCartSidebar();
             }
