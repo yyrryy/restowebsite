@@ -227,7 +227,8 @@
                 const prod = {
                     name: $(this).data('name'),
                     price: parseFloat($(this).data('price')) || 0,
-                    desc: $(this).data('desc') || ''
+                    desc: $(this).data('desc') || '',
+                    id: id
                 };
                 addToCart(prod);
             }
@@ -265,16 +266,16 @@
         }
 
         // populate all sections
-        renderProductGrid("topSellersList", menu.topSellers, true);
-        renderProductGrid("sandwichNormalGrid", menu.sandwichNormal);
-        renderProductGrid("sandwichLargeGrid", menu.sandwichLarge);
-        renderProductGrid("tacosGrid", menu.tacos);
-        renderProductGrid("bowlsGrid", menu.bowls);
-        renderProductGrid("burgersGrid", menu.burgers);
-        renderProductGrid("platsGrid", menu.plats);
-        renderProductGrid("pouletGrid", menu.poulet);
-        renderProductGrid("supplementsGrid", menu.supplements);
-        renderProductGrid("boissonsGrid", menu.boissons);
+        // renderProductGrid("topSellersList", menu.topSellers, true);
+        // renderProductGrid("sandwichNormalGrid", menu.sandwichNormal);
+        // renderProductGrid("sandwichLargeGrid", menu.sandwichLarge);
+        // renderProductGrid("tacosGrid", menu.tacos);
+        // renderProductGrid("bowlsGrid", menu.bowls);
+        // renderProductGrid("burgersGrid", menu.burgers);
+        // renderProductGrid("platsGrid", menu.plats);
+        // renderProductGrid("pouletGrid", menu.poulet);
+        // renderProductGrid("supplementsGrid", menu.supplements);
+        // renderProductGrid("boissonsGrid", menu.boissons);
 
         // Sticky category active highlight + smooth scroll
         $(".category-link").on("click", function(e) {

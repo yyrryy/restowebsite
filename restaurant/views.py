@@ -860,7 +860,9 @@ def admin_users(request):
 
 def createguestorder(request):
     guest = json.loads(request.GET.get('guest'))
+    cart = json.loads(request.GET.get('cart'))
     print("guest", guest, type(guest))
+    print("cart", cart, type(cart))
     name = guest['name']
     phone_number = guest['phone']
     address = guest['address']
@@ -868,14 +870,16 @@ def createguestorder(request):
     deliveryfees = guest['deliveryfees']
     total = guest['total']
     payment_method=guest["payment"]
-    cart_items_json = request.GET.get('cart_items_json')
-    if not all([name, phone_number, address, cart_items_json]):
+    for i in cart:
+        print(i["id"], i["price"], i["quantity"])
+    test=False
+    if not all([name, phone_number, address, cart, test]):
         return JsonResponse({
             "success":False,
             "error":"Remplir tous les champs"
         })
     print("cart items", cart_items_json)
-    Order.objects.create(
+    order = Order.objects.create(
         name=name,
         phone_number=phone_number,
         delivery_address=address,
@@ -885,6 +889,22 @@ def createguestorder(request):
         deliveryfees=deliveryfees,
         payment_method=payment_method
     )
+    for i in cart:
+        id = i["id"]
+        price = float(i["price"])
+        qty = float(i["quantity"])
+        total = price*total
+        OrderItem.objects.create(
+            order=order,
+            dish_id=id,
+            price=price,
+            quantity=quantity,
+            total=total    
+        )
+    return JsonResponse({
+        "success":True,
+        "error":"Remplir tous les champs"
+    })
 
     # finish the order creation and redirect to a confirmation page or home
     
