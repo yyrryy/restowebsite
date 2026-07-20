@@ -76,7 +76,7 @@ class MenuItem(models.Model):
 class MenuItemVariant(models.Model):
     dish = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name='variants')
     name = models.CharField(max_length=160)
-    price_modifier = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    price_modifier = models.FloatField(default=0.0)
     is_available = models.BooleanField(default=True)
 
     def __str__(self) -> str:
@@ -97,7 +97,7 @@ class MenuItemVariant(models.Model):
 class Combo(models.Model):
     name = models.CharField(max_length=160)
     description = models.TextField(blank=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.FloatField(default=0.0)
     dishes = models.ManyToManyField(MenuItem, blank=True, related_name='combos')
     is_active = models.BooleanField(default=True)
 
@@ -132,8 +132,7 @@ class Offer(models.Model):
     dishes = models.ManyToManyField(MenuItem, blank=True, related_name='offers')
     combos = models.ManyToManyField(Combo, blank=True, related_name='offers')
 
-    def __str__(self) -> str:
-        return self.name
+
 
 
 class Order(models.Model):
@@ -180,7 +179,7 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return f'Order #{self.id} - {self.user.username}'
+        return f'Order #{self.id} - {self.name}'
 
 
 class OrderItem(models.Model):
@@ -189,8 +188,8 @@ class OrderItem(models.Model):
     combo = models.ForeignKey(Combo, on_delete=models.SET_NULL, null=True, blank=True)
     variant = models.ForeignKey(MenuItemVariant, on_delete=models.SET_NULL, null=True, blank=True)
     quantity = models.PositiveIntegerField(default=1)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    total = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.FloatField(default=0.0)
+    total = models.FloatField(default=0.0)
 
     def __str__(self) -> str:
         item_name = self.dish.name if self.dish else self.combo.name if self.combo else 'Item'

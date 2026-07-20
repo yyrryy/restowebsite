@@ -29,15 +29,15 @@
                 <div class="space-y-2 text-sm">
                     <div class="flex items-center justify-between text-gray-600">
                         <span>Sous-total</span>
-                        <span id="guestSubtotal">0,00 MAD</span>
+                        <span id="guestSubtotal">0,00</span> DH
                     </div>
                     <div class="flex items-center justify-between text-gray-600">
                         <span>Frais de livraison</span>
-                        <span id="guestDeliveryFee">0,00 MAD</span>
+                        <span id="guestDeliveryFee">0,00</span> DH
                     </div>
                     <div class="flex items-center justify-between border-t border-gray-200 pt-3 text-base font-bold text-gray-900">
                         <span>Total</span>
-                        <span id="guestTotal">0,00 MAD</span>
+                        <span id="guestTotal">0,00</span> DH
                     </div>
                 </div>
             </div>
@@ -176,21 +176,21 @@
                             </div>
                             <div class="text-right">
                                 <div class="text-sm font-semibold text-gray-700">× ${it.quantity}</div>
-                                <div class="mt-1 text-sm font-bold text-orange-500">${line.toFixed(2)} MAD</div>
+                                <div class="mt-1 text-sm font-bold text-orange-500">${line.toFixed(2)}</div>
                             </div>
                         </div>
                     </div>`;
             });
             html += `</div><div class="mt-4 rounded-2xl bg-orange-50 px-4 py-3 text-sm font-semibold text-orange-700">Subtotal: ${subtotal.toFixed(2)} MAD</div>`;
             container.innerHTML = html;
-            document.getElementById('guestSubtotal').textContent = `${subtotal.toFixed(2)} MAD`;
-            document.getElementById('guestDeliveryFee').textContent = `${deliveryFee.toFixed(2)} MAD`;
-            document.getElementById('guestTotal').textContent = `${(subtotal + deliveryFee).toFixed(2)} MAD`;
+            document.getElementById('guestSubtotal').textContent = `${subtotal.toFixed(2)}`;
+            document.getElementById('guestDeliveryFee').textContent = `${deliveryFee.toFixed(2)}`;
+            document.getElementById('guestTotal').textContent = `${(subtotal + deliveryFee).toFixed(2)}`;
         } catch(e) {
             container.innerHTML = '<div class="rounded-2xl border border-dashed border-gray-200 bg-gray-50 px-4 py-6 text-center text-sm text-gray-500">Unable to read local order.</div>';
-            document.getElementById('guestSubtotal').textContent = '0,00 MAD';
-            document.getElementById('guestDeliveryFee').textContent = `${deliveryFee.toFixed(2)} MAD`;
-            document.getElementById('guestTotal').textContent = `${deliveryFee.toFixed(2)} MAD`;
+            document.getElementById('guestSubtotal').textContent = '0,00';
+            document.getElementById('guestDeliveryFee').textContent = `${deliveryFee.toFixed(2)}`;
+            document.getElementById('guestTotal').textContent = `${deliveryFee.toFixed(2)}`;
         }
     }
 
@@ -239,7 +239,7 @@
         const params = new URLSearchParams({ guest: JSON.stringify(guestInfo), cart });
         $.get(`/createguestorder/?${params.toString()}`, function(data) {
             if (data.success) {
-                //localStorage.removeItem('guest_cart');
+                localStorage.removeItem('guest_cart');
                 alertify.success("commande envoyee")
             } else {
                 alertify.error(data.error)
