@@ -184,7 +184,7 @@
             }
             // Update totals and badge
             const subtotal = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
-            const delivery = 12;
+            const delivery = 0;
             const total = subtotal + delivery;
             $("#cartSubtotal").text(`${subtotal.toFixed(2)} MAD`);
             $("#cartTotal").text(`${total.toFixed(2)} MAD`);

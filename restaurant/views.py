@@ -896,6 +896,7 @@ def createguestorder(request):
         OrderItem.objects.create(
             order=order,
             dish_id=id,
+            dish_name=MenuItem.objects.get(id=id).name,
             price=price,
             quantity=qty,
             total=total    
@@ -906,4 +907,47 @@ def createguestorder(request):
 
     # finish the order creation and redirect to a confirmation page or home
     
-    
+
+def getcommandnumber(request):
+    orders=Order.objects.filter(senttosystem=False)
+    length=orders.count()
+    if len(orders)==0:
+        return JsonResponse({
+            'success':False,
+            'length':0,
+            'message':'Aucune commande à envoyer'
+        })
+    orderstosend=[]
+    #orderitemsstosend=[]
+    for order in orders:
+        orderdata={
+            'id':order.id,
+            'order_no':order.order_no,
+            'note':order.note,
+            'clientname':order.name,
+            'clientaddress':order.delivery_address,
+            'clientphone':order.phone_number,
+            'date':order.date,
+            'total':order.total,
+            'items':[]
+        }
+        orderstosend.append(orderdata)
+        orderitems=Orderitem.objects.filter(order=order)
+        for item in orderitems:
+            orderitemsdata={
+                'ordernumber':item.order.order_no,
+                #uniqcode will be the connection
+                'name':item.dish_name,
+                'qty':item.quantity,
+                'price':item.price,
+                'total':item.total,
+            }
+            orderdata['items'].append(orderitemsdata)
+            #orderitemsstosend.append(orderitemsdata)
+    orders.update(senttoserver=True)
+    return JsonResponse({
+        'success':True,
+        'length':length,
+        'orders':orderstosend,
+        #'items':orderitemsstosend
+    })

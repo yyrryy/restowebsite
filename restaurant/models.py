@@ -177,7 +177,7 @@ class Order(models.Model):
     paiment_method=models.CharField(max_length=120, blank=True, null=True, default=None)
     ispaid=models.BooleanField(default=False)
     updated_at = models.DateTimeField(auto_now=True)
-
+    senttosystem=models.BooleanField(default=False)
     def __str__(self) -> str:
         return f'Order #{self.id} - {self.name}'
 
