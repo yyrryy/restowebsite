@@ -240,7 +240,23 @@
         $.get(`/createguestorder/?${params.toString()}`, function(data) {
             if (data.success) {
                 localStorage.removeItem('guest_cart');
-                alertify.success("commande envoyee")
+                // alertify.success("commande envoyee")
+                // replace all content of the page with a message that the order has been sent
+                document.body.innerHTML = `
+                    <div class="flex min-h-screen flex-col items-center justify-center gap-6 bg-gray-50 p-6 text-center">
+                        <div class="rounded-full bg-orange-100 p-4 text-orange-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h1 class="text-2xl font-bold text-gray-900">Commande envoyée !</h1>
+                        <p class="max-w-md text-gray-600">Merci pour votre commande. Nous avons bien reçu vos informations et nous vous contacterons bientôt pour confirmer la livraison.</p>
+                        <a href="/" class="mt-4 inline-flex items-center gap-2 rounded-full bg-orange-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-200 transition hover:bg-orange-600">
+                            Retour à l'accueil
+                        </a>
+                    </div>
+                `;
+                
             } else {
                 alertify.error(data.error)
             }

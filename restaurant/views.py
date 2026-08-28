@@ -23,7 +23,7 @@ from .forms import (
     UserRoleForm,
 )
 from .models import MenuCategory, Combo, MenuItem, MenuItemVariant, Offer, Order, OrderItem, Profile
-
+from .utils import send_telegram_message
 
 def login_view(request):
     if request.method == 'POST':
@@ -888,19 +888,37 @@ def createguestorder(request):
         deliveryfees=deliveryfees,
         paiment_method=payment_method
     )
+    message = f"""
+🆕 *New Order Received!*
+
+👤 *Customer:*
+Name: {name}
+Phone: {phone_number}
+Total: {total}DH
+Address: {address if address else 'N/A'}
+livraison: {deliveryfees if deliveryfees else '0.00'}Dh
+
+📦 *Order #{order.id}*
+Date: {order.date.strftime('%Y-%m-%d %H:%M')}
+Total: {order.total}DH
+"""
     for i in cart:
         id = i["id"]
         price = float(i["price"])
         qty = float(i["quantity"])
+        dish_name = MenuItem.objects.get(id=id).name
         total = price*qty
         OrderItem.objects.create(
             order=order,
             dish_id=id,
-            dish_name=MenuItem.objects.get(id=id).name,
             price=price,
             quantity=qty,
             total=total    
         )
+        message += f"• {qty}x {dish_name} - {price}DH\n"
+    
+    send_telegram_message(message, parse_mode='Markdown')
+
     return JsonResponse({
         "success":True
     })
@@ -911,7 +929,7 @@ def createguestorder(request):
 def getcommandnumber(request):
     orders=Order.objects.filter(senttosystem=False)
     length=orders.count()
-    if len(orders)==0:
+    if length==0:
         return JsonResponse({
             'success':False,
             'length':0,
@@ -932,7 +950,7 @@ def getcommandnumber(request):
             'items':[]
         }
         orderstosend.append(orderdata)
-        orderitems=Orderitem.objects.filter(order=order)
+        orderitems=OrderItem.objects.filter(order=order)
         for item in orderitems:
             orderitemsdata={
                 'ordernumber':item.order.order_no,
@@ -944,7 +962,7 @@ def getcommandnumber(request):
             }
             orderdata['items'].append(orderitemsdata)
             #orderitemsstosend.append(orderitemsdata)
-    orders.update(senttoserver=True)
+    orders.update(senttosystem=True)
     return JsonResponse({
         'success':True,
         'length':length,
