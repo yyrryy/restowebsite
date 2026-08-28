@@ -1,0 +1,24 @@
+{
+  "name": "restowebsite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "tailwindcss -i ./static/css/tailwind-source.css -o ./static/css/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yyrryy/restowebsite.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yyrryy/restowebsite/issues"
+  },
+  "homepage": "https://github.com/yyrryy/restowebsite#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}

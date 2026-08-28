@@ -239,7 +239,7 @@
         const params = new URLSearchParams({ guest: JSON.stringify(guestInfo), cart });
         $.get(`/createguestorder/?${params.toString()}`, function(data) {
             if (data.success) {
-                localStorage.removeItem('guest_cart');
+            localStorage.removeItem('guest_cart');
                 // alertify.success("commande envoyee")
                 // replace all content of the page with a message that the order has been sent
                 document.body.innerHTML = `
@@ -256,7 +256,7 @@
                         </a>
                     </div>
                 `;
-                
+
             } else {
                 alertify.error(data.error)
             }

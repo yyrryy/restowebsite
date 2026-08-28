@@ -14,3 +14,4 @@ staticfiles/*
 *.log
 instructions.txt
 .env
+node_modules/
