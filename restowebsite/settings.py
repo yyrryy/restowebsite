@@ -107,7 +107,7 @@ if USE_SQLITE:
         }
     }
 else:
-    STATIC_ROOT = BASE_DIR / 'static'
+    # STATIC_ROOT = BASE_DIR / 'static'
 
     #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
