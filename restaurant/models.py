@@ -98,6 +98,7 @@ class Combo(models.Model):
     name = models.CharField(max_length=160)
     description = models.TextField(blank=True)
     price = models.FloatField(default=0.0)
+    image = models.FileField(upload_to='combos/', blank=True)
     dishes = models.ManyToManyField(MenuItem, blank=True, related_name='combos')
     is_active = models.BooleanField(default=True)
 
@@ -176,6 +177,7 @@ class Order(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     paiment_method=models.CharField(max_length=120, blank=True, null=True, default=None)
     ispaid=models.BooleanField(default=False)
+    note=models.TextField(blank=True, null=True, default=None)
     updated_at = models.DateTimeField(auto_now=True)
     senttosystem=models.BooleanField(default=False)
     def __str__(self) -> str:

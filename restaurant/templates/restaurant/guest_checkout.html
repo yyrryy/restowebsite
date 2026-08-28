@@ -68,7 +68,11 @@
                     <span class="mb-2 block text-sm font-semibold text-gray-700">Adresse de livraison</span>
                     <input id="guestAddress" name="address" placeholder="Delivery address or pickup notes" class="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-100">
                 </label>
-
+                <!-- add note field -->
+                <label class="block">
+                    <span class="mb-2 block text-sm font-semibold text-gray-700">Note (optionnel)</span>
+                    <textarea id="guestNote" name="note" placeholder="Note pour la cuisine ou instructions de livraison" class="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-100"></textarea>
+                </label>
                 <div class="grid gap-4 md:grid-cols-2">
                     <div class="rounded-2xl border border-gray-200 bg-gray-50 p-4">
                         <div class="mb-3 text-sm font-semibold text-gray-700">Livraison</div>
@@ -223,6 +227,7 @@
         const delivery = document.querySelector('input[name="delivery_option"]:checked').value;
         const subtotal = $("#guestSubtotal").text()
         const deliveryfees = $("#guestDeliveryFee").text()
+        const note = $("#guestNote").text()
         const total = $("#guestTotal").text()
 
         if (!name || !phone) {
@@ -232,7 +237,7 @@
         if (name.length>100){
             alertify.error("Verifier le nom")
         }
-        const guestInfo = { name, phone, address, payment, delivery, subtotal, deliveryfees, total, savedAt: Date.now() };
+        const guestInfo = { name, phone, address, payment, delivery, subtotal, deliveryfees, total, savedAt: Date.now(), note};
         localStorage.setItem('guest_info', JSON.stringify(guestInfo));
         // send a get request to /createguestorder/ with the guest info and cart data as query params
         const cart = localStorage.getItem('guest_cart');

@@ -42,7 +42,7 @@ class MenuItemForm(forms.ModelForm):
 class ComboForm(forms.ModelForm):
     class Meta:
         model = Combo
-        fields = ('name', 'price', 'dishes', 'is_active')
+        fields = ('name', 'description', 'price', 'image', 'dishes', 'is_active')
         widgets = {
             'dishes': forms.CheckboxSelectMultiple,
         }

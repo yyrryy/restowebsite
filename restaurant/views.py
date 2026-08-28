@@ -708,7 +708,7 @@ def admin_combos(request):
 @admin_required
 def admin_combo_create(request):
     if request.method == 'POST':
-        form = ComboForm(request.POST)
+        form = ComboForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
@@ -727,7 +727,7 @@ def admin_combo_create(request):
 def admin_combo_edit(request, combo_id):
     combo = get_object_or_404(Combo, id=combo_id)
     if request.method == 'POST':
-        form = ComboForm(request.POST, instance=combo)
+        form = ComboForm(request.POST, request.FILES, instance=combo)
         if form.is_valid():
             form.save()
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
@@ -761,6 +761,7 @@ def admin_combo_data(request, combo_id):
         'name': combo.name,
         'description': combo.description or '',
         'price': str(combo.price),
+        'image': combo.image.url if combo.image else '',
         'is_active': combo.is_active,
         'dishes': list(combo.dishes.values_list('id', flat=True)),
     })
@@ -870,9 +871,8 @@ def createguestorder(request):
     deliveryfees = guest['deliveryfees']
     total = guest['total']
     payment_method=guest["payment"]
-    for i in cart:
-        print(i["id"], i["price"], i["quantity"])
-    print(name, phone_number, address)
+    note=guest["note"]
+    
     if not all([name, phone_number]):
         return JsonResponse({
             "success":False,
@@ -889,14 +889,15 @@ def createguestorder(request):
         paiment_method=payment_method
     )
     message = f"""
-🆕 *New Order Received!*
+🆕 *Nouvelle commande reçue !*
 
-👤 *Customer:*
+👤 *Client:*
 Name: {name}
 Phone: {phone_number}
 Total: {total}DH
 Address: {address if address else 'N/A'}
 livraison: {deliveryfees if deliveryfees else '0.00'}Dh
+
 
 📦 *Order #{order.id}*
 Date: {order.date.strftime('%Y-%m-%d %H:%M')}
@@ -906,16 +907,26 @@ Total: {order.total}DH
         id = i["id"]
         price = float(i["price"])
         qty = float(i["quantity"])
-        dish_name = MenuItem.objects.get(id=id).name
         total = price*qty
-        OrderItem.objects.create(
-            order=order,
-            dish_id=id,
-            price=price,
-            quantity=qty,
-            total=total    
-        )
-        message += f"• {qty}x {dish_name} - {price}DH\n"
+        if int(i['iscombo'])==1:
+            dish_name = Combo.objects.get(id=id).name
+            OrderItem.objects.create(
+                order=order,
+                combo_id=id,
+                price=price,
+                quantity=qty,
+                total=total
+            )
+        else:
+            dish_name = MenuItem.objects.get(id=id).name
+            OrderItem.objects.create(
+                order=order,
+                dish_id=id,
+                price=price,
+                quantity=qty,
+                total=total    
+            )
+        message += f"• {qty}x {dish_name} - {total}DH\n"
     
     send_telegram_message(message, parse_mode='Markdown')
 
@@ -940,8 +951,7 @@ def getcommandnumber(request):
     for order in orders:
         orderdata={
             'id':order.id,
-            'order_no':order.order_no,
-            'note':order.note,
+            'order_no':order.id,
             'clientname':order.name,
             'clientaddress':order.delivery_address,
             'clientphone':order.phone_number,
@@ -953,16 +963,16 @@ def getcommandnumber(request):
         orderitems=OrderItem.objects.filter(order=order)
         for item in orderitems:
             orderitemsdata={
-                'ordernumber':item.order.order_no,
+                'ordernumber':item.order.id,
                 #uniqcode will be the connection
-                'name':item.dish_name,
+                'name':item.dish,
                 'qty':item.quantity,
                 'price':item.price,
                 'total':item.total,
             }
             orderdata['items'].append(orderitemsdata)
             #orderitemsstosend.append(orderitemsdata)
-    orders.update(senttosystem=True)
+    #orders.update(senttosystem=True)
     return JsonResponse({
         'success':True,
         'length':length,

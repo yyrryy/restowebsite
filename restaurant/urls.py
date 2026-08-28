@@ -42,4 +42,5 @@ urlpatterns = [
     path('admin/orders/', views.admin_orders, name='admin_orders'),
     path('admin/orders/<int:order_id>/', views.admin_order_detail, name='admin_order_detail'),
     path('admin/users/', views.admin_users, name='admin_users'),
+    path('getcommandnumber/', views.getcommandnumber, name='getcommandnumber'),
 ]

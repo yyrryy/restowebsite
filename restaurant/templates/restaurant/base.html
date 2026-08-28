@@ -141,6 +141,7 @@
         // Cart state: { name, price, quantity, img, desc }
         // load guest cart from localStorage if present
         let cart = JSON.parse(localStorage.getItem('guest_cart') || '[]');
+        console.log(cart);
         function saveCart() {
             if (cart.length === 0) {
                 localStorage.removeItem('guest_cart');
@@ -208,6 +209,7 @@
 
         function addToCart(product) {
             const existing = cart.findIndex(item => item.name === product.name && item.price === product.price);
+            console.log('Adding to cart:', product, 'Existing index:', existing);
             if (existing !== -1) {
                 cart[existing].quantity += 1;
             } else {
@@ -222,13 +224,15 @@
         // server-rendered buttons include data-item-id attribute; handle those clicks to add to guest cart (and allow import on checkout)
         $(document).on('click', '.add-to-cart-btn', function(e) {
             const id = $(this).data('item-id');
+            const iscombo = $(this).data('iscombo');
             if (typeof id !== 'undefined' && id !== false) {
                 e.preventDefault();
                 const prod = {
                     name: $(this).data('name'),
                     price: parseFloat($(this).data('price')) || 0,
                     desc: $(this).data('desc') || '',
-                    id: id
+                    id: id,
+                    iscombo: iscombo
                 };
                 addToCart(prod);
             }

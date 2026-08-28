@@ -54,7 +54,7 @@ BOT_TOKEN = "8604513149:AAFxeqGNzKcd63VEbOMxeSzXpH7R_hF6Qkw"
 CHAT_ID = "1144635066"      # From Step 3
 CHAT_IDS = [
     "1144635066",     # Your personal chat ID
-    # Another user
+    "6864791868" # Another user
 ]
 
 def send_telegram_message(message, parse_mode=None):

@@ -591,6 +591,7 @@
                         <table>
                             <thead>
                                 <tr>
+                                    <th>Image</th>
                                     <th>Name</th>
                                     <th>Price</th>
                                     <th>MenuItemes</th>
@@ -601,6 +602,13 @@
                             <tbody>
                                 {% for combo in combos %}
                                     <tr>
+                                        <td>
+                                            {% if combo.image %}
+                                                <img src="{{ combo.image.url }}" alt="{{ combo.name }}" style="width: 48px; height: 48px; object-fit: cover; border-radius: 6px;">
+                                            {% else %}
+                                                <span style="color: var(--text-lighter);">—</span>
+                                            {% endif %}
+                                        </td>
                                         <td class="combo-name">{{ combo.name }}</td>
                                         <td class="combo-price">${{ combo.price|floatformat:2 }}</td>
                                         <td>
@@ -665,6 +673,12 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="id_image">Image</label>
+                        <input type="file" name="image" id="id_image" accept="image/*" onchange="previewComboImage(this)">
+                        <img id="comboImagePreview" src="" alt="" style="display: none; margin-top: 0.5rem; width: 96px; height: 96px; object-fit: cover; border-radius: 6px;">
+                    </div>
+
+                    <div class="form-group">
                         <label>Select MenuItemes *</label>
                         <div id="dishesCheckboxes" style="max-height: 250px; overflow-y: auto; border: 1.5px solid var(--border-color); border-radius: 6px; padding: 0.75rem;">
                             {% for dish in dishes %}
@@ -690,6 +704,18 @@
     </div>
 
     <script>
+        function previewComboImage(input) {
+            const preview = document.getElementById('comboImagePreview');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
         function openComboModal(comboId = null) {
             const modal = document.getElementById('comboModal');
             const form = document.getElementById('comboForm');
@@ -708,6 +734,15 @@
                         document.getElementById('id_description').value = data.description || '';
                         document.getElementById('id_price').value = data.price || '';
                         document.getElementById('id_is_active').checked = data.is_active || false;
+
+                        const preview = document.getElementById('comboImagePreview');
+                        if (data.image) {
+                            preview.src = data.image;
+                            preview.style.display = 'block';
+                        } else {
+                            preview.src = '';
+                            preview.style.display = 'none';
+                        }
                         
                         // Uncheck all dishes first
                         document.querySelectorAll('input[name="dishes"]').forEach(checkbox => {
@@ -731,6 +766,9 @@
                 form.action = `{% url 'admin_combo_create' %}`;
                 form.reset();
                 document.getElementById('id_is_active').checked = true;
+                const preview = document.getElementById('comboImagePreview');
+                preview.src = '';
+                preview.style.display = 'none';
             }
             
             modal.classList.add('active');

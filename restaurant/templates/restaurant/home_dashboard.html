@@ -4,7 +4,7 @@
 <div class="lg:w-2/3 w-full">
                 <!-- RESTAURANT HERO SECTION -->
                 <div class="relative rounded-2xl overflow-hidden mb-6">
-                    <div class="h-48 md:h-56 w-full bg-gradient-to-r from-amber-900/70 to-amber-800/70 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=987&q=80'); background-size: cover;">
+                    <div class="h-48 md:h-56 w-full bg-gradient-to-r from-amber-900/70 to-amber-800/70 bg-cover bg-center" style="background-image: url('/media/headerlogo.jpg'); background-size: cover;">
 
                     </div>
                     <div class="absolute inset-0 bg-black/30 flex items-end p-5">
@@ -18,7 +18,75 @@
                         </div>
                     </div>
                 </div>
-                
+                <section class="mb-6">
+                    <div class="flex items-center justify-between mb-3">
+                        <h2 class="text-xl font-bold">Combos</h2>
+                        <span class="text-xs text-gray-500">Offres groupées</span>
+                    </div>
+
+                    {% if combos %}
+                        <div class="grid gap-4">
+                            {% for combo in combos %}
+                                <div class="bg-white rounded-xl border border-orange-100 p-4 shadow-sm">
+                                    <div class="flex justify-between items-start gap-3">
+                                        <div class="flex-1">
+                                            <div class="flex flex-wrap items-center gap-2 mb-1">
+                                                <span class="bg-orange-100 text-orange-700 text-[10px] font-bold px-2 py-1 rounded-full">Combo</span>
+                                                {% if combo.active_discount_percent %}
+                                                    <span class="bg-red-100 text-red-700 text-[10px] font-bold px-2 py-1 rounded-full">-{{ combo.active_discount_percent }}%</span>
+                                                {% endif %}
+                                            </div>
+                                            <div class="flex items-center gap-1">
+                                                <div>
+
+                                                    {% if combo.image %}
+                                                    <img src="{{ combo.image.url }}" alt="{{ combo.name }}" style="width: 120px; height: 120px;object-fit: cover; border-radius: 6px; margin-bottom: 8px;">
+                                                    {% endif %}
+                                                </div>
+                                                <div class="flex-1 flex justify-between">
+                                                    <div>
+                                                        <h3 class="font-bold text-gray-800">{{ combo.name }}</h3>
+                                                        <!-- <p class="text-gray-500 text-xs mt-1">{{ combo.description}}</p> -->
+            
+                                                        <ul class="mt-3 text-m text-gray-600 space-y-1">
+                                                            <li>• {{ combo.description }}</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="">
+                                                        <div class="text-right shrink-0">
+                                                            <div class="font-bold text-primary">
+                                                                {{ combo.discounted_price|floatformat:"2" }} MAD
+                                                            </div>
+                                                            {% if combo.price != combo.discounted_price %}
+                                                            <div class="text-xs text-gray-400 line-through">
+                                                                {{ combo.price|floatformat:"2" }} MAD
+                                                            </div>
+                                                            {% endif %}
+                                                        </div>
+                                                        <button class="add-to-cart-btn bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center shadow-md hover:bg-primary-dark transition" data-item-id="{{ combo.id }}" data-name="{{ combo.name }}" 
+                                                        data-iscombo="1"
+                                                        data-price="{{ combo.discounted_price }}" data-desc="{{ combo.description|default:'Combo' }}">
+                                                            <i class="fas fa-plus text-sm"></i>
+                                                        </button>
+                                                        
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+
+                                        
+                                    </div>
+
+                                    
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="bg-white rounded-xl border border-dashed border-gray-200 p-4 text-sm text-gray-500">
+                            Aucun combo disponible pour le moment.
+                        </div>
+                    {% endif %}
+                </section>
                 <!-- STICKY CATEGORY TABS (horizontal scroll) -->
                 <div class="sticky top-[70px] z-20 bg-white border-b border-gray-200 sticky-nav rounded-t-xl overflow-x-auto scrollbar-hide">
                     <div class="flex space-x-6 px-1 py-3 text-sm font-medium whitespace-nowrap" id="categoryTabs">
@@ -30,7 +98,8 @@
                         <a href="#faq" class="category-link text-gray-500 hover:text-gray-800 pb-2 border-b-2 border-transparent">FAQs</a> -->
                     </div>
                 </div>
-
+                
+                 
                 <!-- PRODUCT SECTIONS (dynamic menu from provided data) -->
                 <div class="space-y-8 mt-4">
                     <!-- TOP SELLERS section (special badge) -->
@@ -61,7 +130,9 @@
                                             </div>
                                             
                                         </div>
-                                        <button class="add-to-cart-btn bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center shadow-md hover:bg-primary-dark transition" data-item-id="{{ item.id }}" data-name="{{ item.name }}" data-price="{{ item.price }}" data-desc="{{ item.description }}">
+                                        <button class="add-to-cart-btn bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center shadow-md hover:bg-primary-dark transition" data-item-id="{{ item.id }}" 
+                                        data-iscombo="0"
+                                        data-name="{{ item.name }}" data-price="{{ item.price }}" data-desc="{{ item.description }}">
                                             <i class="fas fa-plus text-sm"></i>
                                         </button>
                                     </div>
