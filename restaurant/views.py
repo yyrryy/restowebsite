@@ -884,7 +884,7 @@ def createguestorder(request):
         delivery_address=address,
         total=total,
         subtotal=subtotal,
-        notes='Guest order',
+        notes=note if note else '',
         deliveryfees=deliveryfees,
         paiment_method=payment_method
     )
@@ -940,6 +940,7 @@ Total: {order.total}DH
 def getcommandnumber(request):
     orders=Order.objects.filter(senttosystem=False)
     length=orders.count()
+    print("length", length)
     if length==0:
         return JsonResponse({
             'success':False,
@@ -955,7 +956,9 @@ def getcommandnumber(request):
             'clientname':order.name,
             'clientaddress':order.delivery_address,
             'clientphone':order.phone_number,
+            'deliveryfees':order.deliveryfees,
             'date':order.date,
+            'note':order.note,
             'total':order.total,
             'items':[]
         }
@@ -965,7 +968,7 @@ def getcommandnumber(request):
             orderitemsdata={
                 'ordernumber':item.order.id,
                 #uniqcode will be the connection
-                'name':item.dish,
+                'name':item.dish.name if item.dish else item.combo.name,
                 'qty':item.quantity,
                 'price':item.price,
                 'total':item.total,
