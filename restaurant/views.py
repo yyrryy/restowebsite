@@ -878,61 +878,69 @@ def createguestorder(request):
             "success":False,
             "error":"Remplir tous les champs"
         })
-    order = Order.objects.create(
-        name=name,
-        phone_number=phone_number,
-        delivery_address=address,
-        total=total,
-        subtotal=subtotal,
-        notes=note if note else '',
-        deliveryfees=deliveryfees,
-        paiment_method=payment_method
-    )
-    message = f"""
-🆕 *Nouvelle commande reçue !*
+    try:
+        order = Order.objects.create(
+            name=name,
+            phone_number=phone_number,
+            delivery_address=address,
+            total=total,
+            subtotal=subtotal,
+            notes=note if note else '',
+            deliveryfees=deliveryfees,
+            paiment_method=payment_method
+        )
+        message = f"""
+    🆕 *Nouvelle commande reçue !*
 
-👤 *Client:*
-Name: {name}
-Phone: {phone_number}
-Total: {total}DH
-Address: {address if address else 'N/A'}
-livraison: {deliveryfees if deliveryfees else '0.00'}Dh
+    👤 *Client:*
+    Name: {name}
+    Phone: {phone_number}
+    Total: {total}DH
+    Address: {address if address else 'N/A'}
+    livraison: {deliveryfees if deliveryfees else '0.00'}Dh
 
 
-📦 *Order #{order.id}*
-Date: {order.date.strftime('%Y-%m-%d %H:%M')}
-Total: {order.total}DH
-"""
-    for i in cart:
-        id = i["id"]
-        price = float(i["price"])
-        qty = float(i["quantity"])
-        total = price*qty
-        if int(i['iscombo'])==1:
-            dish_name = Combo.objects.get(id=id).name
-            OrderItem.objects.create(
-                order=order,
-                combo_id=id,
-                price=price,
-                quantity=qty,
-                total=total
-            )
-        else:
-            dish_name = MenuItem.objects.get(id=id).name
-            OrderItem.objects.create(
-                order=order,
-                dish_id=id,
-                price=price,
-                quantity=qty,
-                total=total    
-            )
-        message += f"• {qty}x {dish_name} - {total}DH\n"
-    
-    send_telegram_message(message, parse_mode='Markdown')
+    📦 *Order #{order.id}*
+    Date: {order.date.strftime('%Y-%m-%d %H:%M')}
+    Total: {order.total}DH
+    """
+        for i in cart:
+            id = i["id"]
+            price = float(i["price"])
+            qty = float(i["quantity"])
+            total = price*qty
+            if int(i['iscombo'])==1:
+                dish_name = Combo.objects.get(id=id).name
+                OrderItem.objects.create(
+                    order=order,
+                    combo_id=id,
+                    price=price,
+                    quantity=qty,
+                    total=total
+                )
+            else:
+                dish_name = MenuItem.objects.get(id=id).name
+                OrderItem.objects.create(
+                    order=order,
+                    dish_id=id,
+                    price=price,
+                    quantity=qty,
+                    total=total    
+                )
+            message += f"• {qty}x {dish_name} - {total}DH\n"
+        
+        send_telegram_message(message, parse_mode='Markdown')
 
-    return JsonResponse({
-        "success":True
-    })
+        return JsonResponse({
+            "success":True
+        })
+    except Exception as e:
+        with open('error_log.txt', 'a') as f:
+            f.write(f"Error creating guest order: {str(e)}\n")
+        return JsonResponse({
+            "success": False,
+            "error": str(e)
+        })
 
     # finish the order creation and redirect to a confirmation page or home
     

@@ -1,0 +1,152 @@
+{
+  "store": {
+    "name": "grillade le goût",
+    "city": "Kénitra",
+    "country": "Morocco",
+    "source_url": "https://glovoapp.com/fr/ma/kenitra/stores/le-gout-knt",
+    "rating_percent": 88,
+    "delivery_fee": "7,00 MAD (Gratuit avec Prime)"
+  },
+  "categories": [
+    {
+      "category": "Match Time Deals",
+      "products": [
+        {"name": "Combo12 : plateau de Mixte de machaoui", "price": "499,00 MAD", "description": "Plat familial royale de 1.50 kg de Mixte grillé : viande et poulet servi avec tomates et oignons grillés plus 2 litres de soda et 2 frites plus légume sautée", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/4492c6f1-6dad-4823-b28a-14f84da5ded5.jpg"},
+        {"name": "Combo 8", "price": "99,00 MAD", "description": "400gr viande hachée de bœuf grille avec tomate et oignon grille ou salade marocain plus offre soda 25cl", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/3a39d35e7c664c84b290be766e5fa687afed8b5a613784cf2102b7d9463fda30"},
+        {"name": "Combo 10", "price": "99,00 MAD", "description": "2 Cuisses avec 4 ailes et 4 tiges de brochette de poulet et tomate et oignon grille plus soda 1L", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/42051547933/df3e50e4-1e7e-4b07-98c3-5cf301b57cd9.jpg"},
+        {"name": "Combo 11", "price": "89,50 MAD", "description": "Tacos de 220 gr (produit au choix) grille au charbon servi avec soda plus frites", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/a80230e3-8e0e-45c8-a473-f20da51fd256.jpg"},
+        {"name": "Combo 1", "price": "79,00 MAD", "description": "3 tiges poulet grillées au charbon plus 4 pièces ailes servis avec tomates et oignons grillés plus et soda", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/42051535584/f96c2d63-3d71-4907-adae-e6c0c2dbcc1f.jpg"},
+        {"name": "Combo 4", "price": "79,00 MAD", "description": "250 gr Viande hachée de bœuf grille avec tomate et oignon grillés ou salade marocaine plus soda offre", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/62bb51cc1ddd063f30f8a516bc596666d013ea44290dd14d2fa45f861f385cc5"},
+        {"name": "Combo 5", "price": "79,00 MAD", "description": "Tajine de poulet citron et olive plus soda 25cl et frite", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/8da4b611f824db416d9f64653a2d42f241d4979512e85b2b87448a361478f91f"},
+        {"name": "Combo 2", "price": "69,00 MAD", "description": "Gigots de 250gr cuisse et haute cuisse de poulet mariné sauce maison grillés au charbon plus frites et riz (offre soda). Servi avec riz plus soda", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/42051535856/cb2f6818-7098-4bf5-8487-9879d5174413.jpg"},
+        {"name": "combo 6", "price": "69,00 MAD", "description": "M9ila ou choix (blanc poulet ou foie de poulet ou viande hachée ou foie de bœuf ou agneau ou saussice boulonnais) plus soda 25cl au choix offre", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/acf92e8c5a24e5874f5f898bc961ff132522589ed43533db4739b659e5c940e9"}
+      ]
+    },
+    {
+      "category": "SIGNATURE GRILLADE LE GOÛT",
+      "products": [
+        {"name": "Signature 5 : kefta ghrbaoiya", "price": "99,00 MAD", "description": "400 g de viande hachée de bœuf grillée au feu de charbon. Tomate & oignon grillés ou salade marocaine et Soda 25cl inclus", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/c2e4bb8b-2c88-4eda-9e58-810247a2cc15.jpg"},
+        {"name": "Signature 6: steek de bœuf", "price": "99,00 MAD", "description": "Steak de bœuf grillé au charbon 150g. Riz Légumes sautés, Tomate & oignon grillés, Sauce blanche champignons fait maison au soja", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/1bae4db6-ff66-47fe-a0af-9cf69a225293.jpg"},
+        {"name": "Signature 1 : Gigot de poulet", "price": "79,00 MAD", "description": "Gigot de Poulet plus de 290gr mariné épices spéciale grillé au feu de charbon, accompagné de riz jaune parfumé, frites maison et salade de tomates & oignons grillés, avec soda 25cl inclus", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/6b00eed1-79ee-4a05-aa9b-92cb64c736a6.jpg"},
+        {"name": "Signature 2 : Mix Chicken Duo", "price": "79,00 MAD", "description": "Assortiment de poulet grillé au feu de charbon marinade fait maison : 1 cuisse, 2 brochettes et 2 ailes grillées, accompagnés de riz jaune parfumé, frites maison, salade de tomates & oignons grillés, avec soda 25cl inclus", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/f75ea27d-fc24-487e-a5ad-28fdc73139d1.jpg"},
+        {"name": "Signature 4 : Menu beldi boulfaf", "price": "79,00 MAD", "description": "3 brochettes de Boulfaf grillées au feu de charbon, accompagnées de riz parfumé, tomate et oignon grillés, avec une boisson 25cl incluse", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/e42e6cd1-29b5-48f6-86a4-e9422fa62721.jpg"},
+        {"name": "Signature 9 : plat baldi tanjia", "price": "8,00 MAD", "description": "Viande de jarret, marinée aux épices traditionnelles, au safran et à l'ail, puis cuite lentement au charbon pour une viande tendre et fondante", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/ef30132e-bfff-43ec-be50-2f2400cd1883.jpg"}
+      ]
+    },
+    {
+      "category": "Produits supplémentaires fait maison",
+      "products": [
+        {"name": "Salade de Zaalouk", "price": "17,00 MAD", "description": "Aubergine et charmoula fait maison cuite au charbon", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/0208b0c7-e05b-450f-9559-febfb2db1c1b.jpg"},
+        {"name": "Salade de Taktoka", "price": "17,00 MAD", "description": "Poivre et charmoula fait maison cuite au charbon", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/c1928116-ca33-4832-b86b-0c2a62850e7f.jpg"},
+        {"name": "Riz", "price": "17,00 MAD", "description": "Riz sauté fait maison", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/0111d569-e2d3-4fc7-860e-4b37fd57c977.jpg"},
+        {"name": "Frite", "price": "13,00 MAD", "description": "Pomme de terre naturelle et fraîche", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/3610fb23-44c1-4bf0-980c-734e3e153b91.jpg"}
+      ]
+    },
+    {
+      "category": "Nos Salades",
+      "products": [
+        {"name": "Salade Marocaine", "price": "27,50 MAD", "description": "Tomate, concombre, laitue, oignon, vinaigrette et huile d'olive", "image": "https://d52ouboplz7yg.cloudfront.net/glovo/ihwrev2gxtucnva5ppvhgtbr"}
+      ]
+    },
+    {
+      "category": "Offres Exclusives (عرض خاص و استثناء)",
+      "products": [
+        {"name": "Offre Goût 1 : 1 kg viande hachée bœuf", "price": "229,00 MAD", "description": "1 kg viande hachée grillée au charbon avec des épices spéciales, tomate et oignon grillés, soda de 1 litre", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/3b9ae92a-c4ef-4a7c-939d-bf0e53314198.jpg"},
+        {"name": "Offre le goût 2 : 1 kg Mixte de poulet grille au charbon", "price": "159,00 MAD", "description": "250 gr brochette de blanc poulet mariné, 400 gr cuisse de poulet mariné, 350gr ailes de poulet, servi avec tomate et oignon grillé ou salade marocaine plus soda 1 litre", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/0a6459ab-5309-4fd9-a684-cdb3dd861a63.jpg"},
+        {"name": "Offre le Goût 7 : 500gr Mixte de viande agneau", "price": "149,00 MAD", "description": "500gr côtelette + brochette d'agneau, servi avec tomates et oignons grillés ou salade marocaine", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/dc83b72b-41b0-460f-b79e-a2b197663aee.jpg"},
+        {"name": "Offre le Goût spécial = Tanjia au charbon طنجيه على الفحم", "price": "98,00 MAD", "description": "Tanjia cuite au charbon, viande de bœuf, avec safran, citron confit, offre boisson soda", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/80a5f832-0f64-46b4-b116-67f7ed33ab94.jpg"},
+        {"name": "Offre le Goût 3 : Mixte poulet grille au charbon", "price": "69,00 MAD", "description": "2 tiges de brochette de poulet, 3 ailes de poulet marinade fait maison, tomate et oignon grillé, pain", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/a6b8853a-7672-4366-8c1e-bdef81a1baad.jpg"},
+        {"name": "Offre le Goût 8 : Brochette de poivrons farcis au charbon", "price": "59,00 MAD", "description": "3 tiges de 300gr de brochette de poivrons farcis à la viande hachée de bœuf et fromage au charbon, servi avec tomates et oignons grillés ou zaalouk selon menu du jour plus riz", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/bed39bdc-a791-41aa-807d-7065d80894e0.jpg"},
+        {"name": "Offre le Goût 10 : Saussice de bœuf boulonnais", "price": "59,00 MAD", "description": "250 gr saucisse de viande de bœuf, petite taille, au charbon, marinée à l'huile d'olive, ail et persil, tomate et oignon grillés", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/3244d27d-784f-49ab-9787-4ab6ba91fb1b.jpg"}
+      ]
+    },
+    {
+      "category": "(مقيلات) mqilate",
+      "products": [
+        {"name": "Meqila émincé de viande de bœuf", "price": "62,50 MAD", "description": "Émincé de bœuf avec sauce maison, sauce soja, poivre, oignon, fromage râpé", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/72348e95-c97f-44dd-b07c-0c03eb545443.jpg"},
+        {"name": "Meqila de blanc de poulet", "price": "44,00 MAD", "description": "Brochette blanc de poulet avec oignon et fromage râpé", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/334f7513-392d-4240-9978-164d94677501.jpg"},
+        {"name": "Tortilla", "price": "39,00 MAD", "description": "Oignon, petits dés de pomme de terre avec œuf, persil, plus jus naturel 100% au choix", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/4562564c-d4c4-472b-b931-0b13938f3186.jpg"},
+        {"name": "Meqila berbère œuf au tomate", "price": "26,00 MAD", "description": "Œufs, sauce tomate, oignon, poivre, olive, fromage", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/3ac2dbc5-206c-4151-8f98-ce1ab57a32e2.jpg"}
+      ]
+    },
+    {
+      "category": "Jus",
+      "products": [
+        {"name": "Jus de pêche", "price": "34,00 MAD", "description": "Pêche avec orange", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/56ffb022-7d64-49f7-8318-f642ac697cc2.jpg"},
+        {"name": "Jus avocat", "price": "33,50 MAD", "description": "Avocat au lait", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/857e570d-75af-44f8-a864-4cfc7feac2ba.jpg"},
+        {"name": "Jus de mangue", "price": "29,00 MAD", "description": "Mangue avec jus d'orange naturel 100%", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/e73ae5cf-952e-4115-9181-c41a32378339.jpg"},
+        {"name": "Jus de banane", "price": "24,00 MAD", "description": "Jus de banane au lait", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/12cb399f-0519-463b-b9ad-3571234803ae.jpg"},
+        {"name": "Citronnade gingembre", "price": "22,50 MAD", "description": "Boisson rafraîchissante à base de jus de citron naturel 100% et de gingembre", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/c88b6e4e-4c70-412a-bcb3-12ad72fef0d4.jpg"},
+        {"name": "Jus de pomme", "price": "22,50 MAD", "description": "Jus de pomme au lait", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/175ae156-d11f-4997-bc00-6d0767f755e4.jpg"},
+        {"name": "Jus betterave", "price": "22,00 MAD", "description": "Jus de betterave à base d'orange naturelle 100% et fraîche", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/f3572416-b53f-49ec-8cd7-7a8c2ccbd6d0.jpg"},
+        {"name": "Jus de carottes", "price": "22,00 MAD", "description": "Jus de carottes à base d'orange naturelle 100% et fraîche", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/d517cbd8-8148-4b59-9e2f-b1a6fbc43ece.jpg"},
+        {"name": "Jus d'orange", "price": "20,00 MAD", "description": "Jus d'orange naturel 100% et frais", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/056f7e2a-29a4-4191-a76a-de4d44bfec8f.jpg"},
+        {"name": "Jus de citron", "price": "20,00 MAD", "description": "Préparé avec du jus de citron naturel 100% et de l'eau", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/40754f7e-22f8-43a5-ae29-90a0b078f2e8.jpg"}
+      ]
+    },
+    {
+      "category": "DÉTOX",
+      "products": [
+        {"name": "DÉTOX BLANCHE SPORTIVE", "price": "42,00 MAD", "description": "Boisson protéinée aux bananes et aux fruits secs", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/41856680610/5b0fafd1-a75a-483a-9502-aa74fb2795ee.jpg"},
+        {"name": "DÉTOX ROUGE", "price": "39,00 MAD", "description": "Jus d'orange, betterave, carottes et gingembre", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/711ffb94-ae96-45e2-bd55-a46e08a25251.jpg"},
+        {"name": "DETOX ORANGE : ENERGIE MATINALE", "price": "39,00 MAD", "description": "Jus d'orange avec carottes, jus de citron et gingembre", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/1ff5f7f8-492a-41a1-a8e1-d0f8bd6b2632.jpg"},
+        {"name": "DÉTOX VERT", "price": "39,00 MAD", "description": "Jus de citron, pomme verte, gros concombre, kiwi selon disponibilité, et menthe", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/343db000-c179-4b56-ab8e-844aa713d17e.jpg"}
+      ]
+    },
+    {
+      "category": "Nos Plats Marocain",
+      "products": [
+        {"name": "Tanjia au charbon طنجيه على الفحم", "price": "88,50 MAD", "description": "Viande de bœuf melaj avec safran, citron confit", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/86455eb1f4acb0f8126017ed4ac2bb9296781ae9fb5a59018fd5fb53f8d777c2"},
+        {"name": "Tajine De Cervelle", "price": "85,00 MAD", "description": "Cervelle cuite selon votre choix", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/c909f7b23229e6464d2c8ae48a1b96b3d074bd6e13d15e7b2c8bf56634ab4fb5"},
+        {"name": "Poulet Avec Daghmira", "price": "79,00 MAD", "description": "Poulet grillé façon fêtes fait maison, servi avec daghmira, olive, citron, frites", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/41444196630/90dd8708-16a6-47b9-81d2-0939913758ce.jpg"},
+        {"name": "Tajine viande hachée bœuf", "price": "79,00 MAD", "description": "Viande hachée de bœuf avec sauce tomate, œuf, olive, citron", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/e147063e-1a6c-4f12-8ee6-f37f3abe8564.jpg"},
+        {"name": "Pied de Veau Au Charbon (كرعين)", "price": "79,00 MAD", "description": "Pieds de veau, pois chiches, sauce tomate, épices, cuit toute la nuit au charbon", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/41444196585/ca543d20-2851-4409-b55a-ee226f8ce159.jpg"},
+        {"name": "Tajine De Bœuf Aux Pruneaux", "price": "79,00 MAD", "description": "Tajine viande de bœuf cuite au charbon avec oignons mdghmra, pruneaux et œufs durs", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/73f5d79b5eb2f22e5634adeff9d63778795c2372d0ae54feb31cf7f2618b0bfd"},
+        {"name": "Tajine Foie De Bœuf", "price": "79,00 MAD", "description": "Foie de bœuf, sauce tomate", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/8bd35936f3fcb541e758941814144e72c44ab7bfd89de3a66691b15ef3e46379"},
+        {"name": "Plat Poulet Avec Olives", "price": "69,00 MAD", "description": "Tajine de poulet, servi avec olive, citron confit et frites", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/62e68a0217c25fe1f81ddc730b9ea2150fea6382bcecd38aa033ffe358f1627d"},
+        {"name": "Harira", "price": "22,50 MAD", "description": "Harira fait maison avec dattes et œuf", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/1556a65e-6d39-4512-a4ba-a8500e0875f1.jpg"}
+      ]
+    },
+    {
+      "category": "Nos Tacos Grillé Au Charbon",
+      "products": [
+        {"name": "Tacos Mixte", "price": "69,00 MAD", "description": "Mixte grillé au charbon, fromage avec frites, sauce au choix", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/64cea1bcff181d12744c3c859e13436f719fd9c154727047c6db6e93db4befc1"},
+        {"name": "Tacos Viande hachée de bœuf", "price": "59,00 MAD", "description": "Viande hachée grillée au charbon, fromage avec frites, sauce au choix", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/af26e26e41a315e75fb55d2bf025d57d36176c47fa8d95f356f97e1fc34ee184"},
+        {"name": "Tacos baldi Brochette Poulet", "price": "49,00 MAD", "description": "Poulet beldi marinade fait maison grillé au charbon, fromage cheddar, sauce au choix, plus frites", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/60c2ef803f1b71d8d0a7a39a65bd9912c5c0e8e73545c7e95aeb33677c1d8516"},
+        {"name": "Tacos Saucisse De Bœuf", "price": "45,00 MAD", "description": "Saucisse grillée au charbon, fromage avec frites, sauce au choix", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/1ded01870a61b3a1cea1fda27c4e8ce45813efac9a6a7b5cbbd7d0f7122306dc"}
+      ]
+    },
+    {
+      "category": "Grilliade Au Charbon",
+      "products": [
+        {"name": "Mixte", "price": "84,00 MAD", "description": "Selon le choix", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/41444196679/d5911421-b6d4-4f67-9b67-a1846c2636b1.jpg"},
+        {"name": "Foie De Bœuf", "price": "78,00 MAD", "description": "Selon votre choix", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/41444196678/494a2c7a-74ed-4d6f-bd54-92d4188c92b9.jpg"},
+        {"name": "Brochette de Bœuf", "price": "78,00 MAD", "description": "Viande de bœuf avec charmoula fait maison, oignons et épices", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/69c982d523645cb1ce6a60f9442c2e751b71222b0fbde9dd8c311bc87e063be0"},
+        {"name": "Steak Et Entrecôte De Bœuf", "price": "76,00 MAD", "description": "De notre boucherie", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/2e5a1d4c59245a025c030941e476505aaa4e5727d85ecf72a42e0776b215c5b6"},
+        {"name": "Cœur grillé au charbon", "price": "54,00 MAD", "description": "Cœur grillé, bœuf ou agneau, servi avec tomates et oignons (offre)", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/c29c14de-9821-4145-964f-abd4bb368a0e.jpg"},
+        {"name": "Brochette Poulet", "price": "39,50 MAD", "description": "Selon votre choix", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/27770d598627d7600eac159c81ba97ee37acd83fb6729244a5139764d4ce1e2c"},
+        {"name": "Cuisse de poulet Grillé Au Charbon De Bois", "price": "39,50 MAD", "description": "Cuisse grillée avec marinade spéciale, tomates et oignons offre", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/18484d2bb93476a935f2ce953b9f49581e3f2cd7b5a0a0a7589584c00d4f9aee"},
+        {"name": "Saussice de poulet", "price": "34,50 MAD", "description": "Saucisse de haute cuisse grillée au charbon avec marinade et épices maison", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/d61e1304-23cd-41bf-b07a-d376625ff4ad.jpg"},
+        {"name": "Ailes de poulet", "price": "28,50 MAD", "description": "Ailes de poulet marinade spéciale grillées au charbon", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/9b622ddb-ac3f-4e96-bea5-90f7760dc812.jpg"},
+        {"name": "Merguez de bœuf", "price": "22,50 MAD", "description": "Saucisse de bœuf fait maison avec épices spéciales", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/41444196677/32101862-0dbf-4fef-a594-31e823d12498.jpg"},
+        {"name": "Viande hachée de bœuf boulfaf", "price": "20,00 MAD", "description": "Viande hachée au charbon avec épices spéciales (كفتة بولفاف)", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/45a401cd-247d-4fcc-a78e-82e05ab62bb2.jpg"},
+        {"name": "Viande Hachée De Bœuf", "price": "20,00 MAD", "description": "Viande hachée avec épices de notre boucherie", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/PRODUCT/41444196676/65115b7f-540b-46f6-b234-b49caf704e12.jpg"}
+      ]
+    },
+    {
+      "category": "Boisson",
+      "products": [
+        {"name": "Soda Pom's", "price": "12,00 MAD", "description": "Boisson gazeuse", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/f5c888e9e1379badf0f54b4de9a3d3eaf2e4976c51f3d977bdd39627b57d86c5"},
+        {"name": "Oulmes", "price": "12,00 MAD", "description": "Eau gazeuse", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/e9b7e5a3e527b18d624c8f04db46362d58663710e4a2d80ea9bd73f406377855"},
+        {"name": "Soda Coca Cola", "price": "12,00 MAD", "description": "Boisson gazeuse", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/bedeb382d698d3912db759ae62fdd21f98a7ae983e6721b408c78b5b8e5dfcc5"},
+        {"name": "Soda Coca Zero", "price": "12,00 MAD", "description": "Boisson gazeuse", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/20cd75bedc200cd091b1ac44f40ba1de1218a2815f85af3ef0378c347833e688"},
+        {"name": "Soda Hawaï tropical", "price": "12,00 MAD", "description": "Boisson gazeuse", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/e8cba6f98c6d3bcd259121f72a87372317958b78217d7733b1638fb176e6c1d3"},
+        {"name": "Pepsi", "price": "10,00 MAD", "description": "Pepsi cola", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/c96a4674-38d6-473a-80ee-45478c6c563d.jpg"},
+        {"name": "Mirinda orange", "price": "10,00 MAD", "description": "Mirinda", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/fa5fafc8-e812-45ea-96aa-6f5059e62320.jpg"},
+        {"name": "Mirinda citron", "price": "10,00 MAD", "description": "Mirinda", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/2873d839-ef7b-4c7e-9f04-9353b079735a.jpg"},
+        {"name": "7up", "price": "10,00 MAD", "description": "7 up soda", "image": "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/853051/product/2c70f467-dec9-46c6-a0bb-e0b7297f739e.jpg"},
+        {"name": "Eau minérale", "price": "6,00 MAD", "description": "Eau minérale", "image": "https://glovo.dhmedia.io/image/menus-glovo/products/1816402e2329fd62f973da44ef9367514b7ee8bc47248e348c789fcb5492eeb6"}
+      ]
+    }
+  ]
+}
