@@ -52,6 +52,7 @@ class MenuItem(models.Model):
     category = models.ForeignKey(MenuCategory, on_delete=models.SET_NULL, null=True, blank=True, related_name='menuitem_set')
     price = models.FloatField(default=0, null=True, blank=True)
     image = models.FileField(upload_to='menu_items/', blank=True)
+    description = models.TextField(blank=True)
     is_available = models.BooleanField(default=True)
     plu = models.IntegerField(unique=True, null=True, blank=True, db_index=True, default=None)
     

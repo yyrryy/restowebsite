@@ -983,7 +983,7 @@ def getcommandnumber(request):
             }
             orderdata['items'].append(orderitemsdata)
             #orderitemsstosend.append(orderitemsdata)
-    #orders.update(senttosystem=True)
+    orders.update(senttosystem=True)
     return JsonResponse({
         'success':True,
         'length':length,
