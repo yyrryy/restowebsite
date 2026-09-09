@@ -36,7 +36,7 @@ def import_menu_items(json_file_path):
             image = item_data.get('image', None)
             
             # Check if item already exists
-            existing_item = MenuItem.objects.filter(name=name).first()
+            existing_item = MenuItem.objects.filter(category_id=category, name=name).first()
             if existing_item:
                 print(f"⚠️ Item '{name}' already exists, skipping...")
                 continue

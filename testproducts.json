@@ -1,5 +1,33 @@
 [
     {
+        "category": "1",
+        "name": "djddkkd kdkk12 : plateau de Mixte de machaoui",
+        "price": "499,00 MAD",
+        "description": "Plat familial royale de 1.50 kg de Mixte grillé : viande et poulet servi avec tomates et oignons grillés plus 2 litres de soda et 2 frites plus légume sautée",
+        "image": "menu_items/combo12-plateau-de-mixte-de-machaoui.jpg"
+    },
+    {
+        "category": "1",
+        "name": "djddkkd kdkk 8",
+        "price": "99,00 MAD",
+        "description": "400gr viande hachée de bœuf grille avec tomate et oignon grille ou salade marocain plus offre soda 25cl",
+        "image": "menu_items/combo-8.jpg"
+    },
+    {
+        "category": "1",
+        "name": "djddkkd kdkk 10",
+        "price": "99,00 MAD",
+        "description": "2 Cuisses avec 4 ailes et 4 tiges de brochette de poulet et tomate et oignon grille plus soda 1L",
+        "image": "menu_items/combo-10.jpg"
+    },
+    {
+        "category": "1",
+        "name": "djddkkd kdkk 11",
+        "price": "89,50 MAD",
+        "description": "Tacos de 220 gr (produit au choix) grille au charbon servi avec soda plus frites",
+        "image": "menu_items/combo-11.jpg"
+    },
+    {
         "name": "Combo12 : plateau de Mixte de machaoui",
         "price": "499,00 MAD",
         "description": "Plat familial royale de 1.50 kg de Mixte grillé : viande et poulet servi avec tomates et oignons grillés plus 2 litres de soda et 2 frites plus légume sautée",

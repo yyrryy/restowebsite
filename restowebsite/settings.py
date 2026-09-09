@@ -45,6 +45,7 @@ LOCAL_APPS = [
     'apps.analytics',
 ]
 
+
 INSTALLED_APPS = [
     *LOCAL_APPS,
     'django.contrib.admin',
@@ -94,7 +95,7 @@ WSGI_APPLICATION = 'restowebsite.wsgi.application'
 
 USE_SQLITE = os.getenv('DEBUG') == 'True' or os.getenv('HOME') == '/home/aaliali'
 # SQLite mode is treated as local/dev mode (runserver). Non-sqlite is waitress mode.
-DEBUG = USE_SQLITE
+DEBUG = True
 print('USE_SQLITE', USE_SQLITE)
 if USE_SQLITE:
     STATICFILES_DIRS = [
