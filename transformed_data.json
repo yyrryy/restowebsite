@@ -1,562 +1,562 @@
 [
     {
-        "category": "1",
+        "category": "2",
         "name": "Combo12 : plateau de Mixte de machaoui",
         "price": "499,00 MAD",
         "description": "Plat familial royale de 1.50 kg de Mixte grillé : viande et poulet servi avec tomates et oignons grillés plus 2 litres de soda et 2 frites plus légume sautée",
-        "image": "combo12-plateau-de-mixte-de-machaoui.jpg"
+        "image": "menu_items/combo12-plateau-de-mixte-de-machaoui.jpg"
     },
     {
-        "category": "1",
+        "category": "2",
         "name": "Combo 8",
         "price": "99,00 MAD",
         "description": "400gr viande hachée de bœuf grille avec tomate et oignon grille ou salade marocain plus offre soda 25cl",
-        "image": "combo-8.jpg"
+        "image": "menu_items/combo-8.jpg"
     },
     {
-        "category": "1",
+        "category": "2",
         "name": "Combo 10",
         "price": "99,00 MAD",
         "description": "2 Cuisses avec 4 ailes et 4 tiges de brochette de poulet et tomate et oignon grille plus soda 1L",
-        "image": "combo-10.jpg"
+        "image": "menu_items/combo-10.jpg"
     },
     {
-        "category": "1",
+        "category": "2",
         "name": "Combo 11",
         "price": "89,50 MAD",
         "description": "Tacos de 220 gr (produit au choix) grille au charbon servi avec soda plus frites",
-        "image": "combo-11.jpg"
+        "image": "menu_items/combo-11.jpg"
     },
     {
-        "category": "Match Time Deals",
+        "category": "2",
         "name": "Combo 1",
         "price": "79,00 MAD",
         "description": "3 tiges poulet grillées au charbon plus 4 pièces ailes servis avec tomates et oignons grillés plus et soda",
-        "image": "combo-1.jpg"
+        "image": "menu_items/combo-1.jpg"
     },
     {
-        "category": "Match Time Deals",
+        "category": "2",
         "name": "Combo 4",
         "price": "79,00 MAD",
         "description": "250 gr Viande hachée de bœuf grille avec tomate et oignon grillés ou salade marocaine plus soda offre",
-        "image": "combo-4.jpg"
+        "image": "menu_items/combo-4.jpg"
     },
     {
-        "category": "Match Time Deals",
+        "category": "2",
         "name": "Combo 5",
         "price": "79,00 MAD",
         "description": "Tajine de poulet citron et olive plus soda 25cl et frite",
-        "image": "combo-5.jpg"
+        "image": "menu_items/combo-5.jpg"
     },
     {
-        "category": "Match Time Deals",
+        "category": "2",
         "name": "Combo 2",
         "price": "69,00 MAD",
         "description": "Gigots de 250gr cuisse et haute cuisse de poulet mariné sauce maison grillés au charbon plus frites et riz (offre soda). Servi avec riz plus soda",
-        "image": "combo-2.jpg"
+        "image": "menu_items/combo-2.jpg"
     },
     {
-        "category": "Match Time Deals",
+        "category": "2",
         "name": "combo 6",
         "price": "69,00 MAD",
         "description": "M9ila ou choix (blanc poulet ou foie de poulet ou viande hachée ou foie de bœuf ou agneau ou saussice boulonnais) plus soda 25cl au choix offre",
-        "image": "combo-6.jpg"
+        "image": "menu_items/combo-6.jpg"
     },
     {
-        "category": "SIGNATURE GRILLADE LE GOÛT",
+        "category": "13",
         "name": "Signature 5 : kefta ghrbaoiya",
         "price": "99,00 MAD",
         "description": "400 g de viande hachée de bœuf grillée au feu de charbon. Tomate & oignon grillés ou salade marocaine et Soda 25cl inclus",
-        "image": "signature-5-kefta-ghrbaoiya.jpg"
+        "image": "menu_items/signature-5-kefta-ghrbaoiya.jpg"
     },
     {
-        "category": "SIGNATURE GRILLADE LE GOÛT",
+        "category": "13",
         "name": "Signature 6: steek de bœuf",
         "price": "99,00 MAD",
         "description": "Steak de bœuf grillé au charbon 150g. Riz Légumes sautés, Tomate & oignon grillés, Sauce blanche champignons fait maison au soja",
-        "image": "signature-6-steek-de-buf.jpg"
+        "image": "menu_items/signature-6-steek-de-buf.jpg"
     },
     {
-        "category": "SIGNATURE GRILLADE LE GOÛT",
+        "category": "13",
         "name": "Signature 1 : Gigot de poulet",
         "price": "79,00 MAD",
         "description": "Gigot de Poulet plus de 290gr mariné épices spéciale grillé au feu de charbon, accompagné de riz jaune parfumé, frites maison et salade de tomates & oignons grillés, avec soda 25cl inclus",
-        "image": "signature-1-gigot-de-poulet.jpg"
+        "image": "menu_items/signature-1-gigot-de-poulet.jpg"
     },
     {
-        "category": "SIGNATURE GRILLADE LE GOÛT",
+        "category": "13",
         "name": "Signature 2 : Mix Chicken Duo",
         "price": "79,00 MAD",
         "description": "Assortiment de poulet grillé au feu de charbon marinade fait maison : 1 cuisse, 2 brochettes et 2 ailes grillées, accompagnés de riz jaune parfumé, frites maison, salade de tomates & oignons grillés, avec soda 25cl inclus",
-        "image": "signature-2-mix-chicken-duo.jpg"
+        "image": "menu_items/signature-2-mix-chicken-duo.jpg"
     },
     {
-        "category": "SIGNATURE GRILLADE LE GOÛT",
+        "category": "13",
         "name": "Signature 4 : Menu beldi boulfaf",
         "price": "79,00 MAD",
         "description": "3 brochettes de Boulfaf grillées au feu de charbon, accompagnées de riz parfumé, tomate et oignon grillés, avec une boisson 25cl incluse",
-        "image": "signature-4-menu-beldi-boulfaf.jpg"
+        "image": "menu_items/signature-4-menu-beldi-boulfaf.jpg"
     },
     {
-        "category": "SIGNATURE GRILLADE LE GOÛT",
+        "category": "13",
         "name": "Signature 9 : plat baldi tanjia",
         "price": "8,00 MAD",
         "description": "Viande de jarret, marinée aux épices traditionnelles, au safran et à l'ail, puis cuite lentement au charbon pour une viande tendre et fondante",
-        "image": "signature-9-plat-baldi-tanjia.jpg"
+        "image": "menu_items/signature-9-plat-baldi-tanjia.jpg"
     },
     {
-        "category": "Produits supplémentaires fait maison",
+        "category": "9",
         "name": "Salade de Zaalouk",
         "price": "17,00 MAD",
         "description": "Aubergine et charmoula fait maison cuite au charbon",
-        "image": "salade-de-zaalouk.jpg"
+        "image": "menu_items/salade-de-zaalouk.jpg"
     },
     {
-        "category": "Produits supplémentaires fait maison",
+        "category": "9",
         "name": "Salade de Taktoka",
         "price": "17,00 MAD",
         "description": "Poivre et charmoula fait maison cuite au charbon",
-        "image": "salade-de-taktoka.jpg"
+        "image": "menu_items/salade-de-taktoka.jpg"
     },
     {
-        "category": "Produits supplémentaires fait maison",
+        "category": "9",
         "name": "Riz",
         "price": "17,00 MAD",
         "description": "Riz sauté fait maison",
-        "image": "riz.jpg"
+        "image": "menu_items/riz.jpg"
     },
     {
-        "category": "Produits supplémentaires fait maison",
+        "category": "9",
         "name": "Frite",
         "price": "13,00 MAD",
         "description": "Pomme de terre naturelle et fraîche",
-        "image": "frite.jpg"
+        "image": "menu_items/frite.jpg"
     },
     {
-        "category": "Nos Salades",
+        "category": "9",
         "name": "Salade Marocaine",
         "price": "27,50 MAD",
         "description": "Tomate, concombre, laitue, oignon, vinaigrette et huile d'olive",
-        "image": "salade-marocaine.jpg"
+        "image": "menu_items/salade-marocaine.jpg"
     },
     {
-        "category": "Offres Exclusives (عرض خاص و استثناء)",
+        "category": "16",
         "name": "Offre Goût 1 : 1 kg viande hachée bœuf",
         "price": "229,00 MAD",
         "description": "1 kg viande hachée grillée au charbon avec des épices spéciales, tomate et oignon grillés, soda de 1 litre",
-        "image": "offre-got-1-1-kg-viande-hache-buf.jpg"
+        "image": "menu_items/offre-got-1-1-kg-viande-hache-buf.jpg"
     },
     {
-        "category": "Offres Exclusives (عرض خاص و استثناء)",
+        "category": "16",
         "name": "Offre le goût 2 : 1 kg Mixte de poulet grille au charbon",
         "price": "159,00 MAD",
         "description": "250 gr brochette de blanc poulet mariné, 400 gr cuisse de poulet mariné, 350gr ailes de poulet, servi avec tomate et oignon grillé ou salade marocaine plus soda 1 litre",
-        "image": "offre-le-got-2-1-kg-mixte-de-poulet-grille-au-charbon.jpg"
+        "image": "menu_items/offre-le-got-2-1-kg-mixte-de-poulet-grille-au-charbon.jpg"
     },
     {
-        "category": "Offres Exclusives (عرض خاص و استثناء)",
+        "category": "16",
         "name": "Offre le Goût 7 : 500gr Mixte de viande agneau",
         "price": "149,00 MAD",
         "description": "500gr côtelette + brochette d'agneau, servi avec tomates et oignons grillés ou salade marocaine",
-        "image": "offre-le-got-7-500gr-mixte-de-viande-agneau.jpg"
+        "image": "menu_items/offre-le-got-7-500gr-mixte-de-viande-agneau.jpg"
     },
     {
-        "category": "Offres Exclusives (عرض خاص و استثناء)",
+        "category": "16",
         "name": "Offre le Goût spécial = Tanjia au charbon طنجيه على الفحم",
         "price": "98,00 MAD",
         "description": "Tanjia cuite au charbon, viande de bœuf, avec safran, citron confit, offre boisson soda",
-        "image": "offre-le-got-spcial-tanjia-au-charbon.jpg"
+        "image": "menu_items/offre-le-got-spcial-tanjia-au-charbon.jpg"
     },
     {
-        "category": "Offres Exclusives (عرض خاص و استثناء)",
+        "category": "16",
         "name": "Offre le Goût 3 : Mixte poulet grille au charbon",
         "price": "69,00 MAD",
         "description": "2 tiges de brochette de poulet, 3 ailes de poulet marinade fait maison, tomate et oignon grillé, pain",
-        "image": "offre-le-got-3-mixte-poulet-grille-au-charbon.jpg"
+        "image": "menu_items/offre-le-got-3-mixte-poulet-grille-au-charbon.jpg"
     },
     {
-        "category": "Offres Exclusives (عرض خاص و استثناء)",
+        "category": "16",
         "name": "Offre le Goût 8 : Brochette de poivrons farcis au charbon",
         "price": "59,00 MAD",
         "description": "3 tiges de 300gr de brochette de poivrons farcis à la viande hachée de bœuf et fromage au charbon, servi avec tomates et oignons grillés ou zaalouk selon menu du jour plus riz",
-        "image": "offre-le-got-8-brochette-de-poivrons-farcis-au-charbon.jpg"
+        "image": "menu_items/offre-le-got-8-brochette-de-poivrons-farcis-au-charbon.jpg"
     },
     {
-        "category": "Offres Exclusives (عرض خاص و استثناء)",
+        "category": "16",
         "name": "Offre le Goût 10 : Saussice de bœuf boulonnais",
         "price": "59,00 MAD",
         "description": "250 gr saucisse de viande de bœuf, petite taille, au charbon, marinée à l'huile d'olive, ail et persil, tomate et oignon grillés",
-        "image": "offre-le-got-10-saussice-de-buf-boulonnais.jpg"
+        "image": "menu_items/offre-le-got-10-saussice-de-buf-boulonnais.jpg"
     },
     {
-        "category": "(مقيلات) mqilate",
+        "category": "21",
         "name": "Meqila émincé de viande de bœuf",
         "price": "62,50 MAD",
         "description": "Émincé de bœuf avec sauce maison, sauce soja, poivre, oignon, fromage râpé",
-        "image": "meqila-minc-de-viande-de-buf.jpg"
+        "image": "menu_items/meqila-minc-de-viande-de-buf.jpg"
     },
     {
-        "category": "(مقيلات) mqilate",
+        "category": "21",
         "name": "Meqila de blanc de poulet",
         "price": "44,00 MAD",
         "description": "Brochette blanc de poulet avec oignon et fromage râpé",
-        "image": "meqila-de-blanc-de-poulet.jpg"
+        "image": "menu_items/meqila-de-blanc-de-poulet.jpg"
     },
     {
-        "category": "(مقيلات) mqilate",
+        "category": "21",
         "name": "Tortilla",
         "price": "39,00 MAD",
         "description": "Oignon, petits dés de pomme de terre avec œuf, persil, plus jus naturel 100% au choix",
-        "image": "tortilla.jpg"
+        "image": "menu_items/tortilla.jpg"
     },
     {
-        "category": "(مقيلات) mqilate",
+        "category": "21",
         "name": "Meqila berbère œuf au tomate",
         "price": "26,00 MAD",
         "description": "Œufs, sauce tomate, oignon, poivre, olive, fromage",
-        "image": "meqila-berbre-uf-au-tomate.jpg"
+        "image": "menu_items/meqila-berbre-uf-au-tomate.jpg"
     },
     {
-        "category": "Jus",
+        "category": "10",
         "name": "Jus de pêche",
         "price": "34,00 MAD",
         "description": "Pêche avec orange",
-        "image": "jus-de-pche.jpg"
+        "image": "menu_items/jus-de-pche.jpg"
     },
     {
-        "category": "Jus",
+        "category": "10",
         "name": "Jus avocat",
         "price": "33,50 MAD",
         "description": "Avocat au lait",
-        "image": "jus-avocat.jpg"
+        "image": "menu_items/jus-avocat.jpg"
     },
     {
-        "category": "Jus",
+        "category": "10",
         "name": "Jus de mangue",
         "price": "29,00 MAD",
         "description": "Mangue avec jus d'orange naturel 100%",
-        "image": "jus-de-mangue.jpg"
+        "image": "menu_items/jus-de-mangue.jpg"
     },
     {
-        "category": "Jus",
+        "category": "10",
         "name": "Jus de banane",
         "price": "24,00 MAD",
         "description": "Jus de banane au lait",
-        "image": "jus-de-banane.jpg"
+        "image": "menu_items/jus-de-banane.jpg"
     },
     {
-        "category": "Jus",
+        "category": "10",
         "name": "Citronnade gingembre",
         "price": "22,50 MAD",
         "description": "Boisson rafraîchissante à base de jus de citron naturel 100% et de gingembre",
-        "image": "citronnade-gingembre.jpg"
+        "image": "menu_items/citronnade-gingembre.jpg"
     },
     {
-        "category": "Jus",
+        "category": "10",
         "name": "Jus de pomme",
         "price": "22,50 MAD",
         "description": "Jus de pomme au lait",
-        "image": "jus-de-pomme.jpg"
+        "image": "menu_items/jus-de-pomme.jpg"
     },
     {
-        "category": "Jus",
+        "category": "10",
         "name": "Jus betterave",
         "price": "22,00 MAD",
         "description": "Jus de betterave à base d'orange naturelle 100% et fraîche",
-        "image": "jus-betterave.jpg"
+        "image": "menu_items/jus-betterave.jpg"
     },
     {
-        "category": "Jus",
+        "category": "10",
         "name": "Jus de carottes",
         "price": "22,00 MAD",
         "description": "Jus de carottes à base d'orange naturelle 100% et fraîche",
-        "image": "jus-de-carottes.jpg"
+        "image": "menu_items/jus-de-carottes.jpg"
     },
     {
-        "category": "Jus",
+        "category": "10",
         "name": "Jus d'orange",
         "price": "20,00 MAD",
         "description": "Jus d'orange naturel 100% et frais",
-        "image": "jus-dorange.jpg"
+        "image": "menu_items/jus-dorange.jpg"
     },
     {
-        "category": "Jus",
+        "category": "10",
         "name": "Jus de citron",
         "price": "20,00 MAD",
         "description": "Préparé avec du jus de citron naturel 100% et de l'eau",
-        "image": "jus-de-citron.jpg"
+        "image": "menu_items/jus-de-citron.jpg"
     },
     {
-        "category": "DÉTOX",
+        "category": "11",
         "name": "DÉTOX BLANCHE SPORTIVE",
         "price": "42,00 MAD",
         "description": "Boisson protéinée aux bananes et aux fruits secs",
-        "image": "dtox-blanche-sportive.jpg"
+        "image": "menu_items/dtox-blanche-sportive.jpg"
     },
     {
-        "category": "DÉTOX",
+        "category": "11",
         "name": "DÉTOX ROUGE",
         "price": "39,00 MAD",
         "description": "Jus d'orange, betterave, carottes et gingembre",
-        "image": "dtox-rouge.jpg"
+        "image": "menu_items/dtox-rouge.jpg"
     },
     {
-        "category": "DÉTOX",
+        "category": "11",
         "name": "DETOX ORANGE : ENERGIE MATINALE",
         "price": "39,00 MAD",
         "description": "Jus d'orange avec carottes, jus de citron et gingembre",
-        "image": "detox-orange-energie-matinale.jpg"
+        "image": "menu_items/detox-orange-energie-matinale.jpg"
     },
     {
-        "category": "DÉTOX",
+        "category": "11",
         "name": "DÉTOX VERT",
         "price": "39,00 MAD",
         "description": "Jus de citron, pomme verte, gros concombre, kiwi selon disponibilité, et menthe",
-        "image": "dtox-vert.jpg"
+        "image": "menu_items/dtox-vert.jpg"
     },
     {
-        "category": "Nos Plats Marocain",
+        "category": "8",
         "name": "Tanjia au charbon طنجيه على الفحم",
         "price": "88,50 MAD",
         "description": "Viande de bœuf melaj avec safran, citron confit",
-        "image": "tanjia-au-charbon.jpg"
+        "image": "menu_items/tanjia-au-charbon.jpg"
     },
     {
-        "category": "Nos Plats Marocain",
+        "category": "8",
         "name": "Tajine De Cervelle",
         "price": "85,00 MAD",
         "description": "Cervelle cuite selon votre choix",
-        "image": "tajine-de-cervelle.jpg"
+        "image": "menu_items/tajine-de-cervelle.jpg"
     },
     {
-        "category": "Nos Plats Marocain",
+        "category": "8",
         "name": "Poulet Avec Daghmira",
         "price": "79,00 MAD",
         "description": "Poulet grillé façon fêtes fait maison, servi avec daghmira, olive, citron, frites",
-        "image": "poulet-avec-daghmira.jpg"
+        "image": "menu_items/poulet-avec-daghmira.jpg"
     },
     {
-        "category": "Nos Plats Marocain",
+        "category": "8",
         "name": "Tajine viande hachée bœuf",
         "price": "79,00 MAD",
         "description": "Viande hachée de bœuf avec sauce tomate, œuf, olive, citron",
-        "image": "tajine-viande-hache-buf.jpg"
+        "image": "menu_items/tajine-viande-hache-buf.jpg"
     },
     {
-        "category": "Nos Plats Marocain",
+        "category": "8",
         "name": "Pied de Veau Au Charbon (كرعين)",
         "price": "79,00 MAD",
         "description": "Pieds de veau, pois chiches, sauce tomate, épices, cuit toute la nuit au charbon",
-        "image": "pied-de-veau-au-charbon.jpg"
+        "image": "menu_items/pied-de-veau-au-charbon.jpg"
     },
     {
-        "category": "Nos Plats Marocain",
+        "category": "8",
         "name": "Tajine De Bœuf Aux Pruneaux",
         "price": "79,00 MAD",
         "description": "Tajine viande de bœuf cuite au charbon avec oignons mdghmra, pruneaux et œufs durs",
-        "image": "tajine-de-buf-aux-pruneaux.jpg"
+        "image": "menu_items/tajine-de-buf-aux-pruneaux.jpg"
     },
     {
-        "category": "Nos Plats Marocain",
+        "category": "8",
         "name": "Tajine Foie De Bœuf",
         "price": "79,00 MAD",
         "description": "Foie de bœuf, sauce tomate",
-        "image": "tajine-foie-de-buf.jpg"
+        "image": "menu_items/tajine-foie-de-buf.jpg"
     },
     {
-        "category": "Nos Plats Marocain",
+        "category": "8",
         "name": "Plat Poulet Avec Olives",
         "price": "69,00 MAD",
         "description": "Tajine de poulet, servi avec olive, citron confit et frites",
-        "image": "plat-poulet-avec-olives.jpg"
+        "image": "menu_items/plat-poulet-avec-olives.jpg"
     },
     {
-        "category": "Nos Plats Marocain",
+        "category": "8",
         "name": "Harira",
         "price": "22,50 MAD",
         "description": "Harira fait maison avec dattes et œuf",
-        "image": "harira.jpg"
+        "image": "menu_items/harira.jpg"
     },
     {
-        "category": "Nos Tacos Grillé Au Charbon",
+        "category": "15",
         "name": "Tacos Mixte",
         "price": "69,00 MAD",
         "description": "Mixte grillé au charbon, fromage avec frites, sauce au choix",
-        "image": "tacos-mixte.jpg"
+        "image": "menu_items/tacos-mixte.jpg"
     },
     {
-        "category": "Nos Tacos Grillé Au Charbon",
+        "category": "15",
         "name": "Tacos Viande hachée de bœuf",
         "price": "59,00 MAD",
         "description": "Viande hachée grillée au charbon, fromage avec frites, sauce au choix",
-        "image": "tacos-viande-hache-de-buf.jpg"
+        "image": "menu_items/tacos-viande-hache-de-buf.jpg"
     },
     {
-        "category": "Nos Tacos Grillé Au Charbon",
+        "category": "15",
         "name": "Tacos baldi Brochette Poulet",
         "price": "49,00 MAD",
         "description": "Poulet beldi marinade fait maison grillé au charbon, fromage cheddar, sauce au choix, plus frites",
-        "image": "tacos-baldi-brochette-poulet.jpg"
+        "image": "menu_items/tacos-baldi-brochette-poulet.jpg"
     },
     {
-        "category": "Nos Tacos Grillé Au Charbon",
+        "category": "15",
         "name": "Tacos Saucisse De Bœuf",
         "price": "45,00 MAD",
         "description": "Saucisse grillée au charbon, fromage avec frites, sauce au choix",
-        "image": "tacos-saucisse-de-buf.jpg"
+        "image": "menu_items/tacos-saucisse-de-buf.jpg"
     },
     {
-        "category": "Grilliade Au Charbon",
+        "category": "22",
         "name": "Mixte",
         "price": "84,00 MAD",
         "description": "Selon le choix",
-        "image": "mixte.jpg"
+        "image": "menu_items/mixte.jpg"
     },
     {
-        "category": "Grilliade Au Charbon",
+        "category": "22",
         "name": "Foie De Bœuf",
         "price": "78,00 MAD",
         "description": "Selon votre choix",
-        "image": "foie-de-buf.jpg"
+        "image": "menu_items/foie-de-buf.jpg"
     },
     {
-        "category": "Grilliade Au Charbon",
+        "category": "22",
         "name": "Brochette de Bœuf",
         "price": "78,00 MAD",
         "description": "Viande de bœuf avec charmoula fait maison, oignons et épices",
-        "image": "brochette-de-buf.jpg"
+        "image": "menu_items/brochette-de-buf.jpg"
     },
     {
-        "category": "Grilliade Au Charbon",
+        "category": "22",
         "name": "Steak Et Entrecôte De Bœuf",
         "price": "76,00 MAD",
         "description": "De notre boucherie",
-        "image": "steak-et-entrecte-de-buf.jpg"
+        "image": "menu_items/steak-et-entrecte-de-buf.jpg"
     },
     {
-        "category": "Grilliade Au Charbon",
+        "category": "22",
         "name": "Cœur grillé au charbon",
         "price": "54,00 MAD",
         "description": "Cœur grillé, bœuf ou agneau, servi avec tomates et oignons (offre)",
-        "image": "cur-grill-au-charbon.jpg"
+        "image": "menu_items/cur-grill-au-charbon.jpg"
     },
     {
-        "category": "Grilliade Au Charbon",
+        "category": "22",
         "name": "Brochette Poulet",
         "price": "39,50 MAD",
         "description": "Selon votre choix",
-        "image": "brochette-poulet.jpg"
+        "image": "menu_items/brochette-poulet.jpg"
     },
     {
-        "category": "Grilliade Au Charbon",
+        "category": "22",
         "name": "Cuisse de poulet Grillé Au Charbon De Bois",
         "price": "39,50 MAD",
         "description": "Cuisse grillée avec marinade spéciale, tomates et oignons offre",
-        "image": "cuisse-de-poulet-grill-au-charbon-de-bois.jpg"
+        "image": "menu_items/cuisse-de-poulet-grill-au-charbon-de-bois.jpg"
     },
     {
-        "category": "Grilliade Au Charbon",
+        "category": "22",
         "name": "Saussice de poulet",
         "price": "34,50 MAD",
         "description": "Saucisse de haute cuisse grillée au charbon avec marinade et épices maison",
-        "image": "saussice-de-poulet.jpg"
+        "image": "menu_items/saussice-de-poulet.jpg"
     },
     {
-        "category": "Grilliade Au Charbon",
+        "category": "22",
         "name": "Ailes de poulet",
         "price": "28,50 MAD",
         "description": "Ailes de poulet marinade spéciale grillées au charbon",
-        "image": "ailes-de-poulet.jpg"
+        "image": "menu_items/ailes-de-poulet.jpg"
     },
     {
-        "category": "Grilliade Au Charbon",
+        "category": "22",
         "name": "Merguez de bœuf",
         "price": "22,50 MAD",
         "description": "Saucisse de bœuf fait maison avec épices spéciales",
-        "image": "merguez-de-buf.jpg"
+        "image": "menu_items/merguez-de-buf.jpg"
     },
     {
-        "category": "Grilliade Au Charbon",
+        "category": "22",
         "name": "Viande hachée de bœuf boulfaf",
         "price": "20,00 MAD",
         "description": "Viande hachée au charbon avec épices spéciales (كفتة بولفاف)",
-        "image": "viande-hache-de-buf-boulfaf.jpg"
+        "image": "menu_items/viande-hache-de-buf-boulfaf.jpg"
     },
     {
-        "category": "Grilliade Au Charbon",
+        "category": "22",
         "name": "Viande Hachée De Bœuf",
         "price": "20,00 MAD",
         "description": "Viande hachée avec épices de notre boucherie",
-        "image": "viande-hache-de-buf.jpg"
+        "image": "menu_items/viande-hache-de-buf.jpg"
     },
     {
-        "category": "Boisson",
+        "category": "7",
         "name": "Soda Pom's",
         "price": "12,00 MAD",
         "description": "Boisson gazeuse",
-        "image": "soda-poms.jpg"
+        "image": "menu_items/soda-poms.jpg"
     },
     {
-        "category": "Boisson",
+        "category": "7",
         "name": "Oulmes",
         "price": "12,00 MAD",
         "description": "Eau gazeuse",
-        "image": "oulmes.jpg"
+        "image": "menu_items/oulmes.jpg"
     },
     {
-        "category": "Boisson",
+        "category": "7",
         "name": "Soda Coca Cola",
         "price": "12,00 MAD",
         "description": "Boisson gazeuse",
-        "image": "soda-coca-cola.jpg"
+        "image": "menu_items/soda-coca-cola.jpg"
     },
     {
-        "category": "Boisson",
+        "category": "7",
         "name": "Soda Coca Zero",
         "price": "12,00 MAD",
         "description": "Boisson gazeuse",
-        "image": "soda-coca-zero.jpg"
+        "image": "menu_items/soda-coca-zero.jpg"
     },
     {
-        "category": "Boisson",
+        "category": "7",
         "name": "Soda Hawaï tropical",
         "price": "12,00 MAD",
         "description": "Boisson gazeuse",
-        "image": "soda-hawa-tropical.jpg"
+        "image": "menu_items/soda-hawa-tropical.jpg"
     },
     {
-        "category": "Boisson",
+        "category": "7",
         "name": "Pepsi",
         "price": "10,00 MAD",
         "description": "Pepsi cola",
-        "image": "pepsi.jpg"
+        "image": "menu_items/pepsi.jpg"
     },
     {
-        "category": "Boisson",
+        "category": "7",
         "name": "Mirinda orange",
         "price": "10,00 MAD",
         "description": "Mirinda",
-        "image": "mirinda-orange.jpg"
+        "image": "menu_items/mirinda-orange.jpg"
     },
     {
-        "category": "Boisson",
+        "category": "7",
         "name": "Mirinda citron",
         "price": "10,00 MAD",
         "description": "Mirinda",
-        "image": "mirinda-citron.jpg"
+        "image": "menu_items/mirinda-citron.jpg"
     },
     {
-        "category": "Boisson",
+        "category": "7",
         "name": "7up",
         "price": "10,00 MAD",
         "description": "7 up soda",
-        "image": "7up.jpg"
+        "image": "menu_items/7up.jpg"
     },
     {
-        "category": "Boisson",
+        "category": "7",
         "name": "Eau minérale",
         "price": "6,00 MAD",
         "description": "Eau minérale",
-        "image": "eau-minrale.jpg"
+        "image": "menu_items/eau-minrale.jpg"
     }
 ]
