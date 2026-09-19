@@ -18,6 +18,40 @@
                         </div>
                     </div>
                 </div>
+                {% if plate_of_day_items %}
+                <section class="mb-6 rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 p-4 md:p-5 shadow-lg">
+                    <div class="flex items-center justify-between mb-3">
+                        <h2 class="text-xl font-bold text-white flex items-center gap-2">🍽️ Plat du jour</h2>
+                        <span class="text-xs font-medium text-amber-50/90 bg-white/15 px-2 py-1 rounded-full">Sélection du chef</span>
+                    </div>
+                    <div class="plat-du-jour-scroll flex gap-3 sm:gap-4 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory scroll-smooth">
+                        {% for item in plate_of_day_items %}
+                            <div class="product-card bg-white rounded-xl border border-amber-200/60 p-3 flex gap-3 transition shadow-md hover:shadow-xl hover:-translate-y-0.5 shrink-0 w-[78%] sm:w-[55%] md:w-[42%] lg:w-[32%] snap-start">
+                                {% if item.image %}
+                                    <img src="{{ item.image.url }}" alt="{{ item.name }}" loading="lazy" class="w-24 h-24 object-cover rounded-lg shrink-0">
+                                {% else %}
+                                    <div class="w-24 h-24 rounded-lg shrink-0 bg-amber-100 text-amber-500 flex items-center justify-center" aria-label="Image indisponible">
+                                        <i class="fas fa-utensils text-2xl"></i>
+                                    </div>
+                                {% endif %}
+                                <div class="flex-1 min-w-0 flex flex-col">
+                                    <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-1 rounded-full self-start">⭐ Plat du jour</span>
+                                    <h3 class="font-bold text-gray-800 truncate mt-1">{{ item.name }}</h3>
+                                    <p class="text-gray-500 text-xs mt-1 line-clamp-2">{{ item.description }}</p>
+                                    <div class="flex items-center justify-between mt-auto pt-2">
+                                        <span class="font-bold text-primary">{{ item.discounted_price|floatformat:"2" }} MAD</span>
+                                        <button class="add-to-cart-btn bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center shadow-md hover:bg-primary-dark transition shrink-0" data-item-id="{{ item.id }}"
+                                        data-iscombo="0"
+                                        data-name="{{ item.name }}" data-price="{{ item.discounted_price }}" data-desc="{{ item.description }}" data-image="{% if item.image %}{{ item.image.url }}{% endif %}">
+                                            <i class="fas fa-plus text-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endif %}
                 <section class="mb-6">
                     <div class="flex items-center justify-between mb-3">
                         <h2 class="text-xl font-bold">Combos</h2>
@@ -36,13 +70,14 @@
                                                     <span class="bg-red-100 text-red-700 text-[10px] font-bold px-2 py-1 rounded-full">-{{ combo.active_discount_percent }}%</span>
                                                 {% endif %}
                                             </div>
-                                            <div class="flex items-center gap-1">
-                                                <div>
-
-                                                    {% if combo.image %}
-                                                    <img src="{{ combo.image.url }}" alt="{{ combo.name }}" style="width: 120px; height: 120px;object-fit: cover; border-radius: 6px; margin-bottom: 8px;">
-                                                    {% endif %}
-                                                </div>
+                                            <div class="flex items-start gap-3">
+                                                {% if combo.image %}
+                                                    <img src="{{ combo.image.url }}" alt="{{ combo.name }}" loading="lazy" class="w-24 h-24 object-cover rounded-lg shrink-0">
+                                                {% else %}
+                                                    <div class="w-24 h-24 rounded-lg shrink-0 bg-orange-100 text-orange-500 flex items-center justify-center" aria-label="Image indisponible">
+                                                        <i class="fas fa-box-open text-2xl"></i>
+                                                    </div>
+                                                {% endif %}
                                                 <div class="flex-1 flex justify-between">
                                                     <div>
                                                         <h3 class="font-bold text-gray-800">{{ combo.name }}</h3>
@@ -65,7 +100,7 @@
                                                         </div>
                                                         <button class="add-to-cart-btn bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center shadow-md hover:bg-primary-dark transition" data-item-id="{{ combo.id }}" data-name="{{ combo.name }}" 
                                                         data-iscombo="1"
-                                                        data-price="{{ combo.discounted_price }}" data-desc="{{ combo.description|default:'Combo' }}">
+                                                        data-price="{{ combo.discounted_price }}" data-desc="{{ combo.description|default:'Combo' }}" data-image="{% if combo.image %}{{ combo.image.url }}{% endif %}">
                                                             <i class="fas fa-plus text-sm"></i>
                                                         </button>
                                                         
@@ -81,27 +116,21 @@
                                 </div>
                             {% endfor %}
                         </div>
-                    {% else %}
-                        <div class="bg-white rounded-xl border border-dashed border-gray-200 p-4 text-sm text-gray-500">
-                            Aucun combo disponible pour le moment.
-                        </div>
                     {% endif %}
                 </section>
-                <!-- STICKY CATEGORY TABS (horizontal scroll) -->
-                <div class="sticky top-[70px] z-20 bg-white border-b border-gray-200 sticky-nav rounded-t-xl overflow-x-auto scrollbar-hide">
-                    <div class="flex space-x-6 px-1 py-3 text-sm font-medium whitespace-nowrap" id="categoryTabs">
-                        <!-- <a href="#top-sellers" class="category-link text-primary border-primary border-b-2 pb-2">Top sellers</a> -->
-                        {% for category in categories %}
-                        <a href="#{{ category.code }}tab" class="category-link text-gray-500 hover:text-gray-800 pb-2 border-b-2 border-transparent">{{ category.name }}</a>
-                        {% endfor %}
-<!--                         
-                        <a href="#faq" class="category-link text-gray-500 hover:text-gray-800 pb-2 border-b-2 border-transparent">FAQs</a> -->
+                <!-- CATEGORIES NAV (horizontal on phone, vertical sidebar on pc) + PRODUCT SECTIONS -->
+                <div class="flex flex-col md:flex-row gap-6 items-start">
+                    <!-- CATEGORY NAV: horizontal scroll on mobile, vertical sticky sidebar on desktop -->
+                    <div class="w-full md:w-44 md:shrink-0 sticky top-[70px] md:top-[88px] z-20">
+                        <div class="flex flex-row md:flex-col gap-1 md:gap-0 overflow-x-auto md:overflow-x-visible md:overflow-y-auto md:max-h-[calc(100vh-110px)] bg-white border border-gray-200 rounded-xl p-2 sticky-nav scrollbar-hide" id="categoryTabs">
+                            {% for category in categories %}
+                            <a href="#{{ category.code }}tab" class="category-link block whitespace-nowrap px-3 py-2 rounded-lg text-sm font-medium text-gray-500 border-l-2 border-transparent hover:bg-gray-50 hover:text-gray-800">{{ category.name }}</a>
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
-                
-                 
-                <!-- PRODUCT SECTIONS (dynamic menu from provided data) -->
-                <div class="space-y-8 mt-4">
+
+                    <!-- PRODUCT SECTIONS (dynamic menu from provided data) -->
+                    <div class="space-y-8 mt-4 flex-1 min-w-0 w-full">
                     <!-- TOP SELLERS section (special badge) -->
                      {% for category in categories %}
 
@@ -111,30 +140,29 @@
                                 {{ category.name }}
                             </h2>
 
-                            <div class="grid gap-4">
+                            <div class="grid gap-4 grid-cols-1">
                                 
                                 {% for item in category.menuitem_set.all %}
-                                    <div class="product-card bg-white rounded-xl border border-gray-100 p-3 flex justify-between items-center transition">
-                                        <div class="flex-1">
-                                            <div class="flex items-center gap-1">
-                                                {% if item.image %}
-                                                    <img src="{{ item.image.url }}" alt="{{ item.name }}" style="width: 120px; height: 120px; object-fit: cover; border-radius: 6px; margin-right: 8px; vertical-align: middle;">
-                                                {% endif %}
-                                                <div>
-                                                    <h3 class="font-bold text-gray-800">{{ item.name }}</h3>
-                                                    <p class="text-gray-500 text-xs mt-1">{{ item.description }}</p>
-                                                    <div class="font-bold text-primary mt-1">{{ item.price|floatformat:"2" }} MAD</div>
-                                                </div>
-                                                <!-- ${isTopSeller ? '<span class="bg-yellow-200 text-yellow-800 text-[10px] font-bold px-1.5 rounded-full">🔥 Top</span>' : ''} -->
-                                                
+                                    <div class="product-card bg-white rounded-xl border border-gray-100 p-3 flex gap-3 transition">
+                                        {% if item.image %}
+                                            <img src="{{ item.image.url }}" alt="{{ item.name }}" loading="lazy" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg shrink-0">
+                                        {% else %}
+                                            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-lg shrink-0 bg-gray-100 text-gray-400 flex items-center justify-center" aria-label="Image indisponible">
+                                                <i class="fas fa-utensils text-2xl"></i>
                                             </div>
-                                            
+                                        {% endif %}
+                                        <div class="flex-1 min-w-0 flex flex-col">
+                                            <h3 class="font-bold text-gray-800 truncate">{{ item.name }}</h3>
+                                            <p class="text-gray-500 text-xs mt-1 line-clamp-2">{{ item.description }}</p>
+                                            <div class="flex items-center justify-between mt-auto pt-2">
+                                                <span class="font-bold text-primary">{{ item.price|floatformat:"2" }} MAD</span>
+                                                <button class="add-to-cart-btn bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center shadow-md hover:bg-primary-dark transition shrink-0" data-item-id="{{ item.id }}"
+                                                data-iscombo="0"
+                                                data-name="{{ item.name }}" data-price="{{ item.price }}" data-desc="{{ item.description }}" data-image="{% if item.image %}{{ item.image.url }}{% endif %}">
+                                                    <i class="fas fa-plus text-sm"></i>
+                                                </button>
+                                            </div>
                                         </div>
-                                        <button class="add-to-cart-btn bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center shadow-md hover:bg-primary-dark transition" data-item-id="{{ item.id }}" 
-                                        data-iscombo="0"
-                                        data-name="{{ item.name }}" data-price="{{ item.price }}" data-desc="{{ item.description }}">
-                                            <i class="fas fa-plus text-sm"></i>
-                                        </button>
                                     </div>
                                     
                                 {% endfor %}
@@ -159,6 +187,7 @@
                     <div id="boissons"><h2 class="text-xl font-bold mb-3">🥤 Boissons</h2><div class="grid gap-4" id="boissonsGrid"></div></div> -->
 
                     
+                    </div>
                 </div>
             </div>
 

@@ -54,6 +54,30 @@
             border-color: #e2e8f0;
             box-shadow: 0 8px 20px rgba(0,0,0,0.05);
         }
+        /* truncate description to 2 lines on menu/combo cards */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        /* horizontal scroll for plat du jour section */
+        .plat-du-jour-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.6) transparent;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-x;
+        }
+        .plat-du-jour-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+        .plat-du-jour-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.6);
+            border-radius: 999px;
+        }
+        .plat-du-jour-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
         /* increment/decrement buttons */
         .cart-qty-btn {
             transition: 0.1s linear;
@@ -158,13 +182,28 @@
             } else {
                 let html = '';
                 cart.forEach((item, idx) => {
+                    const imageHtml = item.image
+                        ? `<div class="h-20 w-20 shrink-0 overflow-hidden rounded-xl shadow-sm"><img src="${item.image}" alt="${item.name}" class="block h-full w-full object-cover"></div>`
+                        : `<div class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-orange-50 text-orange-400" aria-label="Image indisponible"><i class="fas fa-utensils text-xl"></i></div>`;
                     const itemHtml = `
-                        <div class="flex justify-between items-start border-b pb-2" data-idx="${idx}">
-                            <div class="flex-1"><span class="font-medium">${item.name}</span><div class="text-xs text-gray-500">${item.desc.substring(0, 50)}</div><div class="font-bold text-primary text-sm">${item.price.toFixed(2)} MAD</div></div>
-                            <div class="flex items-center space-x-2">
-                                <button class="cart-qty-btn decr bg-gray-100 w-7 h-7 rounded-full text-gray-700">−</button>
-                                <span class="w-6 text-center">${item.quantity}</span>
-                                <button class="cart-qty-btn incr bg-gray-100 w-7 h-7 rounded-full text-gray-700">+</button>
+                        <div class="flex gap-3 rounded-2xl border border-gray-100 bg-gray-50/80 p-3 shadow-sm" data-idx="${idx}">
+                            ${imageHtml}
+                            <div class="flex min-w-0 flex-1 flex-col justify-between gap-3">
+                                <div class="min-w-0">
+                                    <div class="flex items-start justify-between gap-2">
+                                        <span class="truncate font-bold text-gray-800" title="${item.name}">${item.name}</span>
+                                        <span class="shrink-0 font-bold text-primary">${item.price.toFixed(2)} MAD</span>
+                                    </div>
+                                    <div class="mt-1 line-clamp-2 text-xs leading-4 text-gray-500">${(item.desc || '').substring(0, 70)}</div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-medium uppercase tracking-wide text-gray-400">Quantité</span>
+                                    <div class="flex items-center gap-2 rounded-full bg-white p-1 shadow-sm">
+                                        <button class="cart-qty-btn decr flex h-7 w-7 items-center justify-center rounded-full bg-gray-100 text-gray-700 hover:bg-orange-100 hover:text-primary" aria-label="Diminuer la quantité">−</button>
+                                        <span class="w-5 text-center text-sm font-bold text-gray-700">${item.quantity}</span>
+                                        <button class="cart-qty-btn incr flex h-7 w-7 items-center justify-center rounded-full bg-primary text-white hover:bg-orange-600" aria-label="Augmenter la quantité">+</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>`;
                     html += itemHtml;
@@ -232,7 +271,8 @@
                     price: parseFloat($(this).data('price')) || 0,
                     desc: $(this).data('desc') || '',
                     id: id,
-                    iscombo: iscombo
+                    iscombo: iscombo,
+                    image: $(this).data('image') || ''
                 };
                 addToCart(prod);
             }
@@ -290,8 +330,8 @@
                     scrollTop: $(target).offset().top - 85
                 }, 300);
             }
-            $(".category-link").removeClass("text-primary border-primary").addClass("text-gray-500 border-transparent");
-            $(this).addClass("text-primary border-primary").removeClass("text-gray-500 border-transparent");
+            $(".category-link").removeClass("text-primary border-primary bg-orange-50").addClass("text-gray-500 border-transparent");
+            $(this).addClass("text-primary border-primary bg-orange-50").removeClass("text-gray-500 border-transparent");
         });
 
         const cartSidebar = $("#cartSidebar");

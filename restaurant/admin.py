@@ -11,8 +11,8 @@ class ProfileAdmin(admin.ModelAdmin):
 
 @admin.register(MenuCategory)
 class MenuCategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'isactive')
-    list_filter = ('isactive',)
+    list_display = ('name', 'isactive', 'is_guest_checkout_extra')
+    list_filter = ('isactive', 'is_guest_checkout_extra')
     search_fields = ('name',)
 
 
@@ -24,8 +24,8 @@ class MenuItemVariantInline(admin.TabularInline):
 
 @admin.register(MenuItem)
 class MenuItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'price', 'is_available')
-    list_filter = ('is_available', 'category')
+    list_display = ('name', 'category', 'price', 'is_available', 'is_plate_of_day')
+    list_filter = ('is_available', 'is_plate_of_day', 'category')
     search_fields = ('name',)
     inlines = [MenuItemVariantInline]
 

@@ -40,6 +40,10 @@ def create_user_profile(sender, instance: User, created: bool, **kwargs):
 class MenuCategory(models.Model):
     name = models.CharField(max_length=120, unique=True)
     isactive = models.BooleanField(default=True, null=True, blank=True)
+    is_guest_checkout_extra = models.BooleanField(
+        default=False,
+        help_text='Show this category as desserts and supplements during guest checkout.',
+    )
     code = models.CharField(max_length=20, unique=False, blank=True)
     def __str__(self) -> str:
         return self.name
@@ -54,6 +58,7 @@ class MenuItem(models.Model):
     image = models.FileField(upload_to='menu_items/', blank=True)
     description = models.TextField(blank=True)
     is_available = models.BooleanField(default=True)
+    is_plate_of_day = models.BooleanField(default=False, help_text='Feature this item in the "Plat du jour" section.')
     plu = models.IntegerField(unique=True, null=True, blank=True, db_index=True, default=None)
     
     def __str__(self) -> str:

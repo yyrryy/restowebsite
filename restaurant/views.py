@@ -79,6 +79,7 @@ def home(request):
     combos = Combo.objects.filter(is_active=True).prefetch_related('dishes')
     offers = Offer.objects.filter(is_active=True)
     categories = MenuCategory.objects.prefetch_related('menuitem_set').all()
+    plate_of_day_items = MenuItem.objects.filter(is_available=True, is_plate_of_day=True)
     cart_items, cart_total = _build_cart_items(_get_cart(request))
     
     return render(
@@ -89,6 +90,7 @@ def home(request):
             'combos': combos,
             'offers': offers,
             'categories': categories,
+            'plate_of_day_items': plate_of_day_items,
             'cart_items': cart_items,
             'cart_total': cart_total,
         },
@@ -567,7 +569,27 @@ def api_cart_import(request):
 
 # Guest checkout view (no login required) to display localStorage cart and prompt login or save locally
 def guest_checkout(request):
-    return render(request, 'restaurant/guest_checkout.html')
+    guest_extra_items = MenuItem.objects.filter(
+        is_available=True,
+        category__isactive=True,
+        category__is_guest_checkout_extra=True,
+    ).select_related('category').order_by('category__name', 'name')
+    guest_extra_products = [
+        {
+            'id': item.id,
+            'name': item.name,
+            'desc': item.description,
+            'price': float(item.discounted_price()),
+            'iscombo': 0,
+            'image': item.image.url if item.image else '',
+        }
+        for item in guest_extra_items
+    ]
+    return render(
+        request,
+        'restaurant/guest_checkout.html',
+        {'guest_extra_products': guest_extra_products},
+    )
 
 
 @client_required

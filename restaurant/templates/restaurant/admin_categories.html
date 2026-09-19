@@ -570,8 +570,12 @@
               {% endfor %}
             </div>
             <div class="form-check mb-3">
-              {{ form.is_active }}
-              <label class="form-check-label" for="{{ form.is_active.id_for_label }}">Active</label>
+              {{ form.isactive }}
+              <label class="form-check-label" for="{{ form.isactive.id_for_label }}">Active</label>
+            </div>
+            <div class="form-check mb-3">
+              {{ form.is_guest_checkout_extra }}
+              <label class="form-check-label" for="{{ form.is_guest_checkout_extra.id_for_label }}">Show as a guest checkout extra</label>
             </div>
             <button class="btn btn-primary" type="submit">Save category</button>
           </form>
@@ -584,6 +588,7 @@
               <tr>
                 <th>Name</th>
                 <th>Status</th>
+                <th>Guest checkout</th>
               </tr>
             </thead>
             <tbody>
@@ -597,10 +602,17 @@
                       <span class="badge bg-secondary">Inactive</span>
                     {% endif %}
                   </td>
+                  <td>
+                    {% if category.is_guest_checkout_extra %}
+                      <span class="badge bg-success">Extra category</span>
+                    {% else %}
+                      <span class="badge bg-secondary">Standard</span>
+                    {% endif %}
+                  </td>
                 </tr>
               {% empty %}
                 <tr>
-                  <td colspan="2" class="text-muted">No categories yet.</td>
+                  <td colspan="3" class="text-muted">No categories yet.</td>
                 </tr>
               {% endfor %}
             </tbody>

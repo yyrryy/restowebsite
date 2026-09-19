@@ -30,13 +30,13 @@ class ProfileForm(forms.ModelForm):
 class MenuCategoryForm(forms.ModelForm):
     class Meta:
         model = MenuCategory
-        fields = ('name', 'isactive')
+        fields = ('name', 'isactive', 'is_guest_checkout_extra')
 
 
 class MenuItemForm(forms.ModelForm):
     class Meta:
         model = MenuItem
-        fields = ('category', 'name', 'price', 'image', 'is_available')
+        fields = ('category', 'name', 'price', 'image', 'is_available', 'is_plate_of_day')
 
 
 class ComboForm(forms.ModelForm):

@@ -3,8 +3,8 @@
 <div class="space-y-6">
     <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-orange-500 via-orange-500 to-amber-500 text-white shadow-lg">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.22),transparent_35%)]"></div>
-        <div class="relative p-6 md:p-8">
-            <div class="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold backdrop-blur">
+        <div class="relative p-4 sm:p-6 md:p-8">
+            <div class="inline-flex flex-wrap items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold backdrop-blur">
                 <span>Guest checkout</span>
                 <span class="h-1.5 w-1.5 rounded-full bg-white/80"></span>
                 <span>Fast & private</span>
@@ -15,36 +15,36 @@
         </div>
     </div>
 
-    <div class="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm md:p-6">
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+        <section class="rounded-3xl border border-gray-200 bg-white p-4 sm:p-5 shadow-sm md:p-6">
             <div class="flex items-center justify-between gap-3 border-b border-gray-100 pb-4">
                 <div>
                     <h3 class="text-lg font-bold text-gray-900">La commande</h3>
                 </div>
             </div>
 
-            <div id="guestItems" class="mt-5 space-y-3" style="height: 40vh; overflow-y: scroll;"></div>
+            <div id="guestItems" class="mt-5 max-h-[50vh] space-y-3 overflow-y-auto sm:max-h-[40vh]"></div>
 
             <div class="mt-5 rounded-2xl border border-gray-200 bg-gray-50 p-4">
                 <div class="space-y-2 text-sm">
-                    <div class="flex items-center justify-between text-gray-600">
+                    <div class="flex flex-wrap items-center justify-between gap-1 text-gray-600">
                         <span>Sous-total</span>
-                        <span id="guestSubtotal">0,00</span> DH
+                        <span><span id="guestSubtotal">0,00</span> DH</span>
                     </div>
-                    <div class="flex items-center justify-between text-gray-600">
+                    <div class="flex flex-wrap items-center justify-between gap-1 text-gray-600">
                         <span>Frais de livraison</span>
-                        <span id="guestDeliveryFee">0,00</span> DH
+                        <span><span id="guestDeliveryFee">0,00</span> DH</span>
                     </div>
-                    <div class="flex items-center justify-between border-t border-gray-200 pt-3 text-base font-bold text-gray-900">
+                    <div class="flex flex-wrap items-center justify-between gap-1 border-t border-gray-200 pt-3 text-base font-bold text-gray-900">
                         <span>Total</span>
-                        <span id="guestTotal">0,00</span> DH
+                        <span><span id="guestTotal">0,00</span> DH</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm md:p-6">
-            <div class="flex items-center justify-between gap-3 border-b border-gray-100 pb-4">
+        <section class="rounded-3xl border border-gray-200 bg-white p-4 sm:p-5 shadow-sm md:p-6">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 pb-4">
                 <div>
                     <h3 class="text-lg font-bold text-gray-900">Détails de livraison</h3>
                     <p class="text-sm text-gray-500">Ajoutez les éléments essentiels pour que nous puissions finaliser la commande.</p>
@@ -53,7 +53,7 @@
             </div>
 
             <form id="guestForm" class="mt-5 space-y-5">
-                <div class="grid gap-4 md:grid-cols-2">
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <label class="block">
                         <span class="mb-2 block text-sm font-semibold text-gray-700">Nom</span>
                         <input id="guestName" name="name" placeholder="Full name" required class="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-100">
@@ -73,31 +73,41 @@
                     <span class="mb-2 block text-sm font-semibold text-gray-700">Note (optionnel)</span>
                     <textarea id="guestNote" name="note" placeholder="Note pour la cuisine ou instructions de livraison" class="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-100"></textarea>
                 </label>
-                <div class="grid gap-4 md:grid-cols-2">
+                <div class="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+                    <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-700">Desserts & suppléments</h4>
+                            <p class="text-xs text-gray-500">Ajoutez un extra pour finaliser votre commande.</p>
+                        </div>
+                    </div>
+                    <div id="guestExtraPicker" class="space-y-3"></div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div class="rounded-2xl border border-gray-200 bg-gray-50 p-4">
                         <div class="mb-3 text-sm font-semibold text-gray-700">Livraison</div>
-                        <div class="flex flex-wrap gap-2">
+                        <div class="grid grid-cols-2 gap-2">
                             <label class="cursor-pointer">
                                 <input type="radio" name="delivery_option" value="delivery" checked class="peer sr-only">
-                                <span class="inline-flex items-center rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition peer-checked:border-orange-500 peer-checked:bg-orange-50 peer-checked:text-orange-600">🚚 A domicile</span>
+                                <span class="flex items-center justify-center rounded-full border border-gray-200 bg-white px-3 py-2 text-center text-sm font-medium text-gray-600 transition peer-checked:border-orange-500 peer-checked:bg-orange-50 peer-checked:text-orange-600">🚚 A domicile</span>
                             </label>
                             <label class="cursor-pointer">
                                 <input type="radio" name="delivery_option" value="pickup" class="peer sr-only">
-                                <span class="inline-flex items-center rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition peer-checked:border-orange-500 peer-checked:bg-orange-50 peer-checked:text-orange-600">🧾 Em porter</span>
+                                <span class="flex items-center justify-center rounded-full border border-gray-200 bg-white px-3 py-2 text-center text-sm font-medium text-gray-600 transition peer-checked:border-orange-500 peer-checked:bg-orange-50 peer-checked:text-orange-600">🧾 Em porter</span>
                             </label>
                         </div>
                     </div>
 
                     <div class="rounded-2xl border border-gray-200 bg-gray-50 p-4">
                         <div class="mb-3 text-sm font-semibold text-gray-700">Mode de paiment</div>
-                        <div class="flex flex-wrap gap-2">
+                        <div class="grid grid-cols-2 gap-2">
                             <label class="cursor-pointer">
                                 <input type="radio" name="payment_method" value="card" checked class="peer sr-only">
-                                <span class="inline-flex items-center rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition peer-checked:border-orange-500 peer-checked:bg-orange-50 peer-checked:text-orange-600">💳 Card</span>
+                                <span class="flex items-center justify-center rounded-full border border-gray-200 bg-white px-3 py-2 text-center text-sm font-medium text-gray-600 transition peer-checked:border-orange-500 peer-checked:bg-orange-50 peer-checked:text-orange-600">💳 Card</span>
                             </label>
                             <label class="cursor-pointer">
                                 <input type="radio" name="payment_method" value="cod" class="peer sr-only">
-                                <span class="inline-flex items-center rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition peer-checked:border-orange-500 peer-checked:bg-orange-50 peer-checked:text-orange-600">💵 Cash a la livraison</span>
+                                <span class="flex items-center justify-center rounded-full border border-gray-200 bg-white px-3 py-2 text-center text-sm font-medium text-gray-600 transition peer-checked:border-orange-500 peer-checked:bg-orange-50 peer-checked:text-orange-600">💵 Cash a la livraison</span>
                             </label>
                         </div>
                     </div>
@@ -144,7 +154,97 @@
 </div>
 {% endblock %}
 {% block js %}
+{{ guest_extra_products|json_script:"guest-extra-products" }}
 <script>
+    const guestExtraOptions = JSON.parse(
+        document.getElementById('guest-extra-products').textContent
+    );
+
+    function getGuestCart() {
+        try {
+            const cart = JSON.parse(localStorage.getItem('guest_cart') || '[]');
+            return Array.isArray(cart) ? cart : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function saveGuestCart(cart) {
+        if (cart.length === 0) {
+            localStorage.removeItem('guest_cart');
+            return;
+        }
+        localStorage.setItem('guest_cart', JSON.stringify(cart));
+    }
+
+    function renderGuestExtras() {
+        const container = document.getElementById('guestExtraPicker');
+        if (!container) return;
+
+        const cart = getGuestCart();
+        const quantities = {};
+        cart.filter(item => guestExtraOptions.some(product => product.id === item.id)).forEach(item => {
+            quantities[item.id] = (quantities[item.id] || 0) + Number(item.quantity || 0);
+        });
+
+        if (guestExtraOptions.length === 0) {
+            container.innerHTML = '<p class="rounded-xl border border-dashed border-gray-200 bg-white px-3 py-4 text-sm text-gray-500">Aucun dessert ou supplément n’est disponible pour le moment.</p>';
+            return;
+        }
+
+        container.innerHTML = guestExtraOptions.map(product => {
+            const qty = quantities[product.id] || 0;
+            const image = product.image
+                ? `<img src="${product.image}" alt="" class="h-14 w-14 shrink-0 rounded-xl object-cover">`
+                : '<div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-xl">🍟</div>';
+            return `
+                <div class="flex items-center justify-between gap-3 rounded-2xl border border-gray-200 bg-white p-3">
+                    <div class="flex min-w-0 items-center gap-3">
+                        ${image}
+                        <div class="min-w-0">
+                            <div class="truncate font-medium text-gray-900">${product.name}</div>
+                            <div class="line-clamp-2 text-xs text-gray-500">${product.desc}</div>
+                            <div class="mt-1 text-sm font-bold text-orange-500">${product.price.toFixed(2)} MAD</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button type="button" data-extra-action="decrement" data-extra-id="${product.id}" class="h-8 w-8 rounded-full border border-gray-200 bg-gray-50 text-base font-semibold text-gray-700 hover:bg-gray-100">−</button>
+                        <span class="min-w-6 text-center text-sm font-semibold text-gray-700">${qty}</span>
+                        <button type="button" data-extra-action="increment" data-extra-id="${product.id}" class="h-8 w-8 rounded-full border border-orange-200 bg-orange-50 text-base font-semibold text-orange-600 hover:bg-orange-100">+</button>
+                    </div>
+                </div>`;
+        }).join('');
+    }
+
+    function adjustGuestExtra(extraId, delta) {
+        const cart = getGuestCart();
+        const product = guestExtraOptions.find(item => item.id === extraId);
+        if (!product) return;
+
+        const itemIndex = cart.findIndex(item => item.id === extraId);
+        if (itemIndex >= 0) {
+            const nextQty = (Number(cart[itemIndex].quantity) || 0) + delta;
+            if (nextQty <= 0) {
+                cart.splice(itemIndex, 1);
+            } else {
+                cart[itemIndex].quantity = nextQty;
+            }
+        } else if (delta > 0) {
+            cart.push({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                desc: product.desc,
+                iscombo: product.iscombo,
+                quantity: 1,
+            });
+        }
+
+        saveGuestCart(cart);
+        renderGuestCart();
+        renderGuestExtras();
+    }
+
     function renderGuestCart() {
         const raw = localStorage.getItem('guest_cart');
         const container = document.getElementById('guestItems');
@@ -171,12 +271,18 @@
             cart.forEach(it => {
                 const line = (it.price * it.quantity) || 0;
                 subtotal += line;
+                const image = it.image
+                    ? `<img src="${it.image}" alt="" class="h-16 w-16 shrink-0 rounded-xl object-cover">`
+                    : '<div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-xl">🍽️</div>';
                 html += `
                     <div class="rounded-2xl border border-gray-200 bg-gray-50 p-4">
                         <div class="flex items-start justify-between gap-4">
-                            <div>
-                                <div class="font-semibold text-gray-900">${it.name}</div>
-                                <div class="mt-1 text-sm text-gray-500">${it.desc || ''}</div>
+                            <div class="flex min-w-0 gap-3">
+                                ${image}
+                                <div class="min-w-0">
+                                    <div class="font-semibold text-gray-900">${it.name}ff</div>
+                                    <div class="mt-1 text-sm text-gray-500">${it.desc || ''}</div>
+                                </div>
                             </div>
                             <div class="text-right">
                                 <div class="text-sm font-semibold text-gray-700">× ${it.quantity}</div>
@@ -213,9 +319,18 @@
         renderGuestCart();
     }));
 
+    document.getElementById('guestExtraPicker').addEventListener('click', function(event) {
+        const button = event.target.closest('[data-extra-action]');
+        if (!button) return;
+        const extraId = button.dataset.extraId;
+        const action = button.dataset.extraAction;
+        adjustGuestExtra(extraId, action === 'increment' ? 1 : -1);
+    });
+
     document.getElementById('clearGuestCart').addEventListener('click', function() {
         localStorage.removeItem('guest_cart');
         renderGuestCart();
+        renderGuestExtras();
     });
 
     document.getElementById('guestForm').addEventListener('submit', function(e) {
@@ -225,10 +340,10 @@
         const address = document.getElementById('guestAddress').value.trim();
         const payment = document.querySelector('input[name="payment_method"]:checked').value;
         const delivery = document.querySelector('input[name="delivery_option"]:checked').value;
-        const subtotal = $("#guestSubtotal").text()
-        const deliveryfees = $("#guestDeliveryFee").text()
-        const note = $("#guestNote").text()
-        const total = $("#guestTotal").text()
+        const subtotal = $("#guestSubtotal").text();
+        const deliveryfees = $("#guestDeliveryFee").text();
+        const note = $("#guestNote").val().trim();
+        const total = $("#guestTotal").text();
 
         if (!name || !phone) {
             document.getElementById('guestNotice').textContent = 'Please provide your name and phone so the rider can reach you.';
@@ -277,5 +392,6 @@
 
     toggleCardFields();
     renderGuestCart();
+    renderGuestExtras();
 </script>
 {% endblock %}
