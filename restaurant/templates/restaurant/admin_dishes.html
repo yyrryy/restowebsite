@@ -586,6 +586,9 @@
             <!-- Plats Table -->
             <div class="card">
                 <div class="card-title">📋 All Plats</div>
+                <div class="form-group" style="max-width: 320px;">
+                    <input type="text" id="dishSearchInput" placeholder="🔍 Rechercher un plat..." oninput="filterDishesTable()">
+                </div>
                 {% if dishes %}
                     <div class="table-responsive">
                         <table>
@@ -598,9 +601,9 @@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="dishesTableBody">
                                 {% for dish in dishes %}
-                                    <tr>
+                                    <tr data-dish-name="{{ dish.name|lower }}">
                                         <td class="dish-name">
                                             {% if dish.image %}
                                                 <img src="{{ dish.image.url }}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 6px; margin-right: 8px; vertical-align: middle;">
@@ -632,6 +635,10 @@
                                 {% endfor %}
                             </tbody>
                         </table>
+                        <div id="dishSearchEmpty" class="empty-state" style="display: none;">
+                            <div class="empty-state-icon">🔍</div>
+                            <p>Aucun plat ne correspond à votre recherche.</p>
+                        </div>
                     </div>
                 {% else %}
                     <div class="empty-state">
@@ -682,12 +689,21 @@
 
                     <div class="form-group">
                         <label for="id_image">Image</label>
+                        <div id="currentImagePreview" style="display: none; margin-bottom: 0.75rem;">
+                            <img id="currentImagePreviewImg" src="" alt="Current image" style="width: 100px; height: 100px; object-fit: cover; border-radius: 6px; border: 1.5px solid var(--border-color);">
+                            <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 0.35rem;">Image actuelle — choisissez un fichier pour la remplacer.</p>
+                        </div>
                         <input type="file" name="image" id="id_image" accept="image/*">
                     </div>
 
                     <div class="form-group checkbox-group">
                         <input type="checkbox" name="is_available" id="id_is_available" checked>
                         <label for="id_is_available" style="margin: 0;">Available</label>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" name="is_plate_of_day" id="id_is_plate_of_day">
+                        <label for="id_is_plate_of_day" style="margin: 0;">⭐ Plat du jour</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -701,7 +717,23 @@
     <script>
         // Get categories from the page or fetch them
         const categoriesSelect = document.getElementById('id_category');
-        
+
+        function filterDishesTable() {
+            const query = document.getElementById('dishSearchInput').value.trim().toLowerCase();
+            const rows = document.querySelectorAll('#dishesTableBody tr');
+            let visibleCount = 0;
+            rows.forEach(row => {
+                const name = row.getAttribute('data-dish-name') || '';
+                const matches = name.includes(query);
+                row.style.display = matches ? '' : 'none';
+                if (matches) visibleCount++;
+            });
+            const emptyState = document.getElementById('dishSearchEmpty');
+            if (emptyState) {
+                emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+            }
+        }
+
         function openMenuItemModal(dishId = null) {
             const modal = document.getElementById('dishModal');
             const form = document.getElementById('dishForm');
@@ -721,6 +753,16 @@
                         document.getElementById('id_description').value = data.description || '';
                         document.getElementById('id_price').value = data.price || '';
                         document.getElementById('id_is_available').checked = data.is_available || false;
+                        document.getElementById('id_is_plate_of_day').checked = data.is_plate_of_day || false;
+
+                        const preview = document.getElementById('currentImagePreview');
+                        const previewImg = document.getElementById('currentImagePreviewImg');
+                        if (data.image) {
+                            previewImg.src = data.image;
+                            preview.style.display = 'block';
+                        } else {
+                            preview.style.display = 'none';
+                        }
                     })
                     .catch(error => console.error('Error:', error));
             } else {
@@ -729,6 +771,8 @@
                 form.action = `{% url 'admin_dish_create' %}`;
                 form.reset();
                 document.getElementById('id_is_available').checked = true;
+                document.getElementById('id_is_plate_of_day').checked = false;
+                document.getElementById('currentImagePreview').style.display = 'none';
             }
             
             modal.classList.add('active');

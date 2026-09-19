@@ -714,6 +714,8 @@ def admin_dish_data(request, dish_id):
         'price': str(dish.price),
         'category': dish.category_id,
         'is_available': dish.is_available,
+        'is_plate_of_day': dish.is_plate_of_day,
+        'image': dish.image.url if dish.image else None,
     })
 
 
