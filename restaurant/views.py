@@ -76,7 +76,7 @@ def home(request):
     print("User is authenticated:")
     top_ordered_dishes = MenuItem.objects.filter(is_available=True).order_by('-id')[:5]
     dishes = MenuItem.objects.filter(is_available=True).select_related('category')
-    combos = Combo.objects.filter(is_active=True).prefetch_related('dishes')
+    combos = MenuItem.objects.filter(is_available=True, category__name='combo')
     offers = Offer.objects.filter(is_active=True)
     categories = MenuCategory.objects.prefetch_related('menuitem_set').all()
     plate_of_day_items = MenuItem.objects.filter(is_available=True, is_plate_of_day=True)
