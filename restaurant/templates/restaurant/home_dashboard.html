@@ -26,7 +26,7 @@
                     </div>
                     <div class="plat-du-jour-scroll flex gap-3 sm:gap-4 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory scroll-smooth">
                         {% for item in plate_of_day_items %}
-                            <div class="product-card bg-white rounded-xl border border-amber-200/60 p-3 flex gap-3 transition shadow-md hover:shadow-xl hover:-translate-y-0.5 shrink-0 w-[78%] sm:w-[55%] md:w-[42%] lg:w-[32%] snap-start">
+                            <div class="product-card bg-white rounded-xl border border-amber-200/60 p-3 flex gap-3 transition shadow-md hover:shadow-xl hover:-translate-y-0.5 shrink-0 w-[78%] sm:w-[55%] snap-start">
                                 {% if item.image %}
                                     <img src="{{ item.image.url }}" alt="{{ item.name }}" loading="lazy" class="w-24 h-24 object-cover rounded-lg shrink-0">
                                 {% else %}
@@ -50,9 +50,44 @@
                             </div>
                         {% endfor %}
                     </div>
+                    
                 </section>
                 {% endif %}
-                <section class="mb-6">
+
+                <section class="mb-6 rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 p-4 md:p-5 shadow-lg">
+                    <div class="flex items-center justify-between mb-3">
+                        <h2 class="text-xl font-bold text-white flex items-center gap-2">🍽️ Les Combos</h2>
+                        <span class="text-xs font-medium text-amber-50/90 bg-white/15 px-2 py-1 rounded-full">Offre spéciale</span>
+                    </div>
+                    <div class="plat-du-jour-scroll flex gap-3 sm:gap-4 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory scroll-smooth">
+                        {% for item in combos %}
+                            <div class="product-card bg-white rounded-xl border border-amber-200/60 p-3 flex gap-3 transition shadow-md hover:shadow-xl hover:-translate-y-0.5 shrink-0 w-[78%] sm:w-[55%] snap-start">
+                                {% if item.image %}
+                                    <img src="{{ item.image.url }}" alt="{{ item.name }}" loading="lazy" class="w-24 h-24 object-cover rounded-lg shrink-0">
+                                {% else %}
+                                    <div class="w-24 h-24 rounded-lg shrink-0 bg-amber-100 text-amber-500 flex items-center justify-center" aria-label="Image indisponible">
+                                        <i class="fas fa-utensils text-2xl"></i>
+                                    </div>
+                                {% endif %}
+                                <div class="flex-1 min-w-0 flex flex-col">
+                                    <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-1 rounded-full self-start">⭐ Combo</span>
+                                    <h3 class="font-bold text-gray-800 truncate mt-1">{{ item.name }}</h3>
+                                    <p class="text-gray-500 text-xs mt-1 line-clamp-2">{{ item.description }}</p>
+                                    <div class="flex items-center justify-between mt-auto pt-2">
+                                        <span class="font-bold text-primary">{{ item.discounted_price|floatformat:"2" }} MAD</span>
+                                        <button class="add-to-cart-btn bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center shadow-md hover:bg-primary-dark transition shrink-0" data-item-id="{{ item.id }}"
+                                        data-iscombo="1"
+                                        data-name="{{ item.name }}" data-price="{{ item.discounted_price }}" data-desc="{{ item.description }}" data-image="{% if item.image %}{{ item.image.url }}{% endif %}">
+                                            <i class="fas fa-plus text-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                </section>
+                <!-- <section class="mb-6">
                     <div class="flex items-center justify-between mb-3">
                         <h2 class="text-xl font-bold">Combos</h2>
                         <span class="text-xs text-gray-500">Offres groupées</span>
@@ -81,7 +116,7 @@
                                                 <div class="flex-1 flex justify-between">
                                                     <div>
                                                         <h3 class="font-bold text-gray-800">{{ combo.name }}</h3>
-                                                        <!-- <p class="text-gray-500 text-xs mt-1">{{ combo.description}}</p> -->
+                                                         <p class="text-gray-500 text-xs mt-1">{{ combo.description}}</p> 
             
                                                         <ul class="mt-3 text-m text-gray-600 space-y-1">
                                                             <li>• {{ combo.description }}</li>
@@ -117,7 +152,7 @@
                             {% endfor %}
                         </div>
                     {% endif %}
-                </section>
+                </section> -->
                 <!-- CATEGORIES NAV (horizontal on phone, vertical sidebar on pc) + PRODUCT SECTIONS -->
                 <div class="flex flex-col md:flex-row gap-6 items-start">
                     <!-- CATEGORY NAV: horizontal scroll on mobile, vertical sticky sidebar on desktop -->
