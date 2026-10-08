@@ -754,7 +754,8 @@
                         document.getElementById('id_price').value = data.price || '';
                         document.getElementById('id_is_available').checked = data.is_available || false;
                         document.getElementById('id_is_plate_of_day').checked = data.is_plate_of_day || false;
-
+                        document.getElementById('id_is_plate_of_day').checked = data.is_plate_of_day || false;
+                        document.getElementById('id_image').value = data.image || '';
                         const preview = document.getElementById('currentImagePreview');
                         const previewImg = document.getElementById('currentImagePreviewImg');
                         if (data.image) {

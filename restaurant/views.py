@@ -545,7 +545,6 @@ def api_cart_import(request):
             data = json.loads(request.POST.get('cart_items_json', '[]'))
         if not isinstance(data, list):
             return JsonResponse({'error': 'Invalid cart format'}, status=400)
-
         new_cart = {}
         for entry in data:
             name = entry.get('name')
@@ -933,27 +932,27 @@ def createguestorder(request):
             price = float(i["price"])
             qty = float(i["quantity"])
             total = price*qty
-            if int(i['iscombo'])==1:
-                dish_name = Combo.objects.get(id=id).name
-                OrderItem.objects.create(
-                    order=order,
-                    combo_id=id,
-                    price=price,
-                    quantity=qty,
-                    total=total
-                )
-            else:
-                dish_name = MenuItem.objects.get(id=id).name
-                OrderItem.objects.create(
-                    order=order,
-                    dish_id=id,
-                    price=price,
-                    quantity=qty,
-                    total=total    
-                )
+            # if int(i['iscombo'])==1:
+            #     dish_name = Combo.objects.get(id=id).name
+            #     OrderItem.objects.create(
+            #         order=order,
+            #         combo_id=id,
+            #         price=price,
+            #         quantity=qty,
+            #         total=total
+            #     )
+            # else:
+            dish_name = MenuItem.objects.get(id=id).name
+            OrderItem.objects.create(
+                order=order,
+                dish_id=id,
+                price=price,
+                quantity=qty,
+                total=total    
+            )
             message += f"• {qty}x {dish_name} - {total}DH\n"
         
-        send_telegram_message(message, parse_mode='Markdown')
+        # send_telegram_message(message, parse_mode='Markdown')
 
         return JsonResponse({
             "success":True
