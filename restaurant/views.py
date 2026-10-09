@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import AuthenticationForm
 from django.db import transaction
+from django.db.models import Prefetch
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
@@ -78,7 +79,9 @@ def home(request):
     dishes = MenuItem.objects.filter(is_available=True).select_related('category')
     combos = MenuItem.objects.filter(is_available=True, category__name='combo')
     offers = Offer.objects.filter(is_active=True)
-    categories = MenuCategory.objects.prefetch_related('menuitem_set').all()
+    categories = MenuCategory.objects.prefetch_related(
+        Prefetch('menuitem_set', queryset=MenuItem.objects.filter(is_available=True))
+    ).all()
     plate_of_day_items = MenuItem.objects.filter(is_available=True, is_plate_of_day=True)
     cart_items, cart_total = _build_cart_items(_get_cart(request))
     
