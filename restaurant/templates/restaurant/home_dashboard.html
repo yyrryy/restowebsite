@@ -178,6 +178,7 @@
                             <div class="grid gap-4 grid-cols-1">
                                 
                                 {% for item in category.menuitem_set.all %}
+                                    {% if item.is_available %}
                                     <div class="product-card bg-white rounded-xl border border-gray-100 p-3 flex gap-3 transition">
                                         {% if item.image %}
                                             <img src="{{ item.image.url }}" alt="{{ item.name }}" loading="lazy" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg shrink-0">
@@ -197,6 +198,7 @@
                                                     <i class="fas fa-plus text-sm"></i>
                                                 </button>
                                             </div>
+                                    {% endif %}
                                         </div>
                                     </div>
                                     
