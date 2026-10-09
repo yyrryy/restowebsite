@@ -709,7 +709,7 @@ def admin_dish_data(request, dish_id):
     return JsonResponse({
         'id': dish.id,
         'name': dish.name,
-        'description': '',
+        'description': dish.description,
         'price': str(dish.price),
         'category': dish.category_id,
         'is_available': dish.is_available,
