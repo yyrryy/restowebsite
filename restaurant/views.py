@@ -719,6 +719,15 @@ def admin_dish_data(request, dish_id):
 
 
 @admin_required
+@require_http_methods(["POST"])
+def admin_dish_toggle_availability(request, dish_id):
+    dish = get_object_or_404(MenuItem, id=dish_id)
+    dish.is_available = not dish.is_available
+    dish.save(update_fields=['is_available'])
+    return JsonResponse({'success': True, 'is_available': dish.is_available})
+
+
+@admin_required
 def admin_combos(request):
     combos = Combo.objects.prefetch_related('dishes').order_by('name')
     dishes = MenuItem.objects.filter(is_available=True).order_by('name')

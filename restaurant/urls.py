@@ -29,6 +29,7 @@ urlpatterns = [
     path('admin/dishes/new/', views.admin_dish_create, name='admin_dish_create'),
     path('admin/dishes/<int:dish_id>/edit/', views.admin_dish_edit, name='admin_dish_edit'),
     path('admin/dishes/<int:dish_id>/delete/', views.admin_dish_delete, name='admin_dish_delete'),
+    path('admin/dishes/<int:dish_id>/toggle-availability/', views.admin_dish_toggle_availability, name='admin_dish_toggle_availability'),
     path('admin/dishes/<int:dish_id>/data/', views.admin_dish_data, name='admin_dish_data'),
     path('admin/combos/', views.admin_combos, name='admin_combos'),
     path('admin/combos/new/', views.admin_combo_create, name='admin_combo_create'),

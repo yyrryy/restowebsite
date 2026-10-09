@@ -36,7 +36,7 @@ class MenuCategoryForm(forms.ModelForm):
 class MenuItemForm(forms.ModelForm):
     class Meta:
         model = MenuItem
-        fields = ('category', 'name', 'description', 'price', 'image', 'is_available', 'is_plate_of_day')
+        fields = ('category', 'name', 'description', 'price', 'image', 'is_plate_of_day')
 
 
 class ComboForm(forms.ModelForm):
